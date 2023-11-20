@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.css">
+</head>
+<body style="background: url('images/signlogBg.jpg')">
+    <style>
+     
+        .Filtercontainer {
+            background-color: lightgreen;
+            border-radius: 25px;
+            width: 50%;
+            margin: auto; 
+        }
+
+        .vertical-center {
+            padding: 10vh 0;
+            display: flex;
+            align-items: center; 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #calendar {
+            border-collapse: collapse;
+            width: 90%;
+            margin:auto;
+            padding: 0 5%;
+        }
+        #calendar th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+        }
+        #calendar td {
+            border: 1px solid #ddd;
+            padding: 10px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        #calendar .today {
+            background-color: #f2f2f2;
+        }
+        .calendar-nav {
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .calendar-nav button {
+            padding: 5px 10px;
+            margin: 0 5px;
+        }
+        .mark-text {
+            font-weight: bold;
+            color: red;
+        }
+
+    </style>
+    <div class="vertical-center">
+    <div class="Filtercontainer">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Carer and Customer</h2>
+                <form id="login-form">
+                    <div class="row">
+                
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="carer-dropdown">Carer</label>
+                            <select id="carer-dropdown" class="form-control">
+                              
+                            </select>
+                        </div>
+                    
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="customer-dropdown">Customer</label>
+                            <select id="customer-dropdown" class="form-control">
+                      
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                    
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary mb-3" id = "Search_button_Carer">Search</button>
+                        </div>
+
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary mb-3" id = "Search_button_Customer">Search</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="calendar-nav">
+        <button onclick="moveMonth(-1)">&lt; Prev</button>
+        <span id="monthYear"></span>
+        <button onclick="moveMonth(1)">Next &gt;</button>
+    </div>
+    
+    <table id="calendar">
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody id="calendar-body">
+            <!-- Calendar days will be generated here -->
+        </tbody>
+    </table>
+
+    <script>
+                const airtableBaseId = "app8p4RecoWg7JsOX";
+                const airtableTableName = "Users"; 
+                const airtableUrl = "https://api.airtable.com/v0/app8p4RecoWg7JsOX/Users";
+                const airtableApiKey = "patbjbBB4mGfLvwMD.e257cd19ea5b9b3a5337417837f56d29c6f8b8dfeae4a7853b8da010f990e3df";
+                const emailToSearch = "jessie.wu@everyoungai.com";  
+                const encodedFormulaByEmail = encodeURIComponent(`{Email} = '${emailToSearch}'`);
+                
+
+                function populateDropdown(dropdownId, data, select) {
+
+                        const dropdown = document.getElementById(dropdownId);
+                        data.forEach(item => {
+                        const option = new Option(item, item);
+                        dropdown.add(option);
+                        });
+                }
+
+                let allRecords = [];
+                let offset;
+
+                async function fetchAllRecords(offsetParam) {
+                    let url = `https://api.airtable.com/v0/${airtableBaseId}/${airtableTableName}?filterByFormula=${encodedFormulaByEmail}`;
+                    if (offsetParam) {
+                        url += `&offset=${offsetParam}`;
+                    }
+
+                    try {
+                            const response = await fetch(url, {
+                            headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                            }
+                        });
+                        const data = await response.json();
+                        allRecords = allRecords.concat(data.records);
+
+
+                        if (data.offset) {
+                            await fetchAllRecords(data.offset);
+                            
+                        }
+                    } catch (error) {
+                            console.error('Error:', error);
+                    }
+                    }
+              
+                const customerNames = [];
+                const carerNames = [];
+                let userObject = {
+                            "Carer Active":["All"],
+                            "Customer":["All"]
+                        }
+                let userRecordID = {
+                        "Carer Active":[],
+                        "Customer":[]
+
+                    }
+                async function fetchCustomerNames(customerRecordIds, role) {
+                        await fetchAllRecords();
+                        const recordId = allRecords[0]["fields"]["Client"];
+                        const userType = ["Customer", "Carer Active"]
+                        
+
+                        for (var i = 0; i < userType.length; i++){
+                            const encodedFormulaByRecordId = encodeURIComponent(`AND({Record ID (from Client)} = '${recordId}', {User Type} = '${userType[i]}')`);
+                            try {
+                                const response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Users?filterByFormula=${encodedFormulaByRecordId}`, {
+                                headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                            });
+
+                            const Staff_Data = await response.json();
+                            
+                            for (const record of Staff_Data.records) {
+                                    userObject[userType[i]].push(record.fields.Name);
+                                }
+
+                            } catch (error) {
+                            console.error('Error:', error);
+                            }
+                        }               
+                    }
+
+                let carerRecordID = [];
+                async function findCalendar(){
+                    for (var i = 0; i< userObject["Carer Active"].length;i++){
+                        const Casername = userObject["Carer Active"][i];
+                        const encodedFormulaByCaserId = encodeURIComponent(`{Name} = '${Casername}'`);
+                        try {
+                                const response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Carers?filterByFormula=${encodedFormulaByCaserId}`, {
+                                headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                            });
+
+                            const Caser_Data = await response.json();
+                 
+                            
+                            for (const record of Caser_Data.records) {
+                                carerRecordID.push(record.fields.devRecordId);
+                                }
+
+                                
+                                console.log("ID collection is" + carerRecordID);
+                        
+                            } catch (error) {
+                            console.error('Error:', error);
+                            }
+                    }
+                    
+
+                }
+
+                let UserList;
+                async function FindCustomer(LINKED_FIELD_NAME, LINKED_RECORD_ID){
+
+                    
+                    // Encode the formula for use in a URL query parameter
+                    const encodedFormula = encodeURIComponent(`{${LINKED_FIELD_NAME}} = '${LINKED_RECORD_ID}'`);
+
+
+
+                    const response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Schedule?filterByFormula=${encodedFormula}`, {
+                                headers: {
+                                    'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                                });
+
+                    const data = await response.json(); 
+                    const User_records = data.records;
+
+                    // console.log("data is :" + JSON.stringify(data.records));
+                    let CustomersAndCarers = User_records.map(record => {
+           
+                    const fields = record.fields;
+
+          
+                    const customers = fields.Customers || [];
+                    const carers = fields.Carers || []; 
+                    const start = fields.Start || [];
+                    const end = fields.End || [];
+                    ////////////////////////////////////////////ADD MORE INFORMATION HERE/////////////////////////////
+                
+                    return {
+                        recordId: record.id,
+                        customers: customers,
+                        carers: carers,
+                        start: start,
+                        end: end
+                    };
+                    });
+
+                    UserList = CustomersAndCarers;
+
+                    return CustomersAndCarers;
+                    // console.log("The Customer data is" + JSON.stringify(CustomersAndCarers));
+       
+
+                }
+
+        
+
+        
+
+
+            async function handleAllRecords() {
+                    await fetchCustomerNames();
+                    await findCalendar();
+                    // await FindCustomer();
+                    console.log(userObject);
+                    
+                    populateDropdown('customer-dropdown', userObject['Customer'], 'customers');
+                    populateDropdown('carer-dropdown', userObject['Carer Active'], 'carers');
+                }
+                
+
+        
+            async function setupEventListeners() {
+                await handleAllRecords();
+
+                const search_button_Carer = document.getElementById("Search_button_Carer");
+                const search_button_Customer = document.getElementById("Search_button_Customer");
+                const selectCarer = document.getElementById('carer-dropdown');
+                const selectCustomer = document.getElementById('customer-dropdown');
+
+                search_button_Carer.addEventListener('click', async function(){
+                    const carer_options = selectCarer.options;
+                    const customer_options = selectCustomer.options;
+
+                    const selected_carer = selectCarer.selectedOptions[0].value;
+                    const selected_customer = selectCustomer.selectedOptions[0].value;
+                    const Carer_Schedule = '';
+
+                    console.log("Carer:" + JSON.stringify(selected_carer));
+                    console.log("Customer:" + JSON.stringify(selected_customer));
+                    if (selected_carer == "All"){
+                        console.log("Show All");
+                        const All_Carer = [];
+                        for (var i = 0; i < userObject['Carer Active'].length;i++){
+
+                        }
+
+                    }else{
+                        const result = await FindCustomer('Carers', selected_carer);
+                        console.log("Carer list is :" + JSON.stringify(result))
+                    }
+            
+
+                });
+
+                search_button_Customer.addEventListener('click',async function(){
+                    const carer_options = selectCarer.options;
+                    const customer_options = selectCustomer.options;
+
+                    const selected_carer = selectCarer.selectedOptions[0].text;
+                    const selected_customer = selectCustomer.selectedOptions[0].text;
+                    console.log("Carer:" + JSON.stringify(selected_carer));
+                    console.log("Customer:" + JSON.stringify(selected_customer));
+                    if (selected_customer == "All"){
+                        console.log("Show All");
+
+                    }else{
+                        const result = await FindCustomer('Customers',selected_customer);
+                        console.log("Customer list is :" + JSON.stringify(result))
+                    }
+
+
+                });
+            }
+
+            async function FinalDeploy(){
+                await setupEventListeners();
+                
+            }
+            FinalDeploy();
+            
+
+
+                
+        
+            /////////////////////////////////////////SEPARATE LINE FOR /////////////////////////////////////////////
+            let currentYear = new Date().getFullYear();
+            let currentMonth = new Date().getMonth();
+            
+            const specialDates = [
+                new Date(2023, 10, 16),
+                new Date(2023,9,16)
+             
+            ];
+
+            function createCalendar(year, month) {
+                    let monthYear = document.getElementById('monthYear');
+                    let calendarBody = document.getElementById('calendar-body');
+                    let firstDay = new Date(year, month).getDay();
+                    let daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                    monthYear.textContent = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
+                    calendarBody.innerHTML = '';
+
+                    let date = 1;
+                    for (let i = 0; i < 6; i++) {
+                        let row = document.createElement('tr');
+
+                        for (let j = 0; j < 7; j++) {
+                            let cell = document.createElement('td');
+                            if (i === 0 && j < firstDay) {
+                                cell.innerHTML = '';
+                                row.appendChild(cell);
+                            } else if (date > daysInMonth) {
+                                break;
+                            } else {
+                                let cellDate = new Date(year, month, date);
+                                let formattedDate = cellDate.toISOString().split('T')[0]; 
+                                
+                               
+                                if (specialDates.some(d => d.toISOString().split('T')[0] === formattedDate)) {
+                                    cell.innerHTML = date + "<br><span class='mark-text'>Mark</span>";
+                                } else {
+                                    cell.innerHTML = date;
+                                }
+
+                                if (date === new Date().getDate() && year === new Date().getFullYear() && month === new Date().getMonth()) {
+                                    cell.classList.add('today');
+                                }
+                                row.appendChild(cell);
+                                date++;
+                            }
+                        }
+                        calendarBody.appendChild(row);
+                    }
+                }
+
+            function moveMonth(step) {
+                currentMonth += step;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                } else if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                createCalendar(currentYear, currentMonth);
+            }
+
+            createCalendar(currentYear, currentMonth);
+            
+
+
+
+
+
+    </script>
+</body>
+</html>
