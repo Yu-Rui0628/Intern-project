@@ -202,7 +202,7 @@
                             console.error('Error:', error);
                             }
                         }               
-                    }
+                }
 
                 let carerRecordID = [];
                 async function findCalendar(){
@@ -262,6 +262,7 @@
                     const carers = fields.Carers || []; 
                     const start = fields.Start || [];
                     const end = fields.End || [];
+                    const event = fields.Services || [];
                     ////////////////////////////////////////////ADD MORE INFORMATION HERE/////////////////////////////
                 
                     return {
@@ -269,14 +270,15 @@
                         customers: customers,
                         carers: carers,
                         start: start,
-                        end: end
+                        end: end,
+                        event: event
                     };
                     });
 
                     UserList = CustomersAndCarers;
 
                     return CustomersAndCarers;
-                    // console.log("The Customer data is" + JSON.stringify(CustomersAndCarers));
+                    console.log("THE TEST :" + JSON.stringify(CustomersAndCarers));
        
 
                 }
@@ -317,19 +319,24 @@
                     console.log("Carer:" + JSON.stringify(selected_carer));
                     console.log("Customer:" + JSON.stringify(selected_customer));
                     if (selected_carer == "All"){
-                        console.log("Show All");
+        
                         const All_Carer = [];
-                        for (var i = 0; i < userObject['Carer Active'].length;i++){
-
+                        for (var i = 1; i < userObject['Carer Active'].length;i++){
+                            console.log("All the carer is:" + userObject['Carer Active'][i])
                         }
 
                     }else{
                         const result = await FindCustomer('Carers', selected_carer);
-                        console.log("Carer list is :" + JSON.stringify(result))
+                        console.log("Carer list is :" + JSON.stringify(result));
+                        let output =await GenerateResult(result);
+
+                        console.log("THE OUTPUT IS" + JSON.stringify(output));
                     }
             
 
                 });
+
+               
 
                 search_button_Customer.addEventListener('click',async function(){
                     const carer_options = selectCarer.options;
@@ -340,15 +347,95 @@
                     console.log("Carer:" + JSON.stringify(selected_carer));
                     console.log("Customer:" + JSON.stringify(selected_customer));
                     if (selected_customer == "All"){
-                        console.log("Show All");
+                        const All_Customer = [];
+                        for (var i = 1; i < userObject['Customer'].length;i++){
+                            console.log("All the Customer is:" + userObject['Customer'][i])
+                            
+                        }
 
                     }else{
                         const result = await FindCustomer('Customers',selected_customer);
                         console.log("Customer list is :" + JSON.stringify(result))
+                    
+                        let output =await GenerateResult(result);
+
+                        console.log("THE OUTPUT IS" + JSON.stringify(output));
+                        
                     }
 
 
                 });
+                async function GenerateResult (input){
+                    let output = [];
+                    for(var i = 0; i < input.length; i++){
+                       
+                        let object_push = {};
+                        /* carer name, customer name, event name, start, end, and all record id*/
+                        
+
+                        const encodedFormulaCustomer = encodeURIComponent(`recordid = '${input[i].customers}'`);
+                        const encodedFormulaCarer = encodeURIComponent(`devRecordId = '${input[i].carers}'`);
+                        
+                          try {
+                                const Customer_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Customers?filterByFormula=${encodedFormulaCustomer}`, {
+                                headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                            });
+
+                                const Carer_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Carers?filterByFormula=${encodedFormulaCarer}`, {
+                                headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                            });
+
+                            const Customer_Data = await Customer_response.json();
+                            const Carer_Data = await Carer_response.json();
+                            for (const record of Customer_Data.records) {
+                                    console.log("CUSTOMER IS"  +JSON.stringify(record.fields.Customer) );
+                                   
+                                    object_push["customer"] = JSON.stringify(record.fields.Customer);
+
+                                }
+                            for (const record of Carer_Data.records) {
+                                    console.log("CARER IS"  +JSON.stringify(record.fields.Name) );
+                                    object_push["carer"] = JSON.stringify(record.fields.Name);
+                                }
+                            let start_date = new Date(input[i].start);
+                            let end_date = new Date(input[i].end);
+                            object_push["ios_start_date"] = input[i].start;
+                            object_push["ios_end_date"] = input[i].end;
+                            let sydneyStartTime = start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" });
+                            let sydneyEndTime = end_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" });
+                                  
+                            let [sydneyStartDate, sydneyStartHour] = sydneyStartTime.split(', ');
+                            let [sydneyEndDate, sydneyEndHour] = sydneyEndTime.split(', ');
+                            let formattedSydneyStartTime = `${sydneyStartDate.trim()} ${sydneyStartHour.trim()}`;
+                            let formattedSydneyEndTime = `${sydneyEndDate.trim()} ${sydneyEndHour.trim()}`;
+
+                            object_push["normal_start_date"] = formattedSydneyStartTime;
+                            object_push["normal_end_date"] = formattedSydneyEndTime;
+
+                            output.push(object_push);
+
+                            } catch (error) {
+                            console.error('Error:', error);
+                            }
+                                                    
+                       
+
+                            
+
+                            
+
+                        // console.log("carer "+ index + item.carers);
+                        // console.log("carer "+ index + item.customers);
+                        // console.log("carer "+ index + item.start);
+                       
+                    }//for loop end
+                    return output;
+                
+                }
             }
 
             async function FinalDeploy(){
@@ -361,57 +448,73 @@
 
                 
         
-            /////////////////////////////////////////SEPARATE LINE FOR /////////////////////////////////////////////
+            /////////////////////////////////////////SEPARATE LINE FOR CANLENDER/////////////////////////////////////////////
             let currentYear = new Date().getFullYear();
             let currentMonth = new Date().getMonth();
             
             const specialDates = [
-                new Date(2023, 10, 16),
-                new Date(2023,9,16)
+                // new Date(2023, 10, 16),
+                new Date("2023-10-25T04:00:00.000Z"),
+                new Date("2023-10-23T08:41:00.000Z")
              
             ];
 
+            /*Method*/
+            // const specialDates = [
+           
+            //     {
+            //         "starttime":new Date("2023-10-25T04:00:00.000Z"),
+            //         "endtime":new Date("2023-10-23T08:41:00.000Z"),
+            //         "carer":"Yu",
+            //         "customer":"Rui"
+            //     }
+             
+            // ];
+
+
             function createCalendar(year, month) {
-                    let monthYear = document.getElementById('monthYear');
-                    let calendarBody = document.getElementById('calendar-body');
-                    let firstDay = new Date(year, month).getDay();
-                    let daysInMonth = new Date(year, month + 1, 0).getDate();
+                let monthYear = document.getElementById('monthYear');
+                let calendarBody = document.getElementById('calendar-body');
+                let firstDay = new Date(year, month).getDay();
+                let daysInMonth = new Date(year, month + 1, 0).getDate();
 
-                    monthYear.textContent = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
-                    calendarBody.innerHTML = '';
+                monthYear.textContent = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
+                calendarBody.innerHTML = '';
 
-                    let date = 1;
-                    for (let i = 0; i < 6; i++) {
-                        let row = document.createElement('tr');
+                let date = 1;
+                for (let i = 0; i < 6; i++) {
+                    let row = document.createElement('tr');
 
-                        for (let j = 0; j < 7; j++) {
-                            let cell = document.createElement('td');
-                            if (i === 0 && j < firstDay) {
-                                cell.innerHTML = '';
-                                row.appendChild(cell);
-                            } else if (date > daysInMonth) {
-                                break;
+                    for (let j = 0; j < 7; j++) {
+                        let cell = document.createElement('td');
+                        if (i === 0 && j < firstDay) {
+                            cell.innerHTML = '';
+                            row.appendChild(cell);
+                        } else if (date > daysInMonth) {
+                            break;
+                        } else {
+                            let cellDate = new Date(year, month, date);
+                            let formattedDate = cellDate.toISOString().split('T')[0];
+
+                            let specialDate = specialDates.find(d => d.toISOString().split('T')[0] === formattedDate);
+                            if (specialDate) {
+                                let sydneyTime = specialDate.toLocaleString("en-AU", { timeZone: "Australia/Sydney", hour: '2-digit', minute: '2-digit' });
+                                cell.innerHTML = `${date}<br><span class='mark-text'>${sydneyTime}</span>`;
                             } else {
-                                let cellDate = new Date(year, month, date);
-                                let formattedDate = cellDate.toISOString().split('T')[0]; 
-                                
-                               
-                                if (specialDates.some(d => d.toISOString().split('T')[0] === formattedDate)) {
-                                    cell.innerHTML = date + "<br><span class='mark-text'>Mark</span>";
-                                } else {
-                                    cell.innerHTML = date;
-                                }
-
-                                if (date === new Date().getDate() && year === new Date().getFullYear() && month === new Date().getMonth()) {
-                                    cell.classList.add('today');
-                                }
-                                row.appendChild(cell);
-                                date++;
+                                cell.innerHTML = date;
                             }
+
+                            if (date === new Date().getDate() && year === new Date().getFullYear() && month === new Date().getMonth()) {
+                                cell.classList.add('today');
+                            }
+                            row.appendChild(cell);
+                            date++;
                         }
-                        calendarBody.appendChild(row);
                     }
+                    calendarBody.appendChild(row);
                 }
+            }
+
 
             function moveMonth(step) {
                 currentMonth += step;
@@ -427,10 +530,6 @@
 
             createCalendar(currentYear, currentMonth);
             
-
-
-
-
 
     </script>
 </body>
