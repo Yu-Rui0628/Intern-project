@@ -57,6 +57,30 @@
             color: red;
         }
 
+        .today {
+                background-color: blue; 
+        }
+
+        .loading {
+            border: 5px solid #f3f3f3; 
+            border-top: 5px solid #3498db; 
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-bottom: 10%;
+            transform: translate(-50%, -50%);
+            display: none;
+            }
+
+            @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            }
+
     </style>
     <div class="vertical-center">
     <div class="Filtercontainer">
@@ -95,8 +119,10 @@
             </div>
         </div>
     </div>
-</div>
 
+</div>
+ <!-- Testing loading ICON -->
+<div id="loadingIcon" class="loading "></div>
     <div class="calendar-nav">
         <button onclick="moveMonth(-1)">&lt; Prev</button>
         <span id="monthYear"></span>
@@ -251,13 +277,14 @@
 
                     const data = await response.json(); 
                     const User_records = data.records;
+               
 
                     // console.log("data is :" + JSON.stringify(data.records));
                     let CustomersAndCarers = User_records.map(record => {
            
                     const fields = record.fields;
 
-          
+                    const Schedule_id = fields["Record ID"]||[];
                     const customers = fields.Customers || [];
                     const carers = fields.Carers || []; 
                     const start = fields.Start || [];
@@ -271,14 +298,15 @@
                         carers: carers,
                         start: start,
                         end: end,
-                        event: event
+                        event: event,
+                        schedule_id: Schedule_id
                     };
                     });
 
                     UserList = CustomersAndCarers;
-
-                    return CustomersAndCarers;
                     console.log("THE TEST :" + JSON.stringify(CustomersAndCarers));
+                    return CustomersAndCarers;
+                  
        
 
                 }
@@ -308,10 +336,19 @@
                 const selectCarer = document.getElementById('carer-dropdown');
                 const selectCustomer = document.getElementById('customer-dropdown');
 
+                function updateSpecialDates(newDates) {
+                    
+                    specialDates = newDates;    
+              
+                    createCalendar(currentYear, currentMonth, specialDates);
+                    document.getElementById('loadingIcon').style.display = 'none';
+                }
+
                 search_button_Carer.addEventListener('click', async function(){
                     const carer_options = selectCarer.options;
                     const customer_options = selectCustomer.options;
 
+                    console.log("All the carer OPTION is:" + carer_options);
                     const selected_carer = selectCarer.selectedOptions[0].value;
                     const selected_customer = selectCustomer.selectedOptions[0].value;
                     const Carer_Schedule = '';
@@ -326,11 +363,20 @@
                         }
 
                     }else{
+                        document.getElementById('loadingIcon').style.display = 'block';
                         const result = await FindCustomer('Carers', selected_carer);
                         console.log("Carer list is :" + JSON.stringify(result));
-                        let output =await GenerateResult(result);
+                      
 
-                        console.log("THE OUTPUT IS" + JSON.stringify(output));
+                        specialDates =await GenerateResult(result);
+
+                        updateSpecialDates(specialDates)
+
+
+
+                        
+
+                        console.log("THE OUTPUT IS" + JSON.stringify(specialDates));
                     }
             
 
@@ -339,6 +385,8 @@
                
 
                 search_button_Customer.addEventListener('click',async function(){
+
+                    document.getElementById('loadingIcon').style.display = 'block';
                     const carer_options = selectCarer.options;
                     const customer_options = selectCustomer.options;
 
@@ -357,9 +405,14 @@
                         const result = await FindCustomer('Customers',selected_customer);
                         console.log("Customer list is :" + JSON.stringify(result))
                     
-                        let output =await GenerateResult(result);
-
-                        console.log("THE OUTPUT IS" + JSON.stringify(output));
+                        specialDates =await GenerateResult(result);
+                        
+                        
+                        
+                        
+                        
+                        
+                        console.log("THE OUTPUT IS" + JSON.stringify(specialDates));
                         
                     }
 
@@ -375,6 +428,7 @@
 
                         const encodedFormulaCustomer = encodeURIComponent(`recordid = '${input[i].customers}'`);
                         const encodedFormulaCarer = encodeURIComponent(`devRecordId = '${input[i].carers}'`);
+                        const schedule_id = input[i].recordId;
                         
                           try {
                                 const Customer_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Customers?filterByFormula=${encodedFormulaCustomer}`, {
@@ -403,8 +457,8 @@
                                 }
                             let start_date = new Date(input[i].start);
                             let end_date = new Date(input[i].end);
-                            object_push["ios_start_date"] = input[i].start;
-                            object_push["ios_end_date"] = input[i].end;
+                            object_push["ios_start_date"] = start_date;
+                            object_push["ios_end_date"] = end_date;
                             let sydneyStartTime = start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" });
                             let sydneyEndTime = end_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" });
                                   
@@ -415,6 +469,7 @@
 
                             object_push["normal_start_date"] = formattedSydneyStartTime;
                             object_push["normal_end_date"] = formattedSydneyEndTime;
+                            object_push["schedule_id"] = schedule_id;
 
                             output.push(object_push);
 
@@ -433,14 +488,41 @@
                         // console.log("carer "+ index + item.start);
                        
                     }//for loop end
-                    return output;
+
+                    const formattedData = output.map(item => {
+           
+                    const customer = JSON.parse(item.customer);
+                    const carer = JSON.parse(item.carer);
+                    const normal_start_date = item.normal_start_date;
+                    const normal_end_date = item.normal_end_date;
+                    const schedule_id = item.schedule_id;
+                    const ios_start_date = item.ios_start_date;
+                    const ios_end_date = item.ios_end_date;
+            
+                    
+              
+                        return {
+                            customer,
+                            carer,
+                            normal_start_date,
+                            normal_end_date,
+                            schedule_id,
+                            ios_start_date,
+                            ios_end_date
+                
+                        };
+                    });
+
+
+                    return formattedData;
                 
                 }
             }
 
             async function FinalDeploy(){
+               
                 await setupEventListeners();
-                
+                createCalendar(currentYear, currentMonth,specialDates);
             }
             FinalDeploy();
             
@@ -452,68 +534,88 @@
             let currentYear = new Date().getFullYear();
             let currentMonth = new Date().getMonth();
             
-            const specialDates = [
-                // new Date(2023, 10, 16),
-                new Date("2023-10-25T04:00:00.000Z"),
-                new Date("2023-10-23T08:41:00.000Z")
-             
-            ];
-
-            /*Method*/
-            // const specialDates = [
-           
-            //     {
-            //         "starttime":new Date("2023-10-25T04:00:00.000Z"),
-            //         "endtime":new Date("2023-10-23T08:41:00.000Z"),
-            //         "carer":"Yu",
-            //         "customer":"Rui"
-            //     }
+            // let specialDates = [
+            //     // new Date(2023, 10, 16),
+            //     new Date("2023-10-25T04:00:00.000Z"),
+            //     new Date("2023-10-23T08:41:00.000Z")
              
             // ];
 
-
-            function createCalendar(year, month) {
-                let monthYear = document.getElementById('monthYear');
-                let calendarBody = document.getElementById('calendar-body');
-                let firstDay = new Date(year, month).getDay();
-                let daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                monthYear.textContent = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
-                calendarBody.innerHTML = '';
-
-                let date = 1;
-                for (let i = 0; i < 6; i++) {
-                    let row = document.createElement('tr');
-
-                    for (let j = 0; j < 7; j++) {
-                        let cell = document.createElement('td');
-                        if (i === 0 && j < firstDay) {
-                            cell.innerHTML = '';
-                            row.appendChild(cell);
-                        } else if (date > daysInMonth) {
-                            break;
-                        } else {
-                            let cellDate = new Date(year, month, date);
-                            let formattedDate = cellDate.toISOString().split('T')[0];
-
-                            let specialDate = specialDates.find(d => d.toISOString().split('T')[0] === formattedDate);
-                            if (specialDate) {
-                                let sydneyTime = specialDate.toLocaleString("en-AU", { timeZone: "Australia/Sydney", hour: '2-digit', minute: '2-digit' });
-                                cell.innerHTML = `${date}<br><span class='mark-text'>${sydneyTime}</span>`;
-                            } else {
-                                cell.innerHTML = date;
-                            }
-
-                            if (date === new Date().getDate() && year === new Date().getFullYear() && month === new Date().getMonth()) {
-                                cell.classList.add('today');
-                            }
-                            row.appendChild(cell);
-                            date++;
-                        }
-                    }
-                    calendarBody.appendChild(row);
+            /*Method*/
+            let specialDates = [
+           
+                {
+                    "ios_start_date":new Date("2023-10-25T04:00:00.000Z"),
+                    "ios_end_date":new Date("2023-10-23T08:41:00.000Z"),
+                    "carer":"Yu",
+                    "customer":"Rui",
+                    "schedule_id":"recsFan4dEuIoLhcb"
+                },
+                {
+                    "ios_start_date":new Date("2023-10-25T04:00:00.000Z"),
+                    "endtime":new Date("2023-10-23T08:41:00.000Z"),
+                    "carer":"Sun",
+                    "customer":"Kevin",
+                    "schedule_id":"recsFan4dEuIoLhcb"
                 }
+             
+            ];
+
+            
+
+            function createCalendar(year, month, specialDates) {
+            let monthYear = document.getElementById('monthYear');
+            let calendarBody = document.getElementById('calendar-body'); 
+            let firstDay = new Date(year, month).getDay(); 
+            let daysInMonth = new Date(year, month + 1, 0).getDate(); 
+
+            monthYear.textContent = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
+            calendarBody.innerHTML = '';
+
+            let date = 1;
+            for (let i = 0; i < 6; i++) { 
+                let row = document.createElement('tr');
+
+                for (let j = 0; j < 7; j++) { 
+                    let cell = document.createElement('td');
+                    if (i === 0 && j < firstDay) {
+                        cell.innerHTML = '';
+                        row.appendChild(cell);
+                    } else if (date > daysInMonth) {
+                        break;
+                    } else {
+                        let cellDate = new Date(year, month, date);
+                        let formattedDate = cellDate.toISOString().split('T')[0];
+
+                      
+                        let daysEvents = specialDates.filter(d => {
+                            let startDateString = d.ios_start_date.toISOString().split('T')[0];
+                            return formattedDate === startDateString;
+                        });
+
+            
+                        daysEvents.sort((a, b) => a.ios_start_date - b.ios_start_date);
+
+                     
+                        let eventsList = document.createElement('ul');
+                        daysEvents.forEach(event => {
+                            let eventItem = document.createElement('li');
+                            let sydneyTime = event.ios_start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney", hour: '2-digit', minute: '2-digit' });
+                            eventItem.textContent = `${sydneyTime} Cleaning - ${event.carer}`;
+                            eventsList.appendChild(eventItem);
+                        });
+
+                    
+                        cell.innerHTML = date;
+                        cell.appendChild(eventsList);
+                        row.appendChild(cell);
+                        date++;
+                    }
+                }
+                calendarBody.appendChild(row);
             }
+}
+
 
 
             function moveMonth(step) {
@@ -525,11 +627,8 @@
                     currentMonth = 0;
                     currentYear++;
                 }
-                createCalendar(currentYear, currentMonth);
+                createCalendar(currentYear, currentMonth,specialDates);
             }
-
-            createCalendar(currentYear, currentMonth);
-            
 
     </script>
 </body>
