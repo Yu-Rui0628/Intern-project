@@ -85,6 +85,41 @@
                 margin-top: 0px; 
             }
 
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+                }
+
+                .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+                }
+
+                .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                }
+
+                .close:hover,
+                .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+                }
+
     </style>
     <div class="vertical-center">
     <div class="Filtercontainer">
@@ -152,6 +187,20 @@
         </tbody>
     </table>
 </div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <p id="modalCarer"></p>
+      <p id="modalCustomer"></p>
+      <p id="modalScheduleId"></p>
+        <div id="modalButtons">
+        <button id="editButton">Edit</button>
+        <button id="deleteButton">Delete</button>
+        </div>
+    </div>
+  </div>
+
+
     <script>
                 const airtableBaseId = "app8p4RecoWg7JsOX";
                 const airtableTableName = "Users"; 
@@ -563,6 +612,7 @@
             async function FinalDeploy(){
                
                 await setupEventListeners();
+                
                 createCalendar(currentYear, currentMonth,specialDates);
             }
             FinalDeploy();
@@ -595,7 +645,7 @@
                 },
                 {
                     "ios_start_date":new Date("2023-10-25T04:00:00.000Z"),
-                    "endtime":new Date("2023-10-23T08:41:00.000Z"),
+                    "ios_end_date":new Date("2023-10-23T08:41:00.000Z"),
                     "carer":"Sun",
                     "customer":"Kevin",
                     "schedule_id":"recsFan4dEuIoLhcb"
@@ -643,10 +693,12 @@
                             let eventsList = document.createElement('ul');
                             daysEvents.forEach(event => {
                                 let eventItem = document.createElement('li');
-
                                 let sydneyTime = event.ios_start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney", hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
-                         
                                 eventItem.textContent = `${sydneyTime} Cleaning - ${event.carer}`;
+                                eventItem.onclick = function() {
+                                    console.log("THE EVENT IS " +JSON.stringify(event) );
+                                    showModal(event);
+                                };
                                 eventsList.appendChild(eventItem);
                             });
 
@@ -663,6 +715,48 @@
 
 
 
+          
+            function showModal(event) {
+                let modal = document.getElementById('modal');
+                document.getElementById('modalCarer').textContent = `Carer: ${event.carer}`;
+                document.getElementById('modalCustomer').textContent = `Customer: ${event.customer}`;
+                document.getElementById('modalScheduleId').textContent = `Schedule ID: ${event.schedule_id}`;
+
+        
+                let editButton = document.getElementById('editButton');
+                let deleteButton = document.getElementById('deleteButton');
+
+              
+                editButton.onclick = function() {
+                    console.log('edit schedule id:', event.schedule_id);
+               
+                };
+
+         
+                deleteButton.onclick = function() {
+                    console.log('delete id:', event.schedule_id);
+            
+                };
+
+                modal.style.display = "block";
+            }
+
+
+          
+            function closeModal() {
+            let modal = document.getElementById('modal');
+            modal.style.display = "none";
+            }
+
+     
+            window.onclick = function(event) {
+            let modal = document.getElementById('modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            }
+
+
             function moveMonth(step) {
                 currentMonth += step;
                 if (currentMonth < 0) {
@@ -674,6 +768,60 @@
                 }
                 createCalendar(currentYear, currentMonth,specialDates);
             }
+            
+            function updateRecord(){
+                const baseId = 'yourBaseId';
+            const tableName = 'yourTableName';
+            const recordId = 'yourRecordId';
+            const apiKey = 'yourApiKey';
+
+            const updateUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordId}`;
+
+            const data = {
+            fields: {
+                "FieldName": "New Value"
+            }
+            };
+
+            fetch(updateUrl, {
+            method: 'PATCH', // or 'PUT'
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+            console.log(data);
+            })
+            .catch(error => {
+            console.error('Error:', error);
+            });
+
+            }
+
+            function deleteRecord()
+            {
+                const deleteUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordId}`;
+
+                    fetch(deleteUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`
+                    }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                    console.log(data);
+                    })
+                    .catch(error => {
+                    console.error('Error:', error);
+                    });
+
+            }
+
+          
 
     </script>
 </body>
