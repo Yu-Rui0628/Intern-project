@@ -6,7 +6,106 @@
 </head>
 <body>
     <style>
-     
+
+                     
+                body {
+                    background-color: #DFF2E3;
+                    font-family: "Times New Roman", serif;
+                }
+
+       
+                .btn-primary, .form-control, .form-group label {
+                    border-radius: 5px;
+                    border: 1px solid #96C8A2;
+                    background-color: #E6F2DF;
+                    color: #5C865C;
+                }
+
+       
+                .btn-primary:hover {
+                    background-color: #CDE4C3;
+                    color: #3B543B;
+                }
+
+          
+                #calendar th {
+                    background-color: #B4D3B2;
+                    color: #3E533E;
+                }
+
+                #calendar .today {
+                    background-color: #CDE4C3;
+                }
+
+          
+                .modal-content {
+                    background-color: #F8FAF5;
+                    border-color: #B4D3B2;
+                }
+
+   
+                .close {
+                    color: #AAB3A1;
+                }
+
+                .close:hover,
+                .close:focus {
+                    color: #687568;
+                }
+
+                .loading {
+                    border-top-color: #96C8A2;
+                }
+
+           
+                .Filtercontainer {
+                    background-color: #E6F2DF;
+                }
+
+                .calendar-nav button {
+                    background-color: #E6F2DF;
+                    color: #5C865C;
+                }
+
+                .calendar-nav button:hover {
+                    background-color: #CDE4C3;
+                }
+
+       
+                .form-group {
+                    margin-bottom: 1rem;
+                }
+
+                .row {
+                    margin-right: 0;
+                    margin-left: 0;
+                }
+                #Carer_id, #Customer_id {
+                    border: none;
+                    background-color: #E6F2DF; 
+                    color: #5C865C; 
+                    padding: 0.375rem 0.75rem; 
+                    margin-bottom: 0.5rem; 
+                    display: block;
+                }
+                #carer-dropdown, #customer-dropdown {
+                    display: block;
+                    width: 100%; 
+                    box-sizing: border-box; 
+                }
+
+                #calendar li {
+                    cursor: pointer;
+                }
+
+              
+                #Carer_id, #Customer_id {
+                    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+                }
+
+     /*#Carer_id{
+                    border: none;
+                }*/
         .Filtercontainer {
             background-color: lightgreen;
             border-radius: 25px;
@@ -36,11 +135,30 @@
             color: white;
             padding: 10px;
         }
-        #calendar td {
+        /* #calendar td {
             border: 1px solid #ddd;
-            padding: 10px 10px;
+            padding: 10px;
             text-align: left;
             vertical-align: top;
+            min-width: 100px; 
+            height: 100px; 
+            overflow: auto; 
+            word-break: break-word;
+            font-size: 10px
+        } */
+
+        #calendar td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+            width: 110px;
+            min-width: 100px; /* Or any fixed width */
+            height: 100px; /* Fixed height */
+            overflow: auto; /* Enables scrolling */
+            word-break: break-word; /* Ensures text wraps in the cell */
+            font-size: 10px;
+            box-sizing: border-box;
         }
         #calendar .today {
             background-color: #f2f2f2;
@@ -94,16 +212,48 @@
                 width: 100%;
                 height: 100%;
                 overflow: auto;
-                background-color: rgb(0,0,0);
-                background-color: rgba(0,0,0,0.4);
+                background-color: rgb(77, 174, 116);
+                background-color: rgba(0, 0, 0, 0.4);
                 }
 
                 .modal-content {
-                background-color: #fefefe;
-                margin: 15% auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%;
+                    background-color: #FFFFFF; 
+                    margin: 4% auto; 
+                    padding: 20px;
+                    border: 1px solid #DDDDDD; 
+                    width: 50%; 
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    border-radius: 10px; 
+                    transition: transform 0.3s ease-out; 
+                }
+
+                .modal-content h2 {
+                    color: #333333;
+                    margin-bottom: 15px;
+                }
+
+                .modal-content p {
+                    color: #555555;
+                    line-height: 1.6; 
+                }
+
+                .modal-content .btn {
+                    border-radius: 20px;
+                    padding: 10px 15px;
+                    margin-top: 15px;
+
+                    
+                }
+
+             
+                .modal-content .close {
+                    color: #AAAAAA;
+                    text-shadow: none;
+                    opacity: 0.5;
+                }
+
+                .modal-content .close:hover {
+                    opacity: 1;
                 }
 
                 .close {
@@ -120,24 +270,67 @@
                 cursor: pointer;
                 }
 
+
+
+                
+                .modal-content .btn {
+                    border: none; 
+                    padding: 10px 20px; 
+                    margin: 10px 5px 0; 
+                    border-radius: 5px;
+                    font-weight: bold; 
+                    transition: all 0.3s ease; 
+                    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2); 
+                }
+
+             
+                #editButton {
+                    border:none;
+                    border-radius: 5px;
+                    background-color: #4CAF50; 
+                    color: white;
+                }
+
+                #editButton:hover {
+                    background-color: #45a049; 
+                }
+
+               
+                #deleteButton {
+                    border:none;
+                    border-radius: 5px;
+                    background-color: #f44336;
+                    color: white;
+                }
+
+                #deleteButton:hover {
+                    background-color: #da190b; 
+                }
+                #title {
+                    font-family: "Times New Roman";
+                }
+
+
+                
+
     </style>
     <div class="vertical-center">
     <div class="Filtercontainer">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2>Carer and Customer</h2>
+                <h2 id = "title">Carer and Customer</h2>
                 <form id="login-form">
                     <div class="row">
                 
                         <div class="col-md-6 form-group mb-3">
-                            <label for="carer-dropdown">Carer</label>
+                            <label for="carer-dropdown" id = "Carer_id">Carer</label>
                             <select id="carer-dropdown" class="form-control">
                               
                             </select>
                         </div>
                     
                         <div class="col-md-6 form-group mb-3">
-                            <label for="customer-dropdown">Customer</label>
+                            <label for="customer-dropdown" id = "Customer_id">Customer</label>
                             <select id="customer-dropdown" class="form-control">
                       
                             </select>
@@ -190,6 +383,8 @@
 <div id="modal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
+      <p id="Start_End_time"></p>
+      <p id="Event_title"></p>
       <p id="modalCarer"></p>
       <p id="modalCustomer"></p>
       <p id="modalScheduleId"></p>
@@ -506,7 +701,7 @@
 
                 });
                 async function GenerateResult (input){
-                    console.log("The INPUT IS " + JSON.stringify(input))
+                    // console.log("The INPUT IS " + JSON.stringify(input))
                     let output = [];
                     for(var i = 0; i < input.length; i++){
                        
@@ -516,6 +711,8 @@
 
                         const encodedFormulaCustomer = encodeURIComponent(`recordid = '${input[i].customers}'`);
                         const encodedFormulaCarer = encodeURIComponent(`devRecordId = '${input[i].carers}'`);
+                        const encodedFormulaService = encodeURIComponent(`Record_id = '${input[i].event}'`);
+
                         const schedule_id = input[i].recordId;
                         
                           try {
@@ -531,8 +728,16 @@
                                 }
                             });
 
+                                const Services_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Services?filterByFormula=${encodedFormulaService}`, {
+                                headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                            });
+
                             const Customer_Data = await Customer_response.json();
                             const Carer_Data = await Carer_response.json();
+                            const Service_Data = await Services_response.json();
+
                             for (const record of Customer_Data.records) {
                                    
                                     object_push["customer"] = JSON.stringify(record.fields.Customer);
@@ -542,7 +747,131 @@
                                     
                                     object_push["carer"] = JSON.stringify(record.fields.Name);
                                 }
+                            for (const record of Service_Data.records) {
+                                    
+                                    object_push["service"] = JSON.stringify(record.fields['Service name']);
+                                }
+                            // console.log("THE SERVICE data" +JSON.stringify(Service_Data) );
+                            let start_date = new Date(input[i].start);
+                            let end_date = new Date(input[i].end);
+                            object_push["ios_start_date"] = start_date;
+                            object_push["ios_end_date"] = end_date;
+                            let sydneyStartTime = start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" });
+                            let sydneyEndTime = end_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" });
+                                  
+                            let [sydneyStartDate, sydneyStartHour] = sydneyStartTime.split(', ');
+                            let [sydneyEndDate, sydneyEndHour] = sydneyEndTime.split(', ');
+                            let formattedSydneyStartTime = `${sydneyStartDate.trim()} ${sydneyStartHour.trim()}`;
+                            let formattedSydneyEndTime = `${sydneyEndDate.trim()} ${sydneyEndHour.trim()}`;
+
+                            object_push["normal_start_date"] = formattedSydneyStartTime;
+                            object_push["normal_end_date"] = formattedSydneyEndTime;
+                            object_push["schedule_id"] = schedule_id;
                             
+                          
+                            output.push(object_push);
+
+
+                            } catch (error) {
+                            console.error('Error:', error);
+                            }
+                                                    
+                       
+                        // console.log("carer "+ index + item.carers);
+                        // console.log("carer "+ index + item.customers);
+                        // console.log("carer "+ index + item.start);
+                       
+                    }//for loop end
+
+                    const formattedData = output.map(item => {
+           
+                    const customer = JSON.parse(item.customer);
+                    const carer = JSON.parse(item.carer);
+                    const normal_start_date = item.normal_start_date;
+                    const normal_end_date = item.normal_end_date;
+                    const schedule_id = item.schedule_id;
+                    const ios_start_date = item.ios_start_date;
+                    const ios_end_date = item.ios_end_date;
+                    const service = item.service;
+                    
+              
+                        return {
+                            customer,
+                            carer,
+                            normal_start_date,
+                            normal_end_date,
+                            schedule_id,
+                            ios_start_date,
+                            ios_end_date,
+                            service
+                
+                        };
+                    });
+
+
+                    return formattedData;
+                
+                }
+            }
+
+            async function OriginalDeploy(){
+                document.getElementById('loadingIcon').style.display = 'block';
+                const all_carer = await CollectAllRecord("Carer Active","Carers");
+                
+                specialDates =await GenerateResult(all_carer);
+                console.log("Original Special dates IS " +JSON.stringify(specialDates) );
+                async function GenerateResult (input){
+                    // console.log("The INPUT IS " + JSON.stringify(input))
+                    let output = [];
+                    for(var i = 0; i < input.length; i++){
+                       
+                        let object_push = {};
+                        /* carer name, customer name, event name, start, end, and all record id*/
+                        
+
+                        const encodedFormulaCustomer = encodeURIComponent(`recordid = '${input[i].customers}'`);
+                        const encodedFormulaCarer = encodeURIComponent(`devRecordId = '${input[i].carers}'`);
+                        const encodedFormulaService = encodeURIComponent(`Record_id = '${input[i].event}'`);
+
+                        const schedule_id = input[i].recordId;
+                        
+                          try {
+                                const Customer_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Customers?filterByFormula=${encodedFormulaCustomer}`, {
+                                headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                            });
+
+                                const Carer_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Carers?filterByFormula=${encodedFormulaCarer}`, {
+                                headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                            });
+
+                                const Services_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Services?filterByFormula=${encodedFormulaService}`, {
+                                headers: {
+                                'Authorization': `Bearer ${airtableApiKey}`
+                                }
+                            });
+
+                            const Customer_Data = await Customer_response.json();
+                            const Carer_Data = await Carer_response.json();
+                            const Service_Data = await Services_response.json();
+
+                            for (const record of Customer_Data.records) {
+                                   
+                                    object_push["customer"] = JSON.stringify(record.fields.Customer);
+
+                                }
+                            for (const record of Carer_Data.records) {
+                                    
+                                    object_push["carer"] = JSON.stringify(record.fields.Name);
+                                }
+                            for (const record of Service_Data.records) {
+                                    
+                                    object_push["service"] = JSON.stringify(record.fields['Service name']);
+                                }
+                            // console.log("THE SERVICE data" +JSON.stringify(Service_Data) );
                             let start_date = new Date(input[i].start);
                             let end_date = new Date(input[i].end);
                             object_push["ios_start_date"] = start_date;
@@ -588,7 +917,7 @@
                     const schedule_id = item.schedule_id;
                     const ios_start_date = item.ios_start_date;
                     const ios_end_date = item.ios_end_date;
-            
+                    const service = item.service;
                     
               
                         return {
@@ -598,7 +927,8 @@
                             normal_end_date,
                             schedule_id,
                             ios_start_date,
-                            ios_end_date
+                            ios_end_date,
+                            service
                 
                         };
                     });
@@ -612,7 +942,7 @@
             async function FinalDeploy(){
                
                 await setupEventListeners();
-                
+                await OriginalDeploy();
                 createCalendar(currentYear, currentMonth,specialDates);
             }
             FinalDeploy();
@@ -635,21 +965,6 @@
 
             /*Method*/
             let specialDates = [
-           
-                {
-                    "ios_start_date":new Date("2023-10-25T04:00:00.000Z"),
-                    "ios_end_date":new Date("2023-10-23T08:41:00.000Z"),
-                    "carer":"Yu",
-                    "customer":"Rui",
-                    "schedule_id":"recsFan4dEuIoLhcb"
-                },
-                {
-                    "ios_start_date":new Date("2023-10-25T04:00:00.000Z"),
-                    "ios_end_date":new Date("2023-10-23T08:41:00.000Z"),
-                    "carer":"Sun",
-                    "customer":"Kevin",
-                    "schedule_id":"recsFan4dEuIoLhcb"
-                }
              
             ];
 
@@ -689,12 +1004,18 @@
                             });
                             
                             daysEvents.sort((a, b) => a.ios_start_date - b.ios_end_date);
-
+                            let colors = ['red', 'blue', 'green', 'orange', 'purple', 'yellow'];
                             let eventsList = document.createElement('ul');
-                            daysEvents.forEach(event => {
+                            daysEvents.forEach((event,index) => {
                                 let eventItem = document.createElement('li');
                                 let sydneyTime = event.ios_start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney", hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
-                                eventItem.textContent = `${sydneyTime} Cleaning - ${event.carer}`;
+                                let sydneyshowTime = sydneyTime.slice(0, -4);
+                                eventItem.textContent = `${sydneyshowTime} ${event.service}`;
+
+                                eventItem.style.listStyleType = 'disc'; 
+                                eventItem.style.color = colors[index % colors.length];
+                                
+
                                 eventItem.onclick = function() {
                                     console.log("THE EVENT IS " +JSON.stringify(event) );
                                     showModal(event);
@@ -710,6 +1031,8 @@
                     }
                     calendarBody.appendChild(row);
                 }
+
+                document.getElementById('loadingIcon').style.display = 'none';
             }
 
 
@@ -718,9 +1041,11 @@
           
             function showModal(event) {
                 let modal = document.getElementById('modal');
+                document.getElementById('Start_End_time').textContent = `${event.normal_start_date} - ${event.normal_end_date}`;
+                document.getElementById('Event_title').textContent = `Event: ${event.service}`;
                 document.getElementById('modalCarer').textContent = `Carer: ${event.carer}`;
                 document.getElementById('modalCustomer').textContent = `Customer: ${event.customer}`;
-                document.getElementById('modalScheduleId').textContent = `Schedule ID: ${event.schedule_id}`;
+                // document.getElementById('modalScheduleId').textContent = `Schedule ID: ${event.schedule_id}`;
 
         
                 let editButton = document.getElementById('editButton');
@@ -771,37 +1096,37 @@
             
             function updateRecord(){
                 const baseId = 'yourBaseId';
-            const tableName = 'yourTableName';
-            const recordId = 'yourRecordId';
-            const apiKey = 'yourApiKey';
+                const tableName = 'yourTableName';
+                const recordId = 'yourRecordId';
+                const apiKey = 'yourApiKey';
 
-            const updateUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordId}`;
+                const updateUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordId}`;
 
-            const data = {
-            fields: {
-                "FieldName": "New Value"
+                const data = {
+                fields: {
+                    "FieldName": "New Value"
+                }
+                };
+
+                fetch(updateUrl, {
+                method: 'PATCH', // or 'PUT'
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                console.log(data);
+                })
+                .catch(error => {
+                console.error('Error:', error);
+                });
+
             }
-            };
 
-            fetch(updateUrl, {
-            method: 'PATCH', // or 'PUT'
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-            console.log(data);
-            })
-            .catch(error => {
-            console.error('Error:', error);
-            });
-
-            }
-
-            function deleteRecord()
+            function deleteRecord(tableName,recordId)
             {
                 const deleteUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordId}`;
 
