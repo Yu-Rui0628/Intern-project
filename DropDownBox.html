@@ -310,8 +310,95 @@
                     font-family: "Times New Roman";
                 }
 
+                /* Another one */
 
-                
+                .edit-schedule-popup {
+                    display: none;
+                    position: fixed;
+                    z-index: 1000;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    background-color: rgba(0,0,0,0.6);
+                }
+
+                .popup-content {
+                    background-color: #fff;
+                    margin: 10% auto;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                    width: 30%;
+                    min-width: 300px;
+                }
+
+                .close-popup {
+                    color: #333;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+
+                .close-popup:hover,
+                .close-popup:focus {
+                    color: #000;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+
+                label {
+                    display: block;
+                    margin: 10px 0 5px;
+                    color: #333;
+                    font-size: 14px;
+                }
+
+                input[type="datetime-local"],
+                input[type="text"],
+                input[type="search"],
+                select {
+                    width: 100%;
+                    padding: 8px;
+                    margin: 5px 0 20px;
+                    display: inline-block;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                }
+
+                button[type="submit"] {
+                    width: 100%;
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 14px 20px;
+                    margin: 8px 0;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+
+                button[type="submit"]:hover {
+                    background-color: #45a049;
+                }
+
+                @media screen and (max-width: 600px) {
+                    .popup-content {
+                        width: 80%;
+                    }
+                }
+
+
+                #Addexpense {
+                width: 100%;
+                height: 100px;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                resize: vertical; 
+            }
 
     </style>
     <div class="vertical-center">
@@ -394,6 +481,42 @@
         </div>
     </div>
   </div>
+
+<!-- Update pop up window -->
+<div id="editSchedulePopup" class="edit-schedule-popup">
+    <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <h2>Edit Schedule</h2>
+        <form id="editScheduleForm">
+            <label>Start Time:</label>
+            <input type="datetime-local" id="startTime">
+            <label>End Time:</label>
+            <input type="datetime-local" id="endTime">
+            <label>Cost per Hour:</label>
+            <input type="text" id="costHour">
+            <label>Type of Day:</label>
+            <select id="dayType">
+                <option value="normal">Normal</option>
+                <option value="publicHoliday">Public Holiday</option>
+            </select>
+            <label>Change Event Type for the Shift:</label>
+            <select id="eventType">
+                <option value="cleaning">Cleaning</option>
+                <option value="Gardening">Gardening</option>
+                <option value="nursingService">Nursing Service</option>
+                <option value="communityActivities">Community Activities</option>
+                <option value="digitalService">Digital Service Support</option>
+                <option value="travelAssistance">Travel Assistance</option>
+                <option value="careandsupport">In home care and support</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="Addexpense">Additional expense for the shift</label>
+            <textarea id="Addexpense" rows="4" cols="50"></textarea>
+            <button id = "updateButton" type="button">Save Changes</button>
+        </form>
+    </div>
+</div>
+
 
 
     <script>
@@ -861,116 +984,6 @@
 
 
 
-                // async function GenerateResult (input){
-                //     // console.log("The INPUT IS " + JSON.stringify(input))
-                //     let output = [];
-                //     for(var i = 0; i < input.length; i++){
-                       
-                //         let object_push = {};
-                
-                        
-
-                //         const encodedFormulaCustomer = encodeURIComponent(`recordid = '${input[i].customers}'`);
-                //         const encodedFormulaCarer = encodeURIComponent(`devRecordId = '${input[i].carers}'`);
-                //         const encodedFormulaService = encodeURIComponent(`Record_id = '${input[i].event}'`);
-
-                //         const schedule_id = input[i].recordId;
-                        
-                //           try {
-                //                 const Customer_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Customers?filterByFormula=${encodedFormulaCustomer}`, {
-                //                 headers: {
-                //                 'Authorization': `Bearer ${airtableApiKey}`
-                //                 }
-                //             });
-
-                //                 const Carer_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Carers?filterByFormula=${encodedFormulaCarer}`, {
-                //                 headers: {
-                //                 'Authorization': `Bearer ${airtableApiKey}`
-                //                 }
-                //             });
-
-                //                 const Services_response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Services?filterByFormula=${encodedFormulaService}`, {
-                //                 headers: {
-                //                 'Authorization': `Bearer ${airtableApiKey}`
-                //                 }
-                //             });
-
-                //             const Customer_Data = await Customer_response.json();
-                //             const Carer_Data = await Carer_response.json();
-                //             const Service_Data = await Services_response.json();
-
-                //             for (const record of Customer_Data.records) {
-                                   
-                //                     object_push["customer"] = JSON.stringify(record.fields.Customer);
-
-                //                 }
-                //             for (const record of Carer_Data.records) {
-                                    
-                //                     object_push["carer"] = JSON.stringify(record.fields.Name);
-                //                 }
-                //             for (const record of Service_Data.records) {
-                                    
-                //                     object_push["service"] = JSON.stringify(record.fields['Service name']);
-                //                 }
-                //             // console.log("THE SERVICE data" +JSON.stringify(Service_Data) );
-                //             let start_date = new Date(input[i].start);
-                //             let end_date = new Date(input[i].end);
-                //             object_push["ios_start_date"] = start_date;
-                //             object_push["ios_end_date"] = end_date;
-                //             let sydneyStartTime = start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" });
-                //             let sydneyEndTime = end_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" });
-                                  
-                //             let [sydneyStartDate, sydneyStartHour] = sydneyStartTime.split(', ');
-                //             let [sydneyEndDate, sydneyEndHour] = sydneyEndTime.split(', ');
-                //             let formattedSydneyStartTime = `${sydneyStartDate.trim()} ${sydneyStartHour.trim()}`;
-                //             let formattedSydneyEndTime = `${sydneyEndDate.trim()} ${sydneyEndHour.trim()}`;
-
-                //             object_push["normal_start_date"] = formattedSydneyStartTime;
-                //             object_push["normal_end_date"] = formattedSydneyEndTime;
-                //             object_push["schedule_id"] = schedule_id;
-                            
-                          
-                //             output.push(object_push);
-
-
-                //             } catch (error) {
-                //             console.error('Error:', error);
-                //             }
-                                                    
-                       
-
-                       
-                //     }//for loop end
-
-                //     const formattedData = output.map(item => {
-           
-                //     const customer = JSON.parse(item.customer);
-                //     const carer = JSON.parse(item.carer);
-                //     const normal_start_date = item.normal_start_date;
-                //     const normal_end_date = item.normal_end_date;
-                //     const schedule_id = item.schedule_id;
-                //     const ios_start_date = item.ios_start_date;
-                //     const ios_end_date = item.ios_end_date;
-                //     const service = item.service;
-                    
-              
-                //         return {
-                //             customer,
-                //             carer,
-                //             normal_start_date,
-                //             normal_end_date,
-                //             schedule_id,
-                //             ios_start_date,
-                //             ios_end_date,
-                //             service
-                
-                //         };
-                //     });
-
-
-                //     return formattedData;
-                
-                // }
             }
 
             async function FinalDeploy(){
@@ -1019,6 +1032,8 @@
 
                     for (let j = 0; j < 7; j++) { 
                         let cell = document.createElement('td');
+
+                        
                         if (i === 0 && j < firstDay) {
                             cell.innerHTML = '';
                             row.appendChild(cell);
@@ -1026,16 +1041,27 @@
                             break;
                         } else {
                             let cellDate = new Date(year, month, date);
-                        
-                            let formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`; // YYYY-MM-DD
+                            let formattedDate = `${cellDate.getFullYear()}-${String(cellDate.getMonth() + 1).padStart(2, '0')}-${String(cellDate.getDate()).padStart(2, '0')}`;
 
                             let daysEvents = specialDates.filter(d => {
+                                // 将每个事件的开始日期的年月日提取出来，不考虑时区
+                                let eventStartDate = new Date(d.ios_start_date);
+                                let eventFormattedDate = `${eventStartDate.getFullYear()}-${String(eventStartDate.getMonth() + 1).padStart(2, '0')}-${String(eventStartDate.getDate()).padStart(2, '0')}`;
+
+                                return formattedDate === eventFormattedDate;
+                            // let cellDate = new Date(year, month, date);
+                        
+                            // let formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`; // YYYY-MM-DD
+
+                            // let daysEvents = specialDates.filter(d => {
                               
-                                let startDateString = d.ios_start_date.toISOString().split('T')[0];
+                            //     let startDateString = d.ios_start_date.toISOString().split('T')[0];
 
                                
-                                return formattedDate === startDateString;
+                            //     return formattedDate === startDateString;
                             });
+
+                            
                             
                             daysEvents.sort((a, b) => a.ios_start_date - b.ios_end_date);
                             let colors = ['red', 'blue', 'green', 'orange', 'purple', 'yellow'];
@@ -1074,6 +1100,14 @@
 
           
             function showModal(event) {
+                function updateSpecialDates(newDates) {
+                    
+                    specialDates = newDates;    
+              
+                    createCalendar(currentYear, currentMonth, specialDates);
+                    document.getElementById('loadingIcon').style.display = 'none';
+                }
+
                 let modal = document.getElementById('modal');
                 document.getElementById('Start_End_time').textContent = `${event.normal_start_date} - ${event.normal_end_date}`;
                 document.getElementById('Event_title').textContent = `Event: ${event.service}`;
@@ -1084,21 +1118,151 @@
         
                 let editButton = document.getElementById('editButton');
                 let deleteButton = document.getElementById('deleteButton');
+                let updateButton = document.getElementById('updateButton');
+               
+                var editSchedulePopup = document.getElementById("editSchedulePopup");
 
+            
+                var closePopup = document.getElementsByClassName("close-popup")[0];
               
                 editButton.onclick = function() {
+                    closeModal();
+                    editSchedulePopup.style.display = "block";
                     console.log('edit schedule id:', event.schedule_id);
                
                 };
 
-         
-                deleteButton.onclick = function() {
-                    console.log('delete id:', event.schedule_id);
-            
+                updateButton.onclick = async function() {
+
+                        let service_record = {
+                            "cleaning": "recJK03v5iM0g1yaK",
+                            "Gardening":"rechGWOft0o3jljpp",
+                            "nursingService":"recwoXYVxAQkikJB5",
+                            "communityActivities":"rec4fGWFKd6ATfzzI",
+                            "digitalService":"recNEpgqDQArZhZtR",
+                            "travelAssistance":"reco5fVaOImm9sdvw",
+                            "careandsupport":"recZMc5BenaLN7fE5",
+                            "other":""
+                              
+                            
+                        }
+                     
+                        var startTime = document.getElementById("startTime").value;
+                        var endTime = document.getElementById("endTime").value;
+                        var costPerHour = document.getElementById("costHour").value;
+                        var dayType = document.getElementById("dayType").value;
+                        var eventType = document.getElementById("eventType").value;
+                        var additionalExpense = document.getElementById("Addexpense").value;
+                        var formattedStartTime = formatDateTime(startTime);
+                        var formattedEndTime = formatDateTime(endTime);
+
+                        var startDateTime = new Date(formattedStartTime);
+                        var endDateTime = new Date(formattedEndTime);
+                        var newService = [];
+                        newService.push(service_record[eventType]);
+
+                        var data = {
+                                "fields": {
+                                    "Start": startDateTime.toISOString(),
+                                    "End": endDateTime.toISOString(),
+                                    "Services":newService
+                                }
+                            };
+                        
+                        console.log("The time is" + formattedStartTime)
+                        await updateConfirm(event, data, eventType, formattedStartTime, formattedEndTime);
+                        console.log("The FUCKING specialDates is" + JSON.stringify(specialDates) );
+                        updateSpecialDates(specialDates);
+
+                       
+                        
+               
                 };
+
+                function formatDateTime(dateTime) {
+                    var date = new Date(dateTime);
+                    return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                }
+
+                deleteButton.onclick = async function() {
+                    await deleteConfirm(event);
+                    
+                    updateSpecialDates(specialDates);
+
+                    closeModal();
+                    
+                };
+
+            
+                closePopup.onclick = window.onclick = function(event) {
+                    if (event.target === closePopup || event.target === editSchedulePopup) {
+                        editSchedulePopup.style.display = "none";
+                    }
+                }
 
                 modal.style.display = "block";
             }
+
+            async function deleteConfirm(event) {
+                    console.log("THE not updated special date is " + JSON.stringify(specialDates));
+                    let confirmation = confirm("Are you sure to delete this schedule?");
+                    if (confirmation) {
+                        deleteRecord("Schedule", event.schedule_id);
+                        specialDates = specialDates.filter(item => item.schedule_id !== event.schedule_id);
+                    }
+                    console.log("THE updated special date is " + JSON.stringify(specialDates));
+                }
+
+            async function updateConfirm(event, data, service, start_time, end_time){
+                let confirmation = confirm("Are you sure to update this schedule?");
+                if (confirmation) {
+                    await updateRecord("Schedule", event.schedule_id, data);
+
+                    let scheduleToUpdate = specialDates.find(item => item.schedule_id === event.schedule_id);
+
+                    let iosStartDateObject = new Date();
+                    let iosEndDateObject = new Date();
+                    if (scheduleToUpdate) {
+                        try {
+                            scheduleToUpdate.normal_start_date = start_time;
+                            scheduleToUpdate.normal_end_date = end_time;
+                            scheduleToUpdate.ios_start_date = transfer_iostime(start_time);
+                            scheduleToUpdate.ios_end_date = transfer_iostime(end_time);
+
+                            
+
+                            scheduleToUpdate.service = service;
+                        } catch (error) {
+                            console.error("Error updating schedule:", error);
+                        }
+                    }
+                }
+            }
+
+            function transfer_iostime(normal_time) {
+                let match = normal_time.match(/(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2}) (am|pm)/i);
+                if (!match) {
+                    throw new Error("Invalid time format");
+                }
+
+                let hour = parseInt(match[4], 10);
+                if (match[7].toLowerCase() === 'pm' && hour < 12) {
+                    hour += 12;
+                } else if (match[7].toLowerCase() === 'am' && hour === 12) {
+                    hour = 0;
+                }
+
+       
+                let sydneyDate = new Date(`${match[3]}-${match[1].padStart(2, '0')}-${match[2].padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${match[5]}:${match[6]}`);
+
+               
+                let timezoneOffsetInHours = 10;
+                sydneyDate.setHours(sydneyDate.getHours() - timezoneOffsetInHours);
+
+                return sydneyDate;
+            }
+
+
 
 
           
@@ -1128,57 +1292,44 @@
                 createCalendar(currentYear, currentMonth,specialDates);
             }
             
-            function updateRecord(){
-                const baseId = 'yourBaseId';
-                const tableName = 'yourTableName';
-                const recordId = 'yourRecordId';
-                const apiKey = 'yourApiKey';
-
-                const updateUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordId}`;
-
-                const data = {
-                fields: {
-                    "FieldName": "New Value"
+           
+            async function updateRecord(tableName,recordId,data){
+                    fetch(`https://api.airtable.com/v0/${airtableBaseId}/${tableName}/${recordId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + airtableApiKey
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        alert('Schedule updated successfully.');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
                 }
-                };
-
-                fetch(updateUrl, {
-                method: 'PATCH', // or 'PUT'
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-                })
-                .then(response => response.json())
-                .then(data => {
-                console.log(data);
-                })
-                .catch(error => {
-                console.error('Error:', error);
-                });
-
-            }
 
             function deleteRecord(tableName,recordId)
             {
-                const deleteUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordId}`;
+                const deleteUrl = `https://api.airtable.com/v0/${airtableBaseId}/${tableName}/${recordId}`;
 
                     fetch(deleteUrl, {
                     method: 'DELETE',
                     headers: {
-                        'Authorization': `Bearer ${apiKey}`
+                        'Authorization': `Bearer ${airtableApiKey}`
                     }
                     })
                     .then(response => response.json())
                     .then(data => {
-                    console.log(data);
+                    console.log("The data delete"+data);
                     })
                     .catch(error => {
                     console.error('Error:', error);
                     });
-
-            }
+                }
 
           
 
