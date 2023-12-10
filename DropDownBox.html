@@ -482,17 +482,18 @@
         <span class="close-popup">&times;</span>
         <h2>Update record</h2>
         <form id="editScheduleForm">
+            <label>Select Carer</label>
+            <select id = "carer_update">
+                
+            </select>
+            <label>Select Customer</label>
+            <select id = "customer_update">
+                
+            </select>
             <label>Start Time:</label>
             <input type="datetime-local" id="startTime">
             <label>End Time:</label>
             <input type="datetime-local" id="endTime">
-            <label>Cost per Hour:</label>
-            <input type="text" id="costHour">
-            <label>Type of Day:</label>
-            <select id="dayType">
-                <option value="normal">Normal</option>
-                <option value="publicHoliday">Public Holiday</option>
-            </select>
             <label>Change Event Type for the Shift:</label>
             <select id="eventType">
                 <option value="cleaning">Cleaning</option>
@@ -504,8 +505,6 @@
                 <option value="careandsupport">In home care and support</option>
                 <option value="other">Other</option>
             </select>
-            <label for="Addexpense">Additional expense for the shift</label>
-            <textarea id="Addexpense" rows="4" cols="50"></textarea>
             <button id = "updateButton" type="button">Save Changes</button>
         </form>
     </div>
@@ -600,12 +599,13 @@
 
                 async function fetchCustomerNames(customerRecordIds, role) {
                     await fetchAllRecords();
+                    console.log("All the record is" + JSON.stringify(allRecords) );
                     const recordId = allRecords[0]["fields"]["Client"];
                     const userType = ["Customer", "Carer Active"];
                     
                     const fetchPromises = userType.map(type => {
                         const encodedFormula = encodeURIComponent(`AND({Record ID (from Client)} = '${recordId}', {User Type} = '${type}')`);
-                        const url = `https://api.airtable.com/v0/app8p4RecoWg7JsOX/Users?filterByFormula=${encodedFormula}`;
+                        const url = `https://api.airtable.com/v0/${airtableBaseId}/Users?filterByFormula=${encodedFormula}`;
                         return fetch(url, {
                             headers: { 'Authorization': `Bearer ${airtableApiKey}` }
                         }).then(response => response.json());
@@ -630,7 +630,7 @@
                         const Casername = userObject["Carer Active"][i];
                         const encodedFormulaByCaserId = encodeURIComponent(`{Name} = '${Casername}'`);
                         try {
-                                const response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Carers?filterByFormula=${encodedFormulaByCaserId}`, {
+                                const response = await fetch(`https://api.airtable.com/v0/${airtableBaseId}/Carers?filterByFormula=${encodedFormulaByCaserId}`, {
                                 headers: {
                                 'Authorization': `Bearer ${airtableApiKey}`
                                 }
@@ -644,7 +644,7 @@
                                 }
 
                                 
-                                console.log("ID collection is" + carerRecordID);
+                                console.log("Carer ID collection is" + carerRecordID);
                         
                             } catch (error) {
                             console.error('Error:', error);
@@ -663,7 +663,7 @@
 
 
 
-                    const response = await fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Schedule?filterByFormula=${encodedFormula}`, {
+                    const response = await fetch(`https://api.airtable.com/v0/${airtableBaseId}/Schedule?filterByFormula=${encodedFormula}`, {
                                 headers: {
                                     'Authorization': `Bearer ${airtableApiKey}`
                                 }
@@ -714,8 +714,8 @@
             async function handleAllRecords() {
                     await fetchCustomerNames();
                     await findCalendar();
-                    // await FindCustomer();
-                    console.log(userObject);
+                
+                    console.log("The user's OBJECT is " +JSON.stringify(userObject) );
                     
                     populateDropdown('customer-dropdown', userObject['Customer'], 'customers');
                     populateDropdown('carer-dropdown', userObject['Carer Active'], 'carers');
@@ -853,9 +853,9 @@
                             const encodedFormulaService = encodeURIComponent(`Record_id = '${item.event}'`);
 
                             return Promise.all([
-                                fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Customers?filterByFormula=${encodedFormulaCustomer}`, { headers: { 'Authorization': `Bearer ${airtableApiKey}` } }),
-                                fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Carers?filterByFormula=${encodedFormulaCarer}`, { headers: { 'Authorization': `Bearer ${airtableApiKey}` } }),
-                                fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Services?filterByFormula=${encodedFormulaService}`, { headers: { 'Authorization': `Bearer ${airtableApiKey}` } })
+                                fetch(`https://api.airtable.com/v0/${airtableBaseId}/Customers?filterByFormula=${encodedFormulaCustomer}`, { headers: { 'Authorization': `Bearer ${airtableApiKey}` } }),
+                                fetch(`https://api.airtable.com/v0/${airtableBaseId}/Carers?filterByFormula=${encodedFormulaCarer}`, { headers: { 'Authorization': `Bearer ${airtableApiKey}` } }),
+                                fetch(`https://api.airtable.com/v0/${airtableBaseId}/Services?filterByFormula=${encodedFormulaService}`, { headers: { 'Authorization': `Bearer ${airtableApiKey}` } })
                             ]).then(async ([customerResponse, carerResponse, serviceResponse]) => {
                                 const customerData = await customerResponse.json();
                                 const carerData = await carerResponse.json();
@@ -905,12 +905,70 @@
 
             }
 
+
+            let carer_customer_id = {
+                "carer":{
+              
+                },
+                "customer":{
+
+                }
+
+            }
+            async function fetchRecord(url, headers) {
+                    const response = await fetch(url, { headers });
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error(`Fetch error: ${response.status} ${response.statusText}`);
+                    }
+                }
+
+
+          
+            async function get_carer_customer_record_id() {
+                let carerPromises = userObject["Carer Active"].slice(1).map(carer => {
+                    const encodedFormula = encodeURIComponent(`{Name} = '${carer}'`);
+                    const url = `https://api.airtable.com/v0/${airtableBaseId}/Carers?filterByFormula=${encodedFormula}`;
+                    return fetchRecord(url, {'Authorization': `Bearer ${airtableApiKey}`})
+                        .then(data => {
+                            if (data.records && data.records.length > 0) {
+                                carer_customer_id.carer[carer] = data.records[0].fields.devRecordId;
+                            } else {
+                                console.log(`No records found for Carer: ${carer}`);
+                            }
+                        })
+                        .catch(error => console.error(`Error fetching Carer: ${carer}`, error));
+                });
+
+                let customerPromises = userObject["Customer"].slice(1).map(customer => {
+                    const encodedFormula = encodeURIComponent(`{Name} = '${customer}'`);
+                    const url = `https://api.airtable.com/v0/${airtableBaseId}/Customers?filterByFormula=${encodedFormula}`;
+                    return fetchRecord(url, {'Authorization': `Bearer ${airtableApiKey}`})
+                        .then(data => {
+                            if (data.records && data.records.length > 0) {
+                                carer_customer_id.customer[customer] = data.records[0].fields.recordid;
+                            } else {
+                                console.log(`No records found for Customer: ${customer}`);
+                            }
+                        })
+                        .catch(error => console.error(`Error fetching Customer: ${customer}`, error));
+                });
+
+                await Promise.all([...carerPromises, ...customerPromises]);
+                console.log("The response data is: ", carer_customer_id);
+            }
+
+
             async function OriginalDeploy(){
                 document.getElementById('loadingIcon').style.display = 'block';
                 const all_carer = await CollectAllRecord("Carer Active","Carers");
-                
+                await get_carer_customer_record_id();
                 specialDates =await GenerateResult(all_carer);
                 console.log("Original Special dates IS " +JSON.stringify(specialDates) );
+                
+
+             
                 async function GenerateResult(input) {
                         let output = [];
                         let fetchPromises = [];
@@ -922,9 +980,9 @@
 
                             fetchPromises.push(
                                 Promise.all([
-                                    fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Customers?filterByFormula=${encodedFormulaCustomer}`, { headers: {'Authorization': `Bearer ${airtableApiKey}`}}),
-                                    fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Carers?filterByFormula=${encodedFormulaCarer}`, { headers: {'Authorization': `Bearer ${airtableApiKey}`}}),
-                                    fetch(`https://api.airtable.com/v0/app8p4RecoWg7JsOX/Services?filterByFormula=${encodedFormulaService}`, { headers: {'Authorization': `Bearer ${airtableApiKey}`}})
+                                    fetch(`https://api.airtable.com/v0/${airtableBaseId}/Customers?filterByFormula=${encodedFormulaCustomer}`, { headers: {'Authorization': `Bearer ${airtableApiKey}`}}),
+                                    fetch(`https://api.airtable.com/v0/${airtableBaseId}/Carers?filterByFormula=${encodedFormulaCarer}`, { headers: {'Authorization': `Bearer ${airtableApiKey}`}}),
+                                    fetch(`https://api.airtable.com/v0/${airtableBaseId}/Services?filterByFormula=${encodedFormulaService}`, { headers: {'Authorization': `Bearer ${airtableApiKey}`}})
                                 ]).then(async ([customerResponse, carerResponse, serviceResponse]) => {
                                     const customerData = await customerResponse.json();
                                     const carerData = await carerResponse.json();
@@ -936,7 +994,9 @@
                                         service: serviceData.records.length > 0 ? serviceData.records[0].fields['Service name'] : '',
                                         start: input[i].start,
                                         end: input[i].end,
-                                        schedule_id: input[i].recordId
+                                        schedule_id: input[i].recordId,
+                                        carer_id : input[i].carers,
+                                        customer_id: input[i].customers
                                     };
                                 }).catch(error => {
                                     console.error('Error:', error);
@@ -967,7 +1027,9 @@
                                         normal_end_date: formattedSydneyEndTime,
                                         schedule_id: result.schedule_id,
                                         ios_start_date: start_date,
-                                        ios_end_date: end_date
+                                        ios_end_date: end_date,
+                                        carer_id: result.carer_id,
+                                        customer_id: result.customer_id
                                     });
                                 }
                             }
@@ -982,10 +1044,37 @@
 
             }
 
+            function deploy_carer_customer(){
+                var carerUpdateSelect = document.getElementById("carer_update");
+                var customerUpdateSelect = document.getElementById("customer_update");
+                var carerOptions = userObject["Carer Active"];
+                var customerOptions = userObject["Customer"];
+
+                carerUpdateSelect.innerHTML = '';
+                customerUpdateSelect.innerHTML = '';
+
+                carerOptions.slice(1).forEach(function(item) {
+                    let optionElement = document.createElement('option');
+                    optionElement.value = item;
+                    optionElement.textContent = item;
+                    carerUpdateSelect.appendChild(optionElement);
+                });
+
+                customerOptions.slice(1).forEach(function(item) {
+                    let optionElement = document.createElement('option');
+                    optionElement.value = item;
+                    optionElement.textContent = item;
+                    customerUpdateSelect.appendChild(optionElement);
+                });
+
+            }
+
             async function FinalDeploy(){
-               
+                
                 await setupEventListeners();
                 await OriginalDeploy();
+                console.log("The user object is" + JSON.stringify(userObject))
+               
                 createCalendar(currentYear, currentMonth,specialDates);
             }
             FinalDeploy();
@@ -997,14 +1086,7 @@
             /////////////////////////////////////////SEPARATE LINE FOR CANLENDER/////////////////////////////////////////////
             let currentYear = new Date().getFullYear();
             let currentMonth = new Date().getMonth();
-            
         
-            // let specialDates = [
-            //     // new Date(2023, 10, 16),
-            //     new Date("2023-10-25T04:00:00.000Z"),
-            //     new Date("2023-10-23T08:41:00.000Z")
-             
-            // ];
 
             /*Method*/
             let specialDates = [
@@ -1014,6 +1096,10 @@
             
 
             function createCalendar(year, month, specialDates) {
+             
+
+
+
                 let monthYear = document.getElementById('monthYear');
                 let calendarBody = document.getElementById('calendar-body');
                 let firstDay = new Date(year, month).getDay();
@@ -1040,7 +1126,7 @@
                             let formattedDate = `${cellDate.getFullYear()}-${String(cellDate.getMonth() + 1).padStart(2, '0')}-${String(cellDate.getDate()).padStart(2, '0')}`;
 
                             let daysEvents = specialDates.filter(d => {
-                                // 将每个事件的开始日期的年月日提取出来，不考虑时区
+                         
                                 let eventStartDate = new Date(d.ios_start_date);
                                 let eventFormattedDate = `${eventStartDate.getFullYear()}-${String(eventStartDate.getMonth() + 1).padStart(2, '0')}-${String(eventStartDate.getDate()).padStart(2, '0')}`;
 
@@ -1096,6 +1182,7 @@
 
           
             function showModal(event) {
+                deploy_carer_customer();
                 function updateSpecialDates(newDates) {
                     
                     specialDates = newDates;    
@@ -1138,17 +1225,21 @@
                             "digitalService":"recNEpgqDQArZhZtR",
                             "travelAssistance":"reco5fVaOImm9sdvw",
                             "careandsupport":"recZMc5BenaLN7fE5",
-                            "other":""
-                              
-                            
+                            "other":""                   
                         }
-                     
+
+                        var carerSelect = document.getElementById('carer_update');
+                        var selectedCarerText = carerSelect.options[carerSelect.selectedIndex].text;
+                        var customerSelect = document.getElementById('customer_update');
+                        var selectedCustomerText = customerSelect.options[customerSelect.selectedIndex].text;
+                        var selectCarerId = carer_customer_id.carer[selectedCarerText];
+                        var selectCustomerId = carer_customer_id.customer[selectedCustomerText];
+
+
                         var startTime = document.getElementById("startTime").value;
                         var endTime = document.getElementById("endTime").value;
-                        var costPerHour = document.getElementById("costHour").value;
-                        var dayType = document.getElementById("dayType").value;
                         var eventType = document.getElementById("eventType").value;
-                        var additionalExpense = document.getElementById("Addexpense").value;
+                   
                         var formattedStartTime = formatDateTime(startTime);
                         var formattedEndTime = formatDateTime(endTime);
 
@@ -1161,13 +1252,18 @@
                                 "fields": {
                                     "Start": startDateTime.toISOString(),
                                     "End": endDateTime.toISOString(),
-                                    "Services":newService
+                                    "Services":newService,
+                                    "Customers":[selectCustomerId],
+                                    "Carers":[selectCarerId]
                                 }
                             };
                         
-                        console.log("The time is" + formattedStartTime)
+                        console.log("The time is" + formattedStartTime);
+
+                        console.log(`The carer id is ${selectCarerId} and customer id is ${selectCustomerId}`)
+
                         await updateConfirm(event, data, eventType, formattedStartTime, formattedEndTime);
-                        console.log("The FUCKING specialDates is" + JSON.stringify(specialDates) );
+                        console.log("The UPDATING specialDates is" + JSON.stringify(specialDates) );
                         updateSpecialDates(specialDates);
 
                        
@@ -1306,7 +1402,7 @@
                     .catch(error => {
                         console.error('Error:', error);
                     });
-                }
+                } //test the code of update record, it will send the request to airtable and 
 
             function deleteRecord(tableName,recordId)
             {
