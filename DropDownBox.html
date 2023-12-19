@@ -503,41 +503,72 @@
             }
 
             .week-calendar-nav {
+                margin-top:10px;
                 text-align: center;
                 margin-bottom: 10px;
             }
 
             #week-calendar {
-                width: 100%;
-                border-collapse: collapse;
+                border-collapse: separate;
+                border-spacing: 10px; 
+                width: 90%;
+                margin: auto;
+                padding: 0 5%;
+                background-color: #4AD09B; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 15px; 
             }
 
-            #week-calendar th, #week-calendar td {
-                border: 1px solid #ccc;
-                text-align: center;
-                padding: 5px;
+            #week-calendar th {
+                font-size: 12px;
+                background-color: #4AD09B;
+                color: white;
+                padding: 10px;
+                border-radius: 15px; 
             }
 
             #week-calendar td {
-                font-size: 10px;
-                width: 200px; /* 固定宽度 */
-                height: 100px; /* 固定高度 */
-                overflow-y: auto; /* 允许垂直滚动 */
-                
-                /* min-width: 100px;
-                height: 60px;  */
+            background-color: white; 
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+            width: 11%;
+            height: 120px;
+            min-width: 100px;
+            overflow: auto;
+            word-break: break-word; 
+            font-size: 10px;
+            /* border-radius: 10px; */
+            box-sizing: border-box;
+
             }
 
-
+ 
            #week-calendarid{
             display: none;
            }
 
+           .text-cell{
+
+                width: 100%;
+                height: 100px; 
+                overflow-y: auto;
+           }
+           /* .row-cell{
+                text-align: center;
+                padding: 5px;
+                font-size: 10px;
+                width: 200px;
+                height: 100px; 
+                overflow: auto;
+
+           } */
            .event-tip {
+                display: block;
                 cursor: pointer;
                 width: auto; /* 让事件占据整个单元格宽度 */
                 height: 30px; /* 设置最小高度 */
-                margin-bottom: 3px;
+                margin-bottom: 5px;
             }
 
 
@@ -691,8 +722,8 @@
                 const airtableTableName = "Users"; 
                 const airtableUrl = "https://api.airtable.com/v0/app8p4RecoWg7JsOX/Users";
                 const airtableApiKey = "patbjbBB4mGfLvwMD.e257cd19ea5b9b3a5337417837f56d29c6f8b8dfeae4a7853b8da010f990e3df";
-                // const emailToSearch = "jessie.wu@everyoungai.com";  
-                const emailToSearch = "jessie.liu@gmail.com"; 
+                const emailToSearch = "jessie.wu@everyoungai.com";  
+                // const emailToSearch = "jessie.liu@gmail.com"; 
                 const encodedFormulaByEmail = encodeURIComponent(`{Email} = '${emailToSearch}'`);
                 
 
@@ -910,8 +941,8 @@
                     
                     specialDates = newDates;    
               
-                    createCalendar(currentYear, currentMonth, specialDates);
-                    setupWeekCalendar(specialDates);
+                    update_whole_calendar();
+    
                     document.getElementById('loadingIcon').style.display = 'none';
                 }
 
@@ -1249,8 +1280,8 @@
                 await OriginalDeploy();
                 setupNavigationButtons();
                 console.log("The user object is" + JSON.stringify(userObject))
-                setupWeekCalendar(specialDates);
-                createCalendar(currentYear, currentMonth,specialDates);
+                
+                update_whole_calendar();
             }
             FinalDeploy();
             
@@ -1277,7 +1308,6 @@
                 currentBaseDate = new Date();
                 currentBaseDate.setDate(currentBaseDate.getDate() - currentBaseDate.getDay());
 
-
                 createWeekCalendar(currentBaseDate,specialDate);
 
                 // setupNavigationButtons();
@@ -1286,17 +1316,29 @@
 
 
             function createWeekCalendar(baseDate,specialDate) {
+      
                     const weekCalendarBody = document.getElementById('week-calendar-body');
                     const weekDaysHeader = document.getElementById('week-days-header');
                     weekCalendarBody.innerHTML = '';
                     weekDaysHeader.innerHTML = '<th>Time</th>'; // 时间列的标题
+
+                    const currentYear = baseDate.getFullYear();
+
+                    console.log("The week special date is" + JSON.stringify(specialDate) );
 
                     // 添加星期标题和日期
                     for (let i = 0; i < 7; i++) {
                         let dayDate = new Date(baseDate);
                         dayDate.setDate(baseDate.getDate() + i);
                         let dayHeader = document.createElement('th');
-                        dayHeader.textContent = dayDate.toLocaleString('default', { weekday: 'short', month: 'short', day: 'numeric' });
+                        dayHeader.textContent = dayDate.toLocaleString('default', 
+                        { 
+                            weekday: 'short', 
+                            month: 'short', 
+                            day: 'numeric',
+                            year: 'numeric'
+                        
+                        });
                         weekDaysHeader.appendChild(dayHeader);
                     }
 
@@ -1312,38 +1354,65 @@
                         // 对每一天创建一个单元格
                         for (let day = 0; day < 7; day++) {
                             let cell = document.createElement('td');
+                            let text_space = document.createElement('div');
                             cell.classList.add('custom-cell');
+                            text_space.classList.add('text-cell');
+                            cell.appendChild(text_space);
 
                             let cellDate = new Date(baseDate);
                             cellDate.setDate(baseDate.getDate() + day);
-                            addEventsToCell(cell, cellDate, hour, specialDate);
+                            addEventsToCell(text_space, cellDate, hour, specialDate);
                             row.appendChild(cell);
                         }
 
                         weekCalendarBody.appendChild(row);
+              
                     }
                 }
 
                 function addEventsToCell(cell, cellDate, hour, specialDate) {
-                    let events = specialDate.filter(event => {
-                        let startDate = new Date(event.ios_start_date);
-                        return startDate.getDate() === cellDate.getDate() &&
-                            startDate.getMonth() === cellDate.getMonth() &&
-                            startDate.getFullYear() === cellDate.getFullYear() &&
-                            startDate.getHours() === hour;
-                    });
+                        
+                        let colors = ['red', 'blue', 'green', 'orange', 'purple', 'yellow'];
+                        let colorIndex = 0;
 
-                    events.forEach(event => {
-                        let eventElement = document.createElement('div');
-                        eventElement.classList.add('event-tip');
-                        start_d = event.normal_start_date.substring(11);
-                        eventElement.textContent = start_d + ' ' + event.service; // 显示服务类型
-                        eventElement.onclick = function() {
-                            showModal(event); // 显示模态框
-                        };
-                        cell.appendChild(eventElement);
-                    });
-                }
+                        let events = specialDate.filter(event => {
+                            let startDate = new Date(event.ios_start_date);
+                            // console.log(`startDate: ${startDate}, cellDate: ${cellDate}, hour: ${hour}`);
+                            //  console.log(`Date comparison: ${startDate.getDate() === cellDate.getDate() && startDate.getMonth() === cellDate.getMonth() && startDate.getFullYear() === cellDate.getFullYear() && startDate.getHours() === hour}`);
+                            
+                             return startDate.getDate() === cellDate.getDate() &&
+                                startDate.getMonth() === cellDate.getMonth() &&
+                                startDate.getFullYear() === cellDate.getFullYear()&&
+                                startDate.getHours() === hour;
+                        });
+
+                        console.log("THE events is " + JSON.stringify(events));
+                        
+                        events.forEach(event => {
+                            console.log("THE event is" + JSON.stringify(event));
+                            let eventElement = document.createElement('div');
+                            eventElement.classList.add('event-tip');
+
+                     
+                            let bullet = document.createElement('span');
+                            bullet.textContent = '• ';
+                            bullet.style.color = colors[colorIndex];
+                            eventElement.appendChild(bullet);
+
+                     
+                            let textNode = document.createTextNode(event.normal_start_date.substring(11) + ' ' + event.service);
+                            eventElement.appendChild(textNode);
+
+                
+                            colorIndex = (colorIndex + 1) % colors.length;
+
+                            eventElement.onclick = function() {
+                                showModal(event);
+                            };
+                            cell.appendChild(eventElement);
+                        });
+                    }
+
 
                 function formatHour(hour) {
                     const ampm = hour >= 12 ? 'PM' : 'AM';
@@ -1355,13 +1424,17 @@
             function setupNavigationButtons() {
                 document.getElementById('prevWeek').addEventListener('click', function() {
                     adjustWeek(-7);
+                   
                     // console.log("THe week special Dates is" +JSON.stringify(specialDates) );
                 });
 
                 document.getElementById('nextWeek').addEventListener('click', function() {
                     adjustWeek(7);
+                    
                     // console.log("THe week special Dates is" +JSON.stringify(specialDates) );
                 });
+
+   
             }
 
 
@@ -1371,8 +1444,14 @@
                 console.log(JSON.stringify(currentBaseDate.getDate()));
             }
 
+            function update_whole_calendar(){
+                createCalendar(currentYear, currentMonth, specialDates);
+                setupWeekCalendar(specialDates);
+
+            }
+
             function createCalendar(year, month, specialDates) {
-             
+                
             
                 
 
@@ -1417,7 +1496,9 @@
                             let eventsList = document.createElement('ul');
                             daysEvents.forEach((event,index) => {
                                 let eventItem = document.createElement('li');
-                                let sydneyTime = event.ios_start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney", hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
+
+                                let eventStartDate = new Date(event.ios_start_date);
+                                let sydneyTime = eventStartDate.toLocaleString("en-AU", { timeZone: "Australia/Sydney", hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
                                 let sydneyshowTime = sydneyTime.slice(0, -4);
                                 eventItem.textContent = `${sydneyshowTime} ${event.service}`;
 
@@ -1446,14 +1527,13 @@
 
 
           
-            function showModal(event) {
+            async function showModal(event) {
                 deploy_carer_customer();
                 function updateSpecialDates(newDates) {
                     
                     specialDates = newDates;    
-              
-                    createCalendar(currentYear, currentMonth, specialDates);
-                    setupWeekCalendar(specialDates);
+       
+                    update_whole_calendar();
                     document.getElementById('loadingIcon').style.display = 'none';
                 }
 
@@ -1503,12 +1583,21 @@
 
 
                         var startTime = document.getElementById("startTime").value;
+                        var startTime2 =new Date(startTime);
+                        var startTime3 = startTime2.toISOString();
+
                         var endTime = document.getElementById("endTime").value;
+                        var endTime2 = new Date(endTime);
+                        var endTime3 = endTime2.toISOString();
+
                         var eventType = document.getElementById("eventType").value;
                    
                         var formattedStartTime = formatDateTime(startTime);
                         var formattedEndTime = formatDateTime(endTime);
+                        console.log("THE unformateed start time is" + startTime);
+                        console.log("THE formatted start time is" + formattedStartTime);
 
+                        
                         var startDateTime = new Date(formattedStartTime);
                         var endDateTime = new Date(formattedEndTime);
                         var newService = [];
@@ -1523,23 +1612,28 @@
                                     "Carers":[selectCarerId]
                                 }
                             };
-                        
-                        console.log("The time is" + formattedStartTime);
+                        var data_to_update = {
+                            "Start": startTime3,
+                            "End": endTime3,
+                            "Services":eventType,
+                            "Customers":selectedCustomerText,
+                            "Carers":selectedCarerText
+                        }
 
                         console.log(`The carer id is ${selectCarerId} and customer id is ${selectCustomerId}`)
 
-                        await updateConfirm(event, data, eventType, formattedStartTime, formattedEndTime);
-                        console.log("The UPDATING specialDates is" + JSON.stringify(specialDates) );
-                        updateSpecialDates(specialDates);
+                        await updateConfirm(event, data, eventType, formattedStartTime, formattedEndTime, data_to_update);
 
-                       
+                        console.log("The UPDATING specialDates is" + JSON.stringify(specialDates) );
                         
+                        updateSpecialDates(specialDates);
                
                 };
 
                 function formatDateTime(dateTime) {
                     var date = new Date(dateTime);
                     return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+
                 }
 
                 deleteButton.onclick = async function() {
@@ -1571,7 +1665,7 @@
                     console.log("THE updated special date is " + JSON.stringify(specialDates));
                 }
 
-            async function updateConfirm(event, data, service, start_time, end_time){
+            async function updateConfirm(event, data, service, start_time, end_time, data_to_update){
                 let confirmation = confirm("Are you sure to update this schedule?");
                 if (confirmation) {
                     await updateRecord("Schedule", event.schedule_id, data);
@@ -1582,18 +1676,25 @@
                     let iosEndDateObject = new Date();
                     if (scheduleToUpdate) {
                         try {
+                            scheduleToUpdate.customer = data_to_update.Customers;
+                            scheduleToUpdate.carer = data_to_update.Carers;
                             scheduleToUpdate.normal_start_date = start_time;
                             scheduleToUpdate.normal_end_date = end_time;
-                            scheduleToUpdate.ios_start_date = transfer_iostime(start_time);
-                            scheduleToUpdate.ios_end_date = transfer_iostime(end_time);
+                            // scheduleToUpdate.ios_start_date = transfer_iostime(start_time);
+                            // scheduleToUpdate.ios_end_date = transfer_iostime(end_time);
+
+                            scheduleToUpdate.ios_start_date =data_to_update.Start;
+                            scheduleToUpdate.ios_end_date = data_to_update.End;
 
                             
-
+                            
                             scheduleToUpdate.service = service;
                         } catch (error) {
                             console.error("Error updating schedule:", error);
                         }
                     }
+
+                    
                 }
             }
 
@@ -1616,6 +1717,7 @@
                
                 let timezoneOffsetInHours = 10;
                 sydneyDate.setHours(sydneyDate.getHours() - timezoneOffsetInHours);
+                console.log("THE TRANSFOR IOS TIME IS " + sydneyDate);
 
                 return sydneyDate;
             }
@@ -1647,7 +1749,7 @@
                     currentMonth = 0;
                     currentYear++;
                 }
-                createCalendar(currentYear, currentMonth,specialDates);
+                update_whole_calendar();
             }
             
            
