@@ -3,6 +3,11 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.css">
+    <style>
+        #week-calendarid, #daily-calendarID {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <style>           
@@ -544,9 +549,7 @@
             }
 
  
-           #week-calendarid{
-            display: none;
-           }
+
 
            .text-cell{
 
@@ -587,6 +590,295 @@
                 background-color: #A8DBD9; 
                 color: white;
             }
+
+            /* daily calendar */
+
+            .daily-calendar{
+                border-collapse: separate;
+                border-spacing: 10px; 
+                width: 90%;
+                margin: auto;
+                padding: 0 5%;
+                background-color: #4AD09B; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 15px; 
+                height: 80vh;
+                overflow-y: auto;
+            }
+
+            .daily-calendar-body {
+            display: grid;
+            grid-gap: 0.5rem;
+            height: 100px;
+            grid-template-columns: 8rem repeat(100, 1fr);
+            grid-template-rows: repeat(30, 1fr);
+            grid-template-areas:
+            "time600 stage"
+            "time630 stage"
+            "time700 stage"
+            "time730 stage"
+            "time800 stage"
+            "time830 stage"
+            "time900 stage"
+            "time930 stage"
+            "time1000 stage"
+            "time1030 stage"
+            "time1100 stage"
+            "time1130 stage"
+            "time1200 stage"
+            "time1230 stage"
+            "time1300 stage"
+            "time1330 stage"
+            "time1400 stage"
+            "time1430 stage"
+            "time1500 stage"
+            "time1530 stage"
+            "time1600 stage"
+            "time1630 stage"
+            "time1700 stage"
+            "time1730 stage"
+            "time1800 stage"
+            "time1830 stage"
+            "time1900 stage"
+            "time1930 stage"
+            "time2000 stage"
+            "time2030 stage"
+            "time2100 stage"
+            ;
+            }
+
+            .time {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            padding: 0 0.5rem;
+            background-color: white;
+            }
+
+            .dailyevent {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                padding: 0.5rem 1rem;
+                background-color: orange;
+                border-radius: 0.2rem;
+                font-size: 0.8rem;
+                font-weight: bold;
+                line-height: 1.4;
+                border-top: black;
+                width: 100px;
+            }
+            
+            .dailyevent p {
+            width: 100%;
+            font-size: 0.8em;
+            font-weight: normal;
+            margin: 2%;
+            }
+
+
+            .dailyevent.start-600 {
+            grid-row-start: time600;
+            }
+            .dailyevent.start-630 {
+            grid-row-start: time630;
+            }
+            .dailyevent.start-700 {
+            grid-row-start: time700;
+            }
+            .dailyevent.start-730 {
+            grid-row-start: time730;
+            }
+            .dailyevent.start-800 {
+            grid-row-start: time800;
+            }
+            .dailyevent.start-830 {
+            grid-row-start: time830;
+            }
+            .dailyevent.start-900 {
+            grid-row-start: time900;
+            }
+            .dailyevent.start-930 {
+            grid-row-start: time930;
+            }
+            .dailyevent.start-1000 {
+            grid-row-start: time1000;
+            }
+            .dailyevent.start-1030 {
+            grid-row-start: time1030;
+            }
+            .dailyevent.start-1100 {
+            grid-row-start: time1100;
+            }
+            .dailyevent.start-1130 {
+            grid-row-start: time1130;
+            }
+            .dailyevent.start-1200 {
+            grid-row-start: time1200;
+            }
+            .dailyevent.start-1230 {
+            grid-row-start: time1230;
+            }
+            .dailyevent.start-1300 {
+            grid-row-start: time1300;
+            }
+            .dailyevent.start-1330 {
+            grid-row-start: time1330;
+            }
+            .dailyevent.start-1400 {
+            grid-row-start: time1400;
+            }
+            .dailyevent.start-1430 {
+            grid-row-start: time1430;
+            }
+            .dailyevent.start-1500 {
+            grid-row-start: time1500;
+            }
+            .dailyevent.start-1530 {
+            grid-row-start: time1530;
+            }
+            .dailyevent.start-1600 {
+            grid-row-start: time1600;
+            }
+            .dailyevent.start-1630 {
+            grid-row-start: time1630;
+            }
+            .dailyevent.start-1700 {
+            grid-row-start: time1700;
+            }
+            .dailyevent.start-1730 {
+            grid-row-start: time1730;
+            }
+            .dailyevent.start-1800 {
+            grid-row-start: time1800;
+            }
+            .dailyevent.start-1830 {
+            grid-row-start: time1830;
+            }
+            .dailyevent.start-1900 {
+            grid-row-start: time1900;
+            }
+            .dailyevent.start-1930 {
+            grid-row-start: time1930;
+            }
+            .dailyevent.start-2000 {
+            grid-row-start: time2000;
+            }
+            .dailyevent.start-2030 {
+            grid-row-start: time2030;
+            }
+
+
+            .dailyevent.end-630 {
+            grid-row-start: time630;
+            }
+            .dailyevent.end-700 {
+            grid-row-start: time700;
+            }
+            .dailyevent.end-730 {
+            grid-row-start: time730;
+            }
+            .dailyevent.end-800 {
+            grid-row-end: time800;
+            }
+            .dailyevent.end-830 {
+            grid-row-end: time830;
+            }
+            .dailyevent.end-900 {
+            grid-row-end: time900;
+            }
+            .dailyevent.end-930 {
+            grid-row-end: time930;
+            }
+            .dailyevent.end-1000 {
+            grid-row-end: time1000;
+            }
+            .dailyevent.end-1030 {
+            grid-row-end: time1030;
+            }
+            .dailyevent.end-1100 {
+            grid-row-end: time1100;
+            }
+            .dailyevent.end-1130 {
+            grid-row-end: time1130;
+            }
+            .dailyevent.end-1200 {
+            grid-row-end: time1200;
+            }
+            .dailyevent.end-1230 {
+            grid-row-end: time1230;
+            }
+            .dailyevent.end-1300 {
+            grid-row-end: time1300;
+            }
+            .dailyevent.end-1330 {
+            grid-row-end: time1330;
+            }
+            .dailyevent.end-1400 {
+            grid-row-end: time1400;
+            }
+            .dailyevent.end-1430 {
+            grid-row-end: time1430;
+            }
+            .dailyevent.end-1500 {
+            grid-row-end: time1500;
+            }
+            .dailyevent.end-1530 {
+            grid-row-end: time1530;
+            }
+            .dailyevent.end-1600 {
+            grid-row-end: time1600;
+            }
+            .dailyevent.end-1630 {
+            grid-row-end: time1630;
+            }
+            .dailyevent.end-1700 {
+            grid-row-end: time1700;
+            }
+            .dailyevent.end-1730 {
+            grid-row-end: time1730;
+            }
+            .dailyevent.end-1800 {
+            grid-row-end: time1800;
+            }
+            .dailyevent.end-1830 {
+            grid-row-end: time1830;
+            }
+            .dailyevent.end-1900 {
+            grid-row-end: time1900;
+            }
+            .dailyevent.end-1930 {
+            grid-row-end: time1930;
+            }
+            .dailyevent.end-2000 {
+            grid-row-end: time2000;
+            }
+            .dailyevent.end-2030 {
+            grid-row-end: time2030;
+            }
+            .dailyevent.end-2100 {
+            grid-row-end: time2100;
+            }
+
+            .dailyevent.color-0 {
+            background-color: #ffa726;
+            }
+            .dailyevent.color-1 {
+            background-color: #9ccc65;
+            }
+            .dailyevent.color-2 {
+            background-color: #ff8a65;
+            }
+            .dailyevent.color-3 {
+            background-color: #b3e5fc;
+            }
+            .dailyevent.color-4 {
+            background-color: #81d4fa;
+            }
+            .dailyevent.color-5 {
+            background-color: #26c6da;
+            }  
     </style>
    
   
@@ -612,6 +904,7 @@
                 <select id="calendar-dropdown" class="form-control">
                     <option value = "month" selected>month</option>
                     <option value = "week">week</option>
+                    <option value = "day">day</option>
                     <!-- Options here -->
                 </select>
             </div>
@@ -645,6 +938,7 @@
         </tbody>
     </table>
 </div>
+
 <!-- Week Calendar -->
 <div class="week-calendar-container" id = "week-calendarid">
     <div class="week-calendar-nav">
@@ -661,6 +955,23 @@
      
         </tbody>
     </table>
+</div>
+
+<!-- Daily Calendar -->
+
+<div class="daily-calendar-container" id="daily-calendarID">
+    <div class="calendar-nav">
+            <button onclick="moveDay(-1)">&lt; Prev</button>
+            <span id="dailyCalendarDay"></span>
+            <button onclick="moveDay(1)">Next &gt;</button>
+    </div>
+
+    <div class = "daily-calendar">
+        <div class="daily-calendar-body", id = "DailyBody">
+
+        </div>
+    </div>
+
 </div>
 
 
@@ -696,9 +1007,9 @@
                 
             </select>
             <label>Start Time:</label>
-            <input type="datetime-local" id="startTime">
+            <input type="datetime-local" id="startTime" onchange="validateTime()">
             <label>End Time:</label>
-            <input type="datetime-local" id="endTime">
+            <input type="datetime-local" id="endTime" onchange="validateTime2()">
             <label>Change Event Type for the Shift:</label>
             <select id="eventType">
                 <option value="cleaning">Cleaning</option>
@@ -723,7 +1034,7 @@
                 const airtableUrl = "https://api.airtable.com/v0/app8p4RecoWg7JsOX/Users";
                 const airtableApiKey = "patbjbBB4mGfLvwMD.e257cd19ea5b9b3a5337417837f56d29c6f8b8dfeae4a7853b8da010f990e3df";
                 const emailToSearch = "jessie.wu@everyoungai.com";  
-                // const emailToSearch = "jessie.liu@gmail.com"; 
+
                 const encodedFormulaByEmail = encodeURIComponent(`{Email} = '${emailToSearch}'`);
                 
 
@@ -781,7 +1092,7 @@
 
                 async function fetchCustomerNames(customerRecordIds, role) {
                     await fetchAllRecords();
-                    console.log("All the record is" + JSON.stringify(allRecords) );
+                    //console.log("All the record is" + JSON.stringify(allRecords) );
                     const recordId = allRecords[0]["fields"]["Client"];
                     const userType = ["Customer", "Carer Active"];
                     
@@ -826,7 +1137,7 @@
                                 }
 
                                 
-                                console.log("Carer ID collection is" + carerRecordID);
+                                //console.log("Carer ID collection is" + carerRecordID);
                         
                             } catch (error) {
                             console.error('Error:', error);
@@ -881,7 +1192,7 @@
                     });
 
                     UserList = CustomersAndCarers;
-                    console.log("THE TEST :" + JSON.stringify(CustomersAndCarers));
+                    //console.log("THE TEST :" + JSON.stringify(CustomersAndCarers));
                     return CustomersAndCarers;
                   
        
@@ -897,7 +1208,7 @@
                     await fetchCustomerNames();
                     await findCalendar();
                 
-                    console.log("The user's OBJECT is " +JSON.stringify(userObject) );
+                    //console.log("The user's OBJECT is " +JSON.stringify(userObject) );
                     
                     populateDropdown('customer-dropdown', userObject['Customer'], 'customers');
                     populateDropdown('carer-dropdown', userObject['Carer Active'], 'carers');
@@ -919,8 +1230,8 @@
                             
                             All_Carer.push(result);
                 }
-                console.log("THIS IS ALL Customer NUMBER"  + All_Carer.length)
-                console.log("The DAMN result is:" +JSON.stringify(All_Carer));
+                //console.log("THIS IS ALL Customer NUMBER"  + All_Carer.length)
+                //console.log("The DAMN result is:" +JSON.stringify(All_Carer));
               
                 return mergeObjectsInArray(All_Carer);
             }
@@ -955,21 +1266,21 @@
                     const selected_customer = selectCustomer.selectedOptions[0].value;
                     const Carer_Schedule = '';
 
-                    console.log("Carer:" + JSON.stringify(selected_carer));
-                    console.log("Customer:" + JSON.stringify(selected_customer));
+                    //console.log("Carer:" + JSON.stringify(selected_carer));
+                    //console.log("Customer:" + JSON.stringify(selected_customer));
                     
                     if (selected_carer == "All"){
                         document.getElementById('loadingIcon').style.display = 'block';
                         const all_carer = await CollectAllRecord("Carer Active","Carers");
-                        console.log("All the CARER" +JSON.stringify(all_carer) );
+                        //console.log("All the CARER" +JSON.stringify(all_carer) );
                         specialDates =await GenerateResult(all_carer);
-                        console.log("ALL THE DATE" + specialDates);
+                        //console.log("ALL THE DATE" + specialDates);
                         updateSpecialDates(specialDates);
 
                     }else{
                         document.getElementById('loadingIcon').style.display = 'block';
                         const result = await FindCustomer('Carers', selected_carer);
-                        console.log("Carer list is :" + JSON.stringify(result));
+                        //console.log("Carer list is :" + JSON.stringify(result));
                       
 
                         specialDates =await GenerateResult(result);
@@ -980,7 +1291,7 @@
 
                         
 
-                        console.log("THE OUTPUT IS" + JSON.stringify(specialDates));
+                        //console.log("THE OUTPUT IS" + JSON.stringify(specialDates));
                     }
             
 
@@ -996,16 +1307,16 @@
 
                     const selected_carer = selectCarer.selectedOptions[0].text;
                     const selected_customer = selectCustomer.selectedOptions[0].text;
-                    console.log("Carer:" + JSON.stringify(selected_carer));
-                    console.log("Customer:" + JSON.stringify(selected_customer));
+                    //console.log("Carer:" + JSON.stringify(selected_carer));
+                    //console.log("Customer:" + JSON.stringify(selected_customer));
                     if (selected_customer == "All"){
                         const All_Customer = [];
                         // for (var i = 1; i < userObject['Customer'].length;i++){
                             document.getElementById('loadingIcon').style.display = 'block';
                             const all_customer = await CollectAllRecord("Customer","Customers");
-                            console.log("All the Customer" +JSON.stringify(all_customer) );
+                            //console.log("All the Customer" +JSON.stringify(all_customer) );
                             specialDates =await GenerateResult(all_customer);
-                            console.log("ALL THE DATE" + specialDates);
+                            //console.log("ALL THE DATE" + specialDates);
                             updateSpecialDates(specialDates);
                             
                         // }
@@ -1014,7 +1325,7 @@
                         document.getElementById('loadingIcon').style.display = 'block';
 
                         const result = await FindCustomer('Customers',selected_customer);
-                        console.log("Customer list is :" + JSON.stringify(result))
+                        //console.log("Customer list is :" + JSON.stringify(result))
                     
                         specialDates =await GenerateResult(result);
                         
@@ -1023,7 +1334,7 @@
                         updateSpecialDates(specialDates)
                         
                         
-                        console.log("THE OUTPUT IS" + JSON.stringify(specialDates));
+                        //console.log("THE OUTPUT IS" + JSON.stringify(specialDates));
                         
                     }
 
@@ -1118,7 +1429,7 @@
                             if (data.records && data.records.length > 0) {
                                 carer_customer_id.carer[carer] = data.records[0].fields.devRecordId;
                             } else {
-                                console.log(`No records found for Carer: ${carer}`);
+                                //console.log(`No records found for Carer: ${carer}`);
                             }
                         })
                         .catch(error => console.error(`Error fetching Carer: ${carer}`, error));
@@ -1132,14 +1443,14 @@
                             if (data.records && data.records.length > 0) {
                                 carer_customer_id.customer[customer] = data.records[0].fields.recordid;
                             } else {
-                                console.log(`No records found for Customer: ${customer}`);
+                                //console.log(`No records found for Customer: ${customer}`);
                             }
                         })
                         .catch(error => console.error(`Error fetching Customer: ${customer}`, error));
                 });
 
                 await Promise.all([...carerPromises, ...customerPromises]);
-                console.log("The response data is: ", carer_customer_id);
+                //console.log("The response data is: ", carer_customer_id);
             }
 
 
@@ -1150,7 +1461,7 @@
               
                 await get_carer_customer_record_id();
                 specialDates =await GenerateResult(all_carer);
-                console.log("Original Special dates IS " +JSON.stringify(specialDates) );
+                //console.log("Original Special dates IS " +JSON.stringify(specialDates) );
                 
 
              
@@ -1257,15 +1568,20 @@
                 document.getElementById('calendar-dropdown').addEventListener('change', function() {
                 var monthCalendar = document.getElementById('calendar-containerid');
                 var weekCalendar = document.getElementById('week-calendarid');
+                var dayCalendar = document.getElementById('daily-calendarID');
 
                 if (this.value === 'month') {
-      
+                    dayCalendar.style.display = 'none';
                     monthCalendar.style.display = 'block';
                     weekCalendar.style.display = 'none';
                 } else if (this.value === 'week') {
-             
+                    dayCalendar.style.display = 'none';
                     monthCalendar.style.display = 'none';
                     weekCalendar.style.display = 'block';
+                } else if (this.value === 'day') {
+                    dayCalendar.style.display = 'block';
+                    monthCalendar.style.display = 'none';
+                    weekCalendar.style.display = 'none';
                 }
             });
 
@@ -1279,7 +1595,7 @@
                 await setupEventListeners();
                 await OriginalDeploy();
                 setupNavigationButtons();
-                console.log("The user object is" + JSON.stringify(userObject))
+                //console.log("The user object is" + JSON.stringify(userObject))
                 
                 update_whole_calendar();
             }
@@ -1324,7 +1640,7 @@
 
                     const currentYear = baseDate.getFullYear();
 
-                    console.log("The week special date is" + JSON.stringify(specialDate) );
+                    //console.log("The week special date is" + JSON.stringify(specialDate) );
 
                     // 添加星期标题和日期
                     for (let i = 0; i < 7; i++) {
@@ -1371,41 +1687,30 @@
                 }
 
                 function addEventsToCell(cell, cellDate, hour, specialDate) {
-                        
                         let colors = ['red', 'blue', 'green', 'orange', 'purple', 'yellow'];
                         let colorIndex = 0;
-
                         let events = specialDate.filter(event => {
                             let startDate = new Date(event.ios_start_date);
                             // console.log(`startDate: ${startDate}, cellDate: ${cellDate}, hour: ${hour}`);
                             //  console.log(`Date comparison: ${startDate.getDate() === cellDate.getDate() && startDate.getMonth() === cellDate.getMonth() && startDate.getFullYear() === cellDate.getFullYear() && startDate.getHours() === hour}`);
-                            
                              return startDate.getDate() === cellDate.getDate() &&
                                 startDate.getMonth() === cellDate.getMonth() &&
                                 startDate.getFullYear() === cellDate.getFullYear()&&
                                 startDate.getHours() === hour;
                         });
-
                         console.log("THE events is " + JSON.stringify(events));
-                        
                         events.forEach(event => {
-                            console.log("THE event is" + JSON.stringify(event));
+                            console.log("THE week event is" + JSON.stringify(event));
                             let eventElement = document.createElement('div');
                             eventElement.classList.add('event-tip');
-
-                     
                             let bullet = document.createElement('span');
                             bullet.textContent = '• ';
                             bullet.style.color = colors[colorIndex];
                             eventElement.appendChild(bullet);
-
-                     
-                            let textNode = document.createTextNode(event.normal_start_date.substring(11) + ' ' + event.service);
+                            let startIndex = event.normal_start_date.length - 11;
+                            let textNode = document.createTextNode(event.normal_start_date.substring(startIndex) + ' ' + event.service);
                             eventElement.appendChild(textNode);
-
-                
                             colorIndex = (colorIndex + 1) % colors.length;
-
                             eventElement.onclick = function() {
                                 showModal(event);
                             };
@@ -1447,7 +1752,7 @@
             function update_whole_calendar(){
                 createCalendar(currentYear, currentMonth, specialDates);
                 setupWeekCalendar(specialDates);
-
+                createDailyCal(curDay, specialDates);
             }
 
             function createCalendar(year, month, specialDates) {
@@ -1505,7 +1810,7 @@
                                 eventItem.className = `color-${index % colors.length}`;
 
                                 eventItem.onclick = function() {
-                                    console.log("THE EVENT IS " +JSON.stringify(event) );
+                                    //console.log("THE EVENT IS " +JSON.stringify(event) );
                                     showModal(event);
                                 };
                                 eventsList.appendChild(eventItem);
@@ -1557,7 +1862,7 @@
                 editButton.onclick = function() {
                     closeModal();
                     editSchedulePopup.style.display = "block";
-                    console.log('edit schedule id:', event.schedule_id);
+                    //console.log('edit schedule id:', event.schedule_id);
                
                 };
 
@@ -1594,8 +1899,8 @@
                    
                         var formattedStartTime = formatDateTime(startTime);
                         var formattedEndTime = formatDateTime(endTime);
-                        console.log("THE unformateed start time is" + startTime);
-                        console.log("THE formatted start time is" + formattedStartTime);
+                        //console.log("THE unformateed start time is" + startTime);
+                        //console.log("THE formatted start time is" + formattedStartTime);
 
                         
                         var startDateTime = new Date(formattedStartTime);
@@ -1620,11 +1925,11 @@
                             "Carers":selectedCarerText
                         }
 
-                        console.log(`The carer id is ${selectCarerId} and customer id is ${selectCustomerId}`)
+                        //console.log(`The carer id is ${selectCarerId} and customer id is ${selectCustomerId}`)
 
                         await updateConfirm(event, data, eventType, formattedStartTime, formattedEndTime, data_to_update);
 
-                        console.log("The UPDATING specialDates is" + JSON.stringify(specialDates) );
+                        //console.log("The UPDATING specialDates is" + JSON.stringify(specialDates) );
                         
                         updateSpecialDates(specialDates);
                
@@ -1656,13 +1961,13 @@
             }
 
             async function deleteConfirm(event) {
-                    console.log("THE not updated special date is " + JSON.stringify(specialDates));
+                    //console.log("THE not updated special date is " + JSON.stringify(specialDates));
                     let confirmation = confirm("Are you sure to delete this schedule?");
                     if (confirmation) {
                         deleteRecord("Schedule", event.schedule_id);
                         specialDates = specialDates.filter(item => item.schedule_id !== event.schedule_id);
                     }
-                    console.log("THE updated special date is " + JSON.stringify(specialDates));
+                    //console.log("THE updated special date is " + JSON.stringify(specialDates));
                 }
 
             async function updateConfirm(event, data, service, start_time, end_time, data_to_update){
@@ -1682,11 +1987,9 @@
                             scheduleToUpdate.normal_end_date = end_time;
                             // scheduleToUpdate.ios_start_date = transfer_iostime(start_time);
                             // scheduleToUpdate.ios_end_date = transfer_iostime(end_time);
-
-                            scheduleToUpdate.ios_start_date =data_to_update.Start;
-                            scheduleToUpdate.ios_end_date = data_to_update.End;
-
                             
+                            scheduleToUpdate.ios_start_date = new Date(data_to_update.Start);
+                            scheduleToUpdate.ios_end_date =  new Date(data_to_update.End);
                             
                             scheduleToUpdate.service = service;
                         } catch (error) {
@@ -1717,7 +2020,7 @@
                
                 let timezoneOffsetInHours = 10;
                 sydneyDate.setHours(sydneyDate.getHours() - timezoneOffsetInHours);
-                console.log("THE TRANSFOR IOS TIME IS " + sydneyDate);
+                //console.log("THE TRANSFOR IOS TIME IS " + sydneyDate);
 
                 return sydneyDate;
             }
@@ -1764,7 +2067,7 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
+                        //console.log(data);
                         alert('Schedule updated successfully.');
                     })
                     .catch(error => {
@@ -1784,14 +2087,151 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                    console.log("The data delete"+data);
+                    //console.log("The data delete"+data);
                     })
                     .catch(error => {
                     console.error('Error:', error);
                     });
                 }
 
-          
+
+/////////////////////////////////////////////////////////////////// Daily Calender //////////////////////////////////////////////////////////////////////////////
+
+            let curDay = new Date();
+
+            function createDailyTimeLine(){
+                const scheduleContainerElement = document.getElementById('DailyBody');
+
+                const startTime = 6;
+                const endTime = 21;
+
+                //create time column 
+                for (let i = startTime * 2; i <= endTime * 2; i++) {
+                    const hour = Math.floor(i / 2);
+                    const minutes = i % 2 === 0 ? '00' : '30';
+                    const time = `${hour}:${minutes}`;
+
+                    const timeElement = document.createElement('div');
+                    timeElement.className = `time start-${hour}${minutes}`;
+                    timeElement.textContent = time;
+                    timeElement.style.setProperty('grid-area', `time${hour}${minutes}`);
+                    scheduleContainerElement.appendChild(timeElement);
+                    
+                }
+            }
+
+            createDailyTimeLine();
+
+                function createDailyEvent(Day, specialDates) {
+                    const scheduleContainerElement = document.getElementById('DailyBody');
+                    
+                    const curDayDisplay = Day.toLocaleString("en-AU", {year:"numeric", month:'short', day:"2-digit", timeZone: "Australia/Sydney" }).split(',')[0];
+                    const curDayString =Day.toLocaleString("en-AU", { timeZone: "Australia/Sydney" }).split(',')[0];
+
+                    const DateDisplay = document.getElementById('dailyCalendarDay')
+                    DateDisplay.textContent = curDayDisplay;
+
+                    let daysEvents = specialDates.filter(d => {
+                        const eventday = d.ios_start_date.toLocaleString("en-AU", { timeZone: "Australia/Sydney" }).split(',')[0];
+
+                        return curDayString === eventday;
+
+                    })
+
+                    //console.log(daysEvents);
+
+                    daysEvents.forEach((event,index) => {
+                        let eventElement = document.createElement('div');
+
+                        // ${event.service}
+
+                        const sHour = event.ios_start_date.getHours();
+                        const sMin = event.ios_start_date.getMinutes();
+                        const sTime = `${sHour}${sMin >= 30 ? "30" : "00"}` ;
+                        const eHour = event.ios_end_date.getHours();
+                        const eMin = event.ios_end_date.getMinutes();
+                        let eTime = "";
+
+                        if (eMin > 30) {
+                            eTime = `${eHour + 1}00`
+                        } else {
+                            eTime = `${eHour}30`
+                        }
+
+                        eventElement.className = `dailyevent color-${index % 6} start-${sTime} end-${eTime}`;
+                        eventElement.textContent = `${sHour}:${sMin.toString().padStart(2, '0')} - ${eHour}:${eMin.toString().padStart(2, '0')}`;
+
+                        const eventItemList = [event.service, event.customer, event.carer].map(c => {
+                            const elem = document.createElement("p");
+                            elem.textContent = c;
+                            return elem;
+                        }).forEach(elem => eventElement.appendChild(elem))
+
+                        eventElement.onclick = function() {
+                            showModal(event);
+                        };
+                        scheduleContainerElement.appendChild(eventElement);
+                    })
+
+            }
+
+            function deleteDailyEvent(){
+                const deleteItem = document.querySelectorAll("div.dailyevent");
+                deleteItem.forEach((element) => {
+                    element.parentNode.removeChild(element);
+                });
+            }
+
+
+
+            async function createDailyCal(Day, specialDates){
+                await deleteDailyEvent();
+                // FindEvent();
+                createDailyEvent(Day,specialDates);
+            }
+
+
+            function moveDay(step) {
+
+                curDay.setDate(curDay.getDate() + step );
+
+                createDailyCal(curDay,specialDates);
+            }
+
+            function validateTime() {
+                var input = document.getElementById('startTime');
+
+                var value = input.value;
+
+                var date = new Date(value);
+
+                var hours = date.getHours();
+
+                var valid = (hours >= 6 && hours <= 21); 
+
+                if (!valid) {
+                    alert("Selected time must between 6 am to 9 pm！");
+                    input.value = ''; 
+                }
+            }
+
+            function validateTime2() {
+                var input = document.getElementById('endTime');
+
+                var value = input.value;
+
+                var date = new Date(value);
+
+                var hours = date.getHours();
+
+                var valid = (hours >= 6 && hours <= 21); 
+
+                if (!valid) {
+                    alert("Selected time must between 6 am to 9 pm！");
+                    input.value = ''; 
+                }
+            }
+
 
     </script>
 </body>
