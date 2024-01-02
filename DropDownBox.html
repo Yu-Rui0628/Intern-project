@@ -2207,7 +2207,9 @@
 
                 var hours = date.getHours();
 
-                var valid = (hours >= 6 && hours <= 21); 
+                var minutes = date.getMinutes();
+
+                var valid = (hours == 21 && minutes == 0)||(hours >= 6 && hours < 21); 
 
                 if (!valid) {
                     alert("Selected time must between 6 am to 9 pm！");
@@ -2224,7 +2226,9 @@
 
                 var hours = date.getHours();
 
-                var valid = (hours >= 6 && hours <= 21); 
+                var minutes = date.getMinutes();
+
+                var valid = (hours == 21 && minutes == 0)||(hours >= 6 && hours < 21); 
 
                 if (!valid) {
                     alert("Selected time must between 6 am to 9 pm！");
