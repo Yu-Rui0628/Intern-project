@@ -99,8 +99,8 @@
       #calendar-dropdown {
         margin-top: 15px; /* Adjusted margin-top for better spacing */
         margin-left: 5px;
-        width: 180px; /* Increase width for better usability */
-        height: 40px; /* Increase height for better visibility and click area */
+        width: 70%; /* Increase width for better usability */
+        height: 50%; /* Increase height for better visibility and click area */
         box-sizing: border-box;
         border: 2px solid #4ad09b; /* Add border to match the theme */
         border-radius: 5px; /* Rounded corners for dropdown */
@@ -190,7 +190,7 @@
       }
 
       #calendar {
-        border-collapse: separate;
+        border-collapse: collapse;
         border-spacing: 10px;
         width: 90%;
         margin: auto;
@@ -208,12 +208,14 @@
       }
 
       #calendar td {
+        border: 1px solid #d3d3d3; 
         background-color: white;
         padding: 10px;
         text-align: left;
         vertical-align: top;
         width: 110px;
         height: 120px;
+
         min-width: 100px;
         overflow: auto;
         word-break: break-word;
