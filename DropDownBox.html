@@ -118,10 +118,15 @@
       }
 
       @media (max-width: 768px) {
+
+        #calendar td {
+                padding: 5px; 
+                font-size: 8px; 
+            }
         #carer-dropdown,
         #customer-dropdown,
         #calendar-dropdown {
-          width: 100%; /* Full width on smaller screens */
+          width: 30%; /* Full width on smaller screens */
           margin-top: 15px; /* Increased margin-top for better spacing */
         }
 
@@ -131,9 +136,12 @@
         }
       }
       .Filtercontainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         background-color: white;
         border-radius: 25px;
-        height: 100px;
+        height: 100%;
         width: 100%;
         margin: 0 auto;
         position: relative;
@@ -191,7 +199,7 @@
 
       #calendar {
         border-collapse: collapse;
-        border-spacing: 10px;
+        height:50%;
         width: 90%;
         margin: auto;
         padding: 0 5%;
@@ -217,7 +225,7 @@
         height: 120px; */
         width: 14%;
         height: 120px;
-        min-width: 100px;
+        
         overflow: auto;
         word-break: break-word;
         font-size: 10px;
@@ -792,7 +800,7 @@
       <div class="row justify-content-center">
         <!-- Carer Selection -->
         <div class="col-md-auto form-group mb-3 d-flex align-items-center">
-          <label for="carer-dropdown" id="Carer_id">Carer</label>
+          <label for="carer-dropdown" id="Carer_id">Carer   </label>
           <select id="carer-dropdown" class="form-control">
             <!-- Options here -->
           </select>
