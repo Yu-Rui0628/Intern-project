@@ -602,15 +602,16 @@
 
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         /* border-radius: 15px; */
-        height: 950px;
+        height: 100vh;
+        overflow-y: auto;
       }
 
       .daily-calendar-body {
-        padding-top: 20px;
         display: grid;
         grid-gap: 0.5rem;
         height: 100%;
-
+        border-top: solid #ddd;
+        
         grid-template-columns: 8rem repeat(100, 1fr);
         grid-template-rows: repeat(30, 1fr);
         grid-template-areas:
@@ -640,6 +641,7 @@
 
         background-color: white;
         border-bottom-style: solid;
+        border-color: #ddd;
       }
 
       .dailyevent {
@@ -776,7 +778,13 @@
 
       #DateBox {
         display: flex;
-        background-color: #f5f5f5 !important;
+        background-color: #f5f5f5 ;
+        height: 42px;
+        font-size: 20px;
+        text-size-adjust: 100%;
+        align-items: center;
+        font-weight: 400;
+        justify-content: center;
       }
     </style>
 
@@ -862,6 +870,7 @@
         <button onclick="moveDay(1)">Next &gt;</button>
         
       </div>
+
 
       <div class="daily-calendar">
         <div id="DateBox">
@@ -2063,14 +2072,14 @@
         const scheduleContainerElement = document.getElementById("DailyBody");
 
         const curDayDisplay = Day.toLocaleString("en-AU", {
-          day: "2-digit",
-          weekday:"short",
+          weekday:"long",
           timeZone: "Australia/Sydney",
         }).split(",")[0];
 
         const curMonthDisplay = Day.toLocaleString("en-AU", {
           year: "numeric",
           month: "long",
+          day: "2-digit",
           timeZone: "Australia/Sydney",
         }).split(",")[0];
         
