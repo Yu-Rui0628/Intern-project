@@ -1607,6 +1607,7 @@
     <div class="week-calendar-container" id="week-calendarid">
       <div class="week-calendar-nav">
         <button id="prevWeek" class="week-calendar-button">&lt;</button>
+        <span id="WeekMonthYear"></span>
         <button id="nextWeek" class="week-calendar-button">&gt;</button>
       </div>
       <table id="week-calendar">
@@ -2311,12 +2312,21 @@
       function createWeekCalendar(baseDate, specialDate) {
         const weekCalendarBody = document.getElementById("week-calendar-body");
         const weekDaysHeader = document.getElementById("week-days-header");
+        const WeekMonthYear = document.getElementById("WeekMonthYear");
+        
         weekCalendarBody.innerHTML = "";
         weekDaysHeader.innerHTML = "<th>Time</th>";
 
         const currentYear = baseDate.getFullYear();
 
         //console.log("The week special date is" + JSON.stringify(specialDate) );
+        const curMonthDisplay = baseDate.toLocaleString("en-AU", {
+          year: "numeric",
+          month: "long",
+          timeZone: "Australia/Sydney",
+        }).split(",")[0];
+
+        WeekMonthYear.textContent = curMonthDisplay;
 
         for (let i = 0; i < 7; i++) {
           let dayDate = new Date(baseDate);
@@ -2324,9 +2334,7 @@
           let dayHeader = document.createElement("th");
           dayHeader.textContent = dayDate.toLocaleString("default", {
             weekday: "short",
-            month: "short",
-            day: "numeric",
-            year: "numeric",
+            day:"2-digit",
           });
           weekDaysHeader.appendChild(dayHeader);
         }
