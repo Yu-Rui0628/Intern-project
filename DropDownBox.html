@@ -1314,7 +1314,7 @@
           text-align: left;
           vertical-align: top;
           width: 11%;
-          height: 60px;
+          height: 33px;
    
           overflow: auto;
           word-break: break-word;
@@ -2393,11 +2393,24 @@
           bullet.style.color = colors[colorIndex];
           eventElement.appendChild(bullet);
           let startIndex = event.normal_start_date.length - 11;
-          let formal_time = event.normal_start_date.substring(startIndex)
-          let format_time = formal_time.substring(4) + " " + formal_time.substring(8,10);
+          let formal_time = event.normal_start_date.substring(startIndex);
 
+          
+        //   function formatTime(timeStr) {
+      
+        //     let parts = timeStr.split(' ');
+        //     let time = parts[0]; 
+        //     let amPm = parts[1]; 
+
+
+        //     let timeParts = time.split(':');
+        //     let formattedTime = timeParts[0] + ':' + timeParts[1] + ' ' + amPm;
+
+        //     return formattedTime;
+        // }
+        //   console.log("THE FUCKING SHIT TIME IS" + formatTime(formal_time));
           let textNode = document.createTextNode(
-            formal_time + " " + event.service
+            event.service
           );
           eventElement.appendChild(textNode);
           colorIndex = (colorIndex + 1) % colors.length;
