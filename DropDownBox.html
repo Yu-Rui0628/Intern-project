@@ -1077,7 +1077,7 @@
           margin: 10% auto;
           padding: 20px;
           border: 1px solid #888;
-          width: 30%;
+          width: 90%;
           border-radius: 10px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           position: relative;
@@ -1274,7 +1274,8 @@
           resize: vertical;
         }
 
-        .week-calendar-container {
+        #calendar-containerid {
+          width: 100%;
           overflow-x: auto;
         }
 
@@ -1283,11 +1284,14 @@
           text-align: center;
           margin-bottom: 10px;
         }
-
+        #week-calendarid{
+          margin: 0 auto;
+          width:95%;
+        }
         #week-calendar {
           border-collapse: collapse;
           border-spacing: 10px;
-          width: 90%;
+          width: 95%;
           margin: auto;
           padding: 0 5%;
           background-color: #4ad09b;
@@ -1296,7 +1300,7 @@
         }
 
         #week-calendar th {
-          font-size: 12px;
+          font-size: 8px;
           background-color: #4ad09b;
           color: white;
           padding: 10px;
@@ -1306,14 +1310,15 @@
         #week-calendar td {
           border: 1px solid #d3d3d3;
           background-color: white;
-          padding: 10px;
+          padding: 3px;
           text-align: left;
           vertical-align: top;
-          height: 50px;
-          width: 60px;
+          width: 11%;
+          height: 60px;
+   
           overflow: auto;
           word-break: break-word;
-          font-size: 10px;
+          font-size: 5px;
           /* border-radius: 10px; */
           box-sizing: border-box;
         }
@@ -1323,7 +1328,7 @@
           height: 50px;
           overflow-y: auto;
         }
-
+        
         .event-tip {
           display: block;
           cursor: pointer;
@@ -1604,7 +1609,7 @@
     </div>
 
     <!-- Week Calendar -->
-    <div class="week-calendar-container" id="week-calendarid">
+    <div class="week-calendar" id="week-calendarid">
       <div class="week-calendar-nav">
         <button id="prevWeek" class="week-calendar-button">&lt;</button>
         <span id="WeekMonthYear"></span>
@@ -2388,8 +2393,11 @@
           bullet.style.color = colors[colorIndex];
           eventElement.appendChild(bullet);
           let startIndex = event.normal_start_date.length - 11;
+          let formal_time = event.normal_start_date.substring(startIndex)
+          let format_time = formal_time.substring(4) + " " + formal_time.substring(8,10);
+
           let textNode = document.createTextNode(
-            event.normal_start_date.substring(startIndex) + " " + event.service
+            formal_time + " " + event.service
           );
           eventElement.appendChild(textNode);
           colorIndex = (colorIndex + 1) % colors.length;
