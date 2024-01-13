@@ -1370,7 +1370,7 @@
           height: 100%;
           border-top: solid #ddd;
 
-          grid-template-columns: 8rem repeat(100, 1fr);
+          grid-template-columns: 50px repeat(100, 1fr);
           grid-template-rows: repeat(30, 1fr);
           grid-template-areas:
             "time6 stage"
@@ -1396,7 +1396,6 @@
           align-items: center;
           justify-content: center;
           height: 50px;
-          width: 50px;
           background-color: white;
           border-bottom-style: solid;
           border-color: #ddd;
@@ -1406,20 +1405,21 @@
           display: flex;
           justify-content: center;
           flex-direction: column;
-          padding: 0.5rem 1rem;
-          background-color: orange;
+          align-items: center;
+          text-align: center;
+          width: 70px;
           border-radius: 0.2rem;
           font-size: 0.8rem;
           font-weight: bold;
           line-height: 1.4;
           border-top: black;
-          width: 100px;
         }
 
         .dailyevent p {
           width: 100%;
           font-size: 0.8em;
           font-weight: normal;
+          text-align: center;
           margin: 2%;
         }
 
@@ -2819,9 +2819,14 @@
         const endTime = 21;
 
         //create time column
-        for (let i = startTime * 2; i <= endTime * 2; i++) {
-          const hour = Math.floor(i / 2);
-          const time = `${hour}:00`;
+        for (let hour = startTime; hour <= endTime; hour++) {
+
+          let time;
+          if (hour === 12) {
+            time = `${hour} pm`;
+          }else{
+            time = `${hour}` > 12 ? `${hour -12} pm`: `${hour} am`;
+          }
 
           const timeElement = document.createElement("div");
           timeElement.className = `time start-${hour}`;
@@ -2884,12 +2889,36 @@
             eTime = `${eHour + 1}`;
           }
 
+          let sDisplay;
+          if (sHour === 12) {
+            sDisplay = `${sHour}:${sMin
+            .toString()
+            .padStart(2, "0")} pm` ;
+          }else{
+            sDisplay = `${sHour}` > 12 ? `${sHour - 12}:${sMin
+            .toString()
+            .padStart(2, "0")} pm`: `${sHour}:${sMin
+            .toString()
+            .padStart(2, "0")} am`;
+          }
+
+          let eDisplay;
+          if (eHour === 12) {
+            eDisplay = `${eHour}:${eMin
+            .toString()
+            .padStart(2, "0")} pm` ;
+          }else{
+            eDisplay = `${eHour}` > 12 ? `${eHour - 12}:${eMin
+            .toString()
+            .padStart(2, "0")} pm`: `${eHour}:${eMin
+            .toString()
+            .padStart(2, "0")} am`;
+          }
+
           eventElement.className = `dailyevent color-${
             index % 6
           } start-${sHour} end-${eTime}`;
-          eventElement.textContent = `${sHour}:${sMin
-            .toString()
-            .padStart(2, "0")} - ${eHour}:${eMin.toString().padStart(2, "0")}`;
+          eventElement.textContent = `${sDisplay} - ${eDisplay}`;
 
           const eventItemList = [event.service, event.customer, event.carer]
             .map((c) => {
