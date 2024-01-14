@@ -15,7 +15,7 @@
   </head>
   <body>
     <style>
-      /* @media (min-width: 769px) {
+      @media (min-width: 769px) {
         body {
           background-color: white;
           font-family: "Times New Roman", serif;
@@ -768,7 +768,7 @@
           font-weight: 400;
           justify-content: center;
         }
-      } */
+      }
 
       @media (max-width: 768px) {
         body {
@@ -850,10 +850,8 @@
           border: none;
         }
 
-        
         #customer-dropdown,
         #calendar-dropdown {
-        
           margin-top: 15px; /* Adjusted margin-top for better spacing */
           margin-left: 5px;
           width: 70%; /* Increase width for better usability */
@@ -868,9 +866,8 @@
           font-size: 1rem; /* Adjust font size for better readability */
         }
 
-        #carer-dropdown{
-
-            margin-top: 15px; /* Adjusted margin-top for better spacing */
+        #carer-dropdown {
+          margin-top: 15px; /* Adjusted margin-top for better spacing */
           margin-left: 31px;
           width: 70%; /* Increase width for better usability */
           height: 50%; /* Increase height for better visibility and click area */
@@ -882,7 +879,6 @@
           box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
           color: #333; /* Text color for readability */
           font-size: 1rem; /* Adjust font size for better readability */
-
         }
 
         #carer-dropdown:hover,
@@ -969,7 +965,7 @@
           color: white;
           padding: 10px;
           border-radius: 15px;
-          font-size:50%;
+          font-size: 50%;
         }
 
         #calendar td {
@@ -1326,7 +1322,6 @@
         .text-cell {
           width: 100%;
           height: 50px;
-          overflow-y: auto;
         }
         
         .event-tip {
@@ -1549,6 +1544,41 @@
           justify-content: center;
         }
       }
+
+      .DayEvent{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+      }
+
+      .DayEventList{
+        background-color: #fff;
+        padding: 100px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow-y: auto;
+      }
+
+      .closeEvent{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        border-style: none;
+        background-color: #fff;
+      }
+      
+      .eventbullet{
+        cursor: pointer;
+      }
     </style>
 
     <div class="Filtercontainer">
@@ -1585,9 +1615,9 @@
 
     <div class="calendar-container" id="calendar-containerid">
       <div class="calendar-nav">
-        <button onclick="moveMonth(-1)">&lt; </button>
+        <button onclick="moveMonth(-1)">&lt;</button>
         <span id="monthYear"></span>
-        <button onclick="moveMonth(1)"> &gt;</button>
+        <button onclick="moveMonth(1)">&gt;</button>
       </div>
 
       <table id="calendar">
@@ -1629,9 +1659,9 @@
 
     <div class="daily-calendar-container" id="daily-calendarID">
       <div class="calendar-nav">
-        <button onclick="moveDay(-1)">&lt; </button>
+        <button onclick="moveDay(-1)">&lt;</button>
         <span id="dailyCalendarMonth"></span>
-        <button onclick="moveDay(1)"> &gt;</button>
+        <button onclick="moveDay(1)">&gt;</button>
       </div>
 
       <div class="daily-calendar">
@@ -1642,6 +1672,8 @@
       </div>
     </div>
 
+
+    <!-- Pop up window -->
     <div id="modal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -2236,6 +2268,14 @@
         }
       }
 
+      function createCounter(seed) {
+        return function () {
+          const tmp = seed;
+          seed++;
+          return tmp;
+        };
+      }
+
       function deploy_carer_customer() {
         var carerUpdateSelect = document.getElementById("carer_update");
         var customerUpdateSelect = document.getElementById("customer_update");
@@ -2318,18 +2358,20 @@
         const weekCalendarBody = document.getElementById("week-calendar-body");
         const weekDaysHeader = document.getElementById("week-days-header");
         const WeekMonthYear = document.getElementById("WeekMonthYear");
-        
+
         weekCalendarBody.innerHTML = "";
         weekDaysHeader.innerHTML = "<th>Time</th>";
 
         const currentYear = baseDate.getFullYear();
 
         //console.log("The week special date is" + JSON.stringify(specialDate) );
-        const curMonthDisplay = baseDate.toLocaleString("en-AU", {
-          year: "numeric",
-          month: "long",
-          timeZone: "Australia/Sydney",
-        }).split(",")[0];
+        const curMonthDisplay = baseDate
+          .toLocaleString("en-AU", {
+            year: "numeric",
+            month: "long",
+            timeZone: "Australia/Sydney",
+          })
+          .split(",")[0];
 
         WeekMonthYear.textContent = curMonthDisplay;
 
@@ -2339,7 +2381,7 @@
           let dayHeader = document.createElement("th");
           dayHeader.textContent = dayDate.toLocaleString("default", {
             weekday: "short",
-            day:"2-digit",
+            day: "2-digit",
           });
           weekDaysHeader.appendChild(dayHeader);
         }
@@ -2369,6 +2411,9 @@
         }
       }
 
+      let daySeed = 1;
+      let dayEventCount = createCounter(daySeed);
+
       function addEventsToCell(cell, cellDate, hour, specialDate) {
         let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
         let colorIndex = 0;
@@ -2383,42 +2428,77 @@
             startDate.getHours() === hour
           );
         });
-        console.log("THE events is " + JSON.stringify(events));
-        events.forEach((event) => {
-          console.log("THE week event is" + JSON.stringify(event));
-          let eventElement = document.createElement("div");
-          eventElement.classList.add("event-tip");
-          let bullet = document.createElement("span");
-          bullet.textContent = "• ";
-          bullet.style.color = colors[colorIndex];
-          eventElement.appendChild(bullet);
-          let startIndex = event.normal_start_date.length - 11;
-          let formal_time = event.normal_start_date.substring(startIndex);
 
-          
-        //   function formatTime(timeStr) {
-      
-        //     let parts = timeStr.split(' ');
-        //     let time = parts[0]; 
-        //     let amPm = parts[1]; 
+        if (events.length !== 0) {
+          let curCount = dayEventCount();
+          let Res = createEventList_Week(curCount, cell);
+          console.log("THE events is " + JSON.stringify(events));
+          let eCount = 0;
+          events.forEach((event) => {
+            console.log("THE week event is" + JSON.stringify(event));
+            let eventElement = document.createElement("div");
+            eventElement.classList.add("event-tip");
+            let bullet = document.createElement("span");
+            bullet.textContent = "• ";
+            bullet.style.color = colors[colorIndex];
+            eventElement.appendChild(bullet);
+            let startIndex = event.normal_start_date.length - 11;
+            let textNode = document.createTextNode(
+              event.normal_start_date.substring(startIndex) +
+                " " +
+                event.service
+            );
+            eventElement.appendChild(textNode);
+            colorIndex = (colorIndex + 1) % colors.length;
+            eventElement.onclick = function () {
+              showModal(event);
+            };
 
+            Res[0].appendChild(eventElement);
+            eCount++;
+          });
+          console.log(Res[0].length);
+          Res[1].textContent = `• ${eCount} events`;
+        }
+      }
 
-        //     let timeParts = time.split(':');
-        //     let formattedTime = timeParts[0] + ':' + timeParts[1] + ' ' + amPm;
+      function createEventList_Week(currCount, cell) {
+        let EventPoint = document.createElement("div");
+        EventPoint.className = "eventPoint";
 
-        //     return formattedTime;
-        // }
-        //   console.log("THE FUCKING SHIT TIME IS" + formatTime(formal_time));
-          let textNode = document.createTextNode(
-            event.service
-          );
-          eventElement.appendChild(textNode);
-          colorIndex = (colorIndex + 1) % colors.length;
-          eventElement.onclick = function () {
-            showModal(event);
-          };
-          cell.appendChild(eventElement);
-        });
+        let bullet0 = document.createElement("span");
+        bullet0.className = "eventbullet";
+
+        EventPoint.appendChild(bullet0);
+        EventPoint.onclick = function (event) {
+          showDayEvent(currCount);
+        };
+
+        let EventContainer = document.createElement("div");
+        EventContainer.className = "DayEvent";
+
+        EventContainer.id = `event-point-${currCount}`;
+
+        let EventList = document.createElement("div");
+        EventList.className = "DayEventList";
+
+        let closebutton = document.createElement("button");
+        closebutton.id = `dayevent${currCount}-close`;
+        closebutton.className = "closeEvent";
+
+        EventList.onclick = function (event) {
+            event.stopPropagation();
+            closeDayEvent(currCount);
+        };
+
+        closebutton.innerHTML = "x";
+        EventList.appendChild(closebutton);
+        EventList.id = `event-list-${currCount}`;
+        EventPoint.appendChild(EventContainer);
+        EventContainer.appendChild(EventList);
+        cell.appendChild(EventPoint);
+        
+        return [EventList, bullet0];
       }
 
       function formatHour(hour) {
@@ -2840,12 +2920,11 @@
 
         //create time column
         for (let hour = startTime; hour <= endTime; hour++) {
-
           let time;
           if (hour === 12) {
             time = `${hour} pm`;
-          }else{
-            time = `${hour}` > 12 ? `${hour -12} pm`: `${hour} am`;
+          } else {
+            time = `${hour}` > 12 ? `${hour - 12} pm` : `${hour} am`;
           }
 
           const timeElement = document.createElement("div");
@@ -2911,28 +2990,22 @@
 
           let sDisplay;
           if (sHour === 12) {
-            sDisplay = `${sHour}:${sMin
-            .toString()
-            .padStart(2, "0")} pm` ;
-          }else{
-            sDisplay = `${sHour}` > 12 ? `${sHour - 12}:${sMin
-            .toString()
-            .padStart(2, "0")} pm`: `${sHour}:${sMin
-            .toString()
-            .padStart(2, "0")} am`;
+            sDisplay = `${sHour}:${sMin.toString().padStart(2, "0")} pm`;
+          } else {
+            sDisplay =
+              `${sHour}` > 12
+                ? `${sHour - 12}:${sMin.toString().padStart(2, "0")} pm`
+                : `${sHour}:${sMin.toString().padStart(2, "0")} am`;
           }
 
           let eDisplay;
           if (eHour === 12) {
-            eDisplay = `${eHour}:${eMin
-            .toString()
-            .padStart(2, "0")} pm` ;
-          }else{
-            eDisplay = `${eHour}` > 12 ? `${eHour - 12}:${eMin
-            .toString()
-            .padStart(2, "0")} pm`: `${eHour}:${eMin
-            .toString()
-            .padStart(2, "0")} am`;
+            eDisplay = `${eHour}:${eMin.toString().padStart(2, "0")} pm`;
+          } else {
+            eDisplay =
+              `${eHour}` > 12
+                ? `${eHour - 12}:${eMin.toString().padStart(2, "0")} pm`
+                : `${eHour}:${eMin.toString().padStart(2, "0")} am`;
           }
 
           eventElement.className = `dailyevent color-${
@@ -3035,6 +3108,18 @@
           alert("End time must between 6:01 am to 9:00 pm！");
           input.value = "";
         }
+      }
+
+      function showDayEvent(counter) {
+        let dayEvent = document.getElementById(`event-point-${counter}`);
+
+          dayEvent.style.display = "flex";
+
+      }
+
+      function closeDayEvent(counter) {
+        let dayEvent = document.getElementById(`event-point-${counter}`);
+        dayEvent.style.display = "none";
       }
     </script>
   </body>
