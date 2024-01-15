@@ -2352,8 +2352,6 @@
         );
 
         createWeekCalendar(currentBaseDate, specialDate);
-
-        // setupNavigationButtons();
       }
 
       function createWeekCalendar(baseDate, specialDate) {
@@ -2536,7 +2534,8 @@
 
       function update_whole_calendar() {
         createCalendar(currentYear, currentMonth, specialDates);
-        setupWeekCalendar(specialDates);
+        createWeekCalendar(currentBaseDate, specialDates);
+        // setupWeekCalendar(specialDates);
         createDailyCal(curDay, specialDates);
       }
 
