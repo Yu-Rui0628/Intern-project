@@ -1555,12 +1555,11 @@
 
       .DayEvent{
         display: none;
-        position: fixed;
+        position:fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        height:100%;
         align-items: center;
         justify-content: center;
       }
@@ -1568,7 +1567,7 @@
       .DayEventList{
         display: flex;
         background-color: #fff;
-        padding: 100px;
+        padding: 20px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         position: relative;
@@ -2546,59 +2545,9 @@
                   eCount++;
                    
                 });
-                console.log(Res[0].length);
                 Res[1].textContent = `• ${eCount} events`;
             }
         }
-
-
-      // function addEventsToCell(cell, cellDate, hour, specialDate) {
-      //   let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
-      //   let colorIndex = 0;
-      //   let events = specialDate.filter((event) => {
-      //     let startDate = new Date(event.ios_start_date);
-      //     // console.log(`startDate: ${startDate}, cellDate: ${cellDate}, hour: ${hour}`);
-      //     //  console.log(`Date comparison: ${startDate.getDate() === cellDate.getDate() && startDate.getMonth() === cellDate.getMonth() && startDate.getFullYear() === cellDate.getFullYear() && startDate.getHours() === hour}`);
-      //     return (
-      //       startDate.getDate() === cellDate.getDate() &&
-      //       startDate.getMonth() === cellDate.getMonth() &&
-      //       startDate.getFullYear() === cellDate.getFullYear() &&
-      //       startDate.getHours() === hour
-      //     );
-      //   });
-
-      //   if (events.length !== 0) {
-      //     let curCount = dayEventCount();
-      //     let Res = createEventList_Week(curCount, cell);
-      //     console.log("THE events is " + JSON.stringify(events));
-      //     let eCount = 0;
-      //     events.forEach((event) => {
-      //       console.log("THE week event is" + JSON.stringify(event));
-      //       let eventElement = document.createElement("div");
-      //       eventElement.classList.add("event-tip");
-      //       let bullet = document.createElement("span");
-      //       bullet.textContent = "• ";
-      //       bullet.style.color = colors[colorIndex];
-      //       eventElement.appendChild(bullet);
-      //       let startIndex = event.normal_start_date.length - 11;
-      //       let textNode = document.createTextNode(
-      //         event.normal_start_date.substring(startIndex) +
-      //           " " +
-      //           event.service
-      //       );
-      //       eventElement.appendChild(textNode);
-      //       colorIndex = (colorIndex + 1) % colors.length;
-      //       eventElement.onclick = function () {
-      //         showModal(event);
-      //       };
-
-      //       Res[0].appendChild(eventElement);
-      //       eCount++;
-      //     });
-      //     console.log(Res[0].length);
-      //     Res[1].textContent = `• ${eCount} events`;
-      //   }
-      // }
 
       function createEventPoint(currCount, cell) {
         let EventPoint = document.createElement("div");
@@ -2738,15 +2687,11 @@
               
               cellM.textContent = `${date}`;
               if (daysEvents.length !== 0) {
-                let curCountM, ResM, eCountM, eventsList;
+                let curCountM, ResM, eCountM;
                 
-                if (daysEvents.length > 5){
-                  curCountM = dayEventCount();
-                  ResM = createEventPoint(curCountM, cellM);
-                  eCountM = 0;
-                } else {
-                   eventsList = document.createElement("ul");
-                }
+                curCountM = dayEventCount();
+                ResM = createEventPoint(curCountM, cellM);
+                eCountM = 0;
                 
                 daysEvents.forEach((event, index) => {
                   let eventItem = document.createElement("li");
@@ -2768,20 +2713,10 @@
                     showModal(event);
                   };
 
-                  if (daysEvents.length > 5){
                     ResM[0].appendChild(eventItem);
                     eCountM ++;
-                  } else {
-                    eventsList.appendChild(eventItem);
-                  }
-                  console.log(eventItem);
                 });
-                
-                if (daysEvents.length > 5){
                   ResM[1].textContent = `• ${eCountM} events`;
-                } else {
-                  cellM.appendChild(eventsList);
-                }
                
               }
               row.appendChild(cellM);
