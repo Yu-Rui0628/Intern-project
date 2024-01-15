@@ -1722,13 +1722,11 @@
           <input
             type="datetime-local"
             id="startTime"
-            onchange="validateTime()"
           />
           <label>End Time:</label>
           <input
             type="datetime-local"
             id="endTime"
-            onchange="validateTime2()"
           />
           <label>Change Event Type for the Shift:</label>
           <select id="eventType">
@@ -3155,68 +3153,68 @@
         createDailyCal(curDay, specialDates);
       }
 
-      function validateTime() {
-        var input = document.getElementById("startTime");
+      // function validateTime() {
+      //   var input = document.getElementById("startTime");
 
-        var value = input.value;
+      //   var value = input.value;
 
-        var date = new Date(value);
+      //   var date = new Date(value);
 
-        var StartDate = value.split("T")[0];
+      //   var StartDate = value.split("T")[0];
 
-        var EndDate = document.getElementById("endTime").value.split("T")[0];
+      //   var EndDate = document.getElementById("endTime").value.split("T")[0];
 
-        if (StartDate !== EndDate && EndDate && value) {
-          alert("Schedule should be in the same date");
-          input.value = "";
-          return;
-        }
+      //   if (StartDate !== EndDate && EndDate && value) {
+      //     alert("Schedule should be in the same date");
+      //     input.value = "";
+      //     return;
+      //   }
 
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var valid = hours >= 6 && hours < 21;
+      //   var hours = date.getHours();
+      //   var minutes = date.getMinutes();
+      //   var valid = hours >= 6 && hours < 21;
 
-        if (!valid && value) {
-          alert("Start time must between 6:00 am to 8:59 pm！");
-          input.value = "";
-        }
-      }
+      //   if (!valid && value) {
+      //     alert("Start time must between 6:00 am to 8:59 pm！");
+      //     input.value = "";
+      //   }
+      // }
 
-      function validateTime2() {
-        var StartDate = document
-          .getElementById("startTime")
-          .value.split("T")[0];
+      // function validateTime2() {
+      //   var StartDate = document
+      //     .getElementById("startTime")
+      //     .value.split("T")[0];
 
-        var input = document.getElementById("endTime");
+      //   var input = document.getElementById("endTime");
 
-        var value = input.value;
+      //   var value = input.value;
 
-        if (!StartDate) {
-          alert("Please select start time first");
-          input.value = "";
-          return;
-        }
+      //   if (!StartDate) {
+      //     alert("Please select start time first");
+      //     input.value = "";
+      //     return;
+      //   }
 
-        var date = new Date(value);
+      //   var date = new Date(value);
 
-        var EndDate = value.split("T")[0];
+      //   var EndDate = value.split("T")[0];
 
-        if (StartDate !== EndDate && value) {
-          alert("Schedule should be in the same date");
-          input.value = "";
-          return;
-        }
+      //   if (StartDate !== EndDate && value) {
+      //     alert("Schedule should be in the same date");
+      //     input.value = "";
+      //     return;
+      //   }
 
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var valid =
-          (hours === 21 && minutes === 0) || (hours > 6 && hours < 21);
+      //   var hours = date.getHours();
+      //   var minutes = date.getMinutes();
+      //   var valid =
+      //     (hours === 21 && minutes === 0) || (hours > 6 && hours < 21);
 
-        if (!valid && value) {
-          alert("End time must between 6:01 am to 9:00 pm！");
-          input.value = "";
-        }
-      }
+      //   if (!valid && value) {
+      //     alert("End time must between 6:01 am to 9:00 pm！");
+      //     input.value = "";
+      //   }
+      // }
 
       function showDayEvent(counter) {
         let dayEvent = document.getElementById(`event-point-${counter}`);
