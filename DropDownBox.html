@@ -1321,7 +1321,7 @@
    
           overflow: auto;
           word-break: break-word;
-          font-size: 4px;
+          font-size: 10px;
 
           box-sizing: border-box;
         }
@@ -1334,8 +1334,8 @@
         .event-tip {
           display: block;
           cursor: pointer;
-          width: auto;
-          height: 30px;
+          width: 100px;
+          height: 50px;
           margin-bottom: 5px;
         }
 
@@ -1565,6 +1565,7 @@
       }
 
       .DayEventList{
+        display: flex;
         background-color: #fff;
         padding: 100px;
         border-radius: 8px;
@@ -1572,6 +1573,10 @@
         position: relative;
         overflow-y: auto;
         width: 30%;
+        align-items: center;
+        justify-content: center;
+        flex-direction:column;
+        overflow-x: hidden;
       }
 
       .closeEvent{
