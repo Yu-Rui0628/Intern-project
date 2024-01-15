@@ -1741,6 +1741,9 @@
         `{Email} = '${emailToSearch}'`
       );
 
+      let daySeed = 0;
+      let dayEventCount = createCounter(daySeed);
+
       function populateDropdown(dropdownId, data, select) {
         const dropdown = document.getElementById(dropdownId);
         data.forEach((item) => {
@@ -2413,8 +2416,7 @@
         }
       }
 
-      let daySeed = 1;
-      let dayEventCount = createCounter(daySeed);
+
 
       function addEventsToCell(cell, cellDate, hour, specialDate) {
         let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
@@ -2433,7 +2435,7 @@
 
         if (events.length !== 0) {
           let curCount = dayEventCount();
-          let Res = createEventList_Week(curCount, cell);
+          let Res = createEventPoint(curCount, cell);
           console.log("THE events is " + JSON.stringify(events));
           let eCount = 0;
           events.forEach((event) => {
@@ -2459,12 +2461,12 @@
             Res[0].appendChild(eventElement);
             eCount++;
           });
-          console.log(Res[0].length);
           Res[1].textContent = `• ${eCount} events`;
+          
         }
       }
 
-      function createEventList_Week(currCount, cell) {
+      function createEventPoint(currCount, cell) {
         let EventPoint = document.createElement("div");
         EventPoint.className = "eventPoint";
 
@@ -2485,7 +2487,6 @@
         EventList.className = "DayEventList";
 
         let closebutton = document.createElement("button");
-        closebutton.id = `dayevent${currCount}-close`;
         closebutton.className = "closeEvent";
 
         EventList.onclick = function (event) {
@@ -2498,8 +2499,9 @@
         EventList.id = `event-list-${currCount}`;
         EventPoint.appendChild(EventContainer);
         EventContainer.appendChild(EventList);
-        cell.appendChild(EventPoint);
         
+        cell.appendChild(EventPoint)
+
         return [EventList, bullet0];
       }
 
@@ -2557,11 +2559,12 @@
           let row = document.createElement("tr");
 
           for (let j = 0; j < 7; j++) {
-            let cell = document.createElement("td");
+
+            let cellM = document.createElement("td");
 
             if (i === 0 && j < firstDay) {
-              cell.innerHTML = "";
-              row.appendChild(cell);
+              
+              row.appendChild(cellM);
             } else if (date > daysInMonth) {
               break;
             } else {
@@ -2594,32 +2597,59 @@
                 "purple",
                 "yellow",
               ];
-              let eventsList = document.createElement("ul");
-              daysEvents.forEach((event, index) => {
-                let eventItem = document.createElement("li");
+              // let eventsList = document.createElement("ul");
+              // cell.appendChild(eventsList);
+              
+              
+              cellM.textContent = `${date}`;
+              if (daysEvents.length !== 0) {
+                let curCountM, ResM, eCountM, eventsList;
+                
+                if (daysEvents.length > 5){
+                  curCountM = dayEventCount();
+                  ResM = createEventPoint(curCountM, cellM);
+                  eCountM = 0;
+                } else {
+                   eventsList = document.createElement("ul");
+                }
+                
+                daysEvents.forEach((event, index) => {
+                  let eventItem = document.createElement("li");
+                  let eventStartDate = new Date(event.ios_start_date);
+                  let sydneyTime = eventStartDate.toLocaleString("en-AU", {
+                    timeZone: "Australia/Sydney",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    timeZoneName: "short",
+                  });
 
-                let eventStartDate = new Date(event.ios_start_date);
-                let sydneyTime = eventStartDate.toLocaleString("en-AU", {
-                  timeZone: "Australia/Sydney",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  timeZoneName: "short",
+                  let sydneyshowTime = sydneyTime.slice(0, -4);
+                  eventItem.textContent = `${sydneyshowTime} ${event.service}`;
+
+                  eventItem.className = `color-${index % colors.length}`;
+
+                  eventItem.onclick = function () {
+                    //console.log("THE EVENT IS " +JSON.stringify(event) );
+                    showModal(event);
+                  };
+
+                  if (daysEvents.length > 5){
+                    ResM[0].appendChild(eventItem);
+                    eCountM ++;
+                  } else {
+                    eventsList.appendChild(eventItem);
+                  }
+                  console.log(eventItem);
                 });
-                let sydneyshowTime = sydneyTime.slice(0, -4);
-                eventItem.textContent = `${sydneyshowTime} ${event.service}`;
-
-                eventItem.className = `color-${index % colors.length}`;
-
-                eventItem.onclick = function () {
-                  //console.log("THE EVENT IS " +JSON.stringify(event) );
-                  showModal(event);
-                };
-                eventsList.appendChild(eventItem);
-              });
-
-              cell.innerHTML = date;
-              cell.appendChild(eventsList);
-              row.appendChild(cell);
+                
+                if (daysEvents.length > 5){
+                  ResM[1].textContent = `• ${eCountM} events`;
+                } else {
+                  cellM.appendChild(eventsList);
+                }
+               
+              }
+              row.appendChild(cellM);
               date++;
             }
           }
@@ -3114,7 +3144,6 @@
 
       function showDayEvent(counter) {
         let dayEvent = document.getElementById(`event-point-${counter}`);
-
           dayEvent.style.display = "flex";
 
       }
