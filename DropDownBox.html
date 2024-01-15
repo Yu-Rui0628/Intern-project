@@ -146,7 +146,7 @@
           content: "•";
           position: absolute;
           left: -15px;
-          top: 50%;
+          top: 38%;
           transform: translateY(-50%);
           font-size: 2em;
         }
@@ -210,13 +210,14 @@
 
           overflow: auto;
           word-break: break-word;
-          font-size: 50%;
+          font-size: 10px;
       
           box-sizing: border-box;
         }
 
         #calendar td div{
           list-style: none;
+          font-size: 10px;
         }
 
         #calendar .today {
@@ -1320,7 +1321,7 @@
    
           overflow: auto;
           word-break: break-word;
-          font-size: 6.5px;
+          font-size: 4px;
 
           box-sizing: border-box;
         }
@@ -2456,7 +2457,44 @@
           weekCalendarBody.appendChild(row);
       }
 
+      function createEventList_Week(currCount, cell) {
+        let EventPoint = document.createElement("div");
+        EventPoint.className = "eventPoint";
 
+        let bullet0 = document.createElement("span");
+        bullet0.className = "eventbullet";
+
+        EventPoint.appendChild(bullet0);
+        EventPoint.onclick = function (event) {
+          showDayEvent(currCount);
+        };
+
+        let EventContainer = document.createElement("div");
+        EventContainer.className = "DayEvent";
+
+        EventContainer.id = `event-point-${currCount}`;
+
+        let EventList = document.createElement("div");
+        EventList.className = "DayEventList";
+
+        let closebutton = document.createElement("button");
+        closebutton.id = `dayevent${currCount}-close`;
+        closebutton.className = "closeEvent";
+
+        EventList.onclick = function (event) {
+            event.stopPropagation();
+            closeDayEvent(currCount);
+        };
+
+        closebutton.innerHTML = "x";
+        EventList.appendChild(closebutton);
+        EventList.id = `event-list-${currCount}`;
+        EventPoint.appendChild(EventContainer);
+        EventContainer.appendChild(EventList);
+        cell.appendChild(EventPoint);
+        
+        return [EventList, bullet0];
+      }
 
       function addEventsToCell(cell, cellDate, startHour, endHour, specialDate) {
             let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
