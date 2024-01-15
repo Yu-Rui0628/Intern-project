@@ -143,7 +143,7 @@
         }
 
         #calendar li::before {
-          content: "•";
+          content: "• ";
           position: absolute;
           left: -15px;
           top: 38%;
@@ -544,7 +544,7 @@
           min-width: 100px;
           overflow: auto;
           word-break: break-word;
-          font-size: 13px;
+          font-size: 15px;
 
           box-sizing: border-box;
         }
@@ -899,7 +899,7 @@
           justify-content: center;
           background-color: white;
           border-radius: 25px;
-          height: 100%;
+          height: 80%;
           width: 100%;
           margin: 0 auto;
           position: relative;
@@ -919,7 +919,7 @@
         }
 
         #calendar li::before {
-          content: "•";
+          content: "• ";
           position: absolute;
           left: -3px;
           top: 50%;
@@ -974,6 +974,10 @@
           border-radius: 15px;
           font-size: 50%;
         }
+        #calendar td div{
+          list-style: none;
+          font-size: 10px;
+        }
 
         #calendar td {
           border: 1px solid #d3d3d3;
@@ -988,10 +992,11 @@
 
           overflow: auto;
           word-break: break-word;
-          font-size: 4px;
+          font-size: 6px;
           /* border-radius: 10px; */
           box-sizing: border-box;
         }
+
 
         #calendar .today {
           background-color: #a8dbd9;
@@ -1591,6 +1596,7 @@
       }
       
       .eventbullet{
+        font-size:65%;
         cursor: pointer;
       }
     </style>
