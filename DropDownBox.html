@@ -2386,81 +2386,168 @@
           weekDaysHeader.appendChild(dayHeader);
         }
 
-        for (let hour = 6; hour < 22; hour++) {
+            // Add the early morning row (00:00am to 5:59am)
+            addTimeRow(weekCalendarBody, baseDate, 0, 6, "00:00am - 5:59am", specialDate);
+
+            // Add rows for each hour from 6am to 9pm
+            for (let hour = 6; hour < 22; hour++) {
+                addTimeRow(weekCalendarBody, baseDate, hour, hour + 1, formatHour(hour), specialDate);
+            }
+
+            // Add the late night row (9:01pm to 11:59pm)
+            addTimeRow(weekCalendarBody, baseDate, 22, 24, "9:01pm - 11:59pm", specialDate);
+
+
+        // for (let hour = 6; hour < 22; hour++) {
+        //   let row = document.createElement("tr");
+        //   row.classList.add("row-cell");
+
+        //   let timeLabel = document.createElement("td");
+        //   timeLabel.textContent = formatHour(hour);
+        //   row.appendChild(timeLabel);
+
+        //   for (let day = 0; day < 7; day++) {
+        //     let cell = document.createElement("td");
+        //     let text_space = document.createElement("div");
+        //     cell.classList.add("custom-cell");
+        //     text_space.classList.add("text-cell");
+        //     cell.appendChild(text_space);
+
+        //     let cellDate = new Date(baseDate);
+        //     cellDate.setDate(baseDate.getDate() + day);
+        //     addEventsToCell(text_space, cellDate, hour, specialDate);
+        //     row.appendChild(cell);
+        //   }
+
+        //   weekCalendarBody.appendChild(row);
+        // }
+      }
+
+      function addTimeRow(weekCalendarBody, baseDate, startHour, endHour, timeLabelContent, specialDate) {
           let row = document.createElement("tr");
           row.classList.add("row-cell");
 
           let timeLabel = document.createElement("td");
-          timeLabel.textContent = formatHour(hour);
+          timeLabel.textContent = timeLabelContent;
           row.appendChild(timeLabel);
 
           for (let day = 0; day < 7; day++) {
-            let cell = document.createElement("td");
-            let text_space = document.createElement("div");
-            cell.classList.add("custom-cell");
-            text_space.classList.add("text-cell");
-            cell.appendChild(text_space);
+              let cell = document.createElement("td");
+              let text_space = document.createElement("div");
+              cell.classList.add("custom-cell");
+              text_space.classList.add("text-cell");
+              cell.appendChild(text_space);
 
-            let cellDate = new Date(baseDate);
-            cellDate.setDate(baseDate.getDate() + day);
-            addEventsToCell(text_space, cellDate, hour, specialDate);
-            row.appendChild(cell);
+              let cellDate = new Date(baseDate);
+              cellDate.setDate(baseDate.getDate() + day);
+              // Modify the addEventsToCell function to handle the startHour and endHour
+              addEventsToCell(text_space, cellDate, startHour, endHour, specialDate);
+              row.appendChild(cell);
           }
 
           weekCalendarBody.appendChild(row);
-        }
       }
 
       let daySeed = 1;
       let dayEventCount = createCounter(daySeed);
 
-      function addEventsToCell(cell, cellDate, hour, specialDate) {
-        let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
-        let colorIndex = 0;
-        let events = specialDate.filter((event) => {
-          let startDate = new Date(event.ios_start_date);
-          // console.log(`startDate: ${startDate}, cellDate: ${cellDate}, hour: ${hour}`);
-          //  console.log(`Date comparison: ${startDate.getDate() === cellDate.getDate() && startDate.getMonth() === cellDate.getMonth() && startDate.getFullYear() === cellDate.getFullYear() && startDate.getHours() === hour}`);
-          return (
-            startDate.getDate() === cellDate.getDate() &&
-            startDate.getMonth() === cellDate.getMonth() &&
-            startDate.getFullYear() === cellDate.getFullYear() &&
-            startDate.getHours() === hour
-          );
-        });
+      function addEventsToCell(cell, cellDate, startHour, endHour, specialDate) {
+            let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
+            let colorIndex = 0;
 
-        if (events.length !== 0) {
-          let curCount = dayEventCount();
-          let Res = createEventList_Week(curCount, cell);
-          console.log("THE events is " + JSON.stringify(events));
-          let eCount = 0;
-          events.forEach((event) => {
-            console.log("THE week event is" + JSON.stringify(event));
-            let eventElement = document.createElement("div");
-            eventElement.classList.add("event-tip");
-            let bullet = document.createElement("span");
-            bullet.textContent = "• ";
-            bullet.style.color = colors[colorIndex];
-            eventElement.appendChild(bullet);
-            let startIndex = event.normal_start_date.length - 11;
-            let textNode = document.createTextNode(
-              event.normal_start_date.substring(startIndex) +
-                " " +
-                event.service
-            );
-            eventElement.appendChild(textNode);
-            colorIndex = (colorIndex + 1) % colors.length;
-            eventElement.onclick = function () {
-              showModal(event);
-            };
+            let events = specialDate.filter((event) => {
+                let startDate = new Date(event.ios_start_date);
+                return (
+                    startDate.getDate() === cellDate.getDate() &&
+                    startDate.getMonth() === cellDate.getMonth() &&
+                    startDate.getFullYear() === cellDate.getFullYear() &&
+                    startDate.getHours() >= startHour &&
+                    startDate.getHours() < endHour
+                );
+            });
 
-            Res[0].appendChild(eventElement);
-            eCount++;
-          });
-          console.log(Res[0].length);
-          Res[1].textContent = `• ${eCount} events`;
+            if (events.length !== 0) {
+                let curCount = dayEventCount();
+                let Res = createEventList_Week(curCount, cell);
+                console.log("THE events is " + JSON.stringify(events));
+                let eCount = 0;
+                events.forEach((event) => {
+                  console.log("THE week event is" + JSON.stringify(event));
+                  let eventElement = document.createElement("div");
+                  eventElement.classList.add("event-tip");
+                  let bullet = document.createElement("span");
+                  bullet.textContent = "• ";
+                  bullet.style.color = colors[colorIndex];
+                  eventElement.appendChild(bullet);
+                  let startIndex = event.normal_start_date.length - 11;
+                  let textNode = document.createTextNode(
+                    event.normal_start_date.substring(startIndex) +
+                      " " +
+                      event.service
+                  );
+                  eventElement.appendChild(textNode);
+                  colorIndex = (colorIndex + 1) % colors.length;
+                  eventElement.onclick = function () {
+                    showModal(event);
+                  };
+
+                  Res[0].appendChild(eventElement);
+                  eCount++;
+                   
+                });
+                console.log(Res[0].length);
+                Res[1].textContent = `• ${eCount} events`;
+            }
         }
-      }
+
+
+      // function addEventsToCell(cell, cellDate, hour, specialDate) {
+      //   let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
+      //   let colorIndex = 0;
+      //   let events = specialDate.filter((event) => {
+      //     let startDate = new Date(event.ios_start_date);
+      //     // console.log(`startDate: ${startDate}, cellDate: ${cellDate}, hour: ${hour}`);
+      //     //  console.log(`Date comparison: ${startDate.getDate() === cellDate.getDate() && startDate.getMonth() === cellDate.getMonth() && startDate.getFullYear() === cellDate.getFullYear() && startDate.getHours() === hour}`);
+      //     return (
+      //       startDate.getDate() === cellDate.getDate() &&
+      //       startDate.getMonth() === cellDate.getMonth() &&
+      //       startDate.getFullYear() === cellDate.getFullYear() &&
+      //       startDate.getHours() === hour
+      //     );
+      //   });
+
+      //   if (events.length !== 0) {
+      //     let curCount = dayEventCount();
+      //     let Res = createEventList_Week(curCount, cell);
+      //     console.log("THE events is " + JSON.stringify(events));
+      //     let eCount = 0;
+      //     events.forEach((event) => {
+      //       console.log("THE week event is" + JSON.stringify(event));
+      //       let eventElement = document.createElement("div");
+      //       eventElement.classList.add("event-tip");
+      //       let bullet = document.createElement("span");
+      //       bullet.textContent = "• ";
+      //       bullet.style.color = colors[colorIndex];
+      //       eventElement.appendChild(bullet);
+      //       let startIndex = event.normal_start_date.length - 11;
+      //       let textNode = document.createTextNode(
+      //         event.normal_start_date.substring(startIndex) +
+      //           " " +
+      //           event.service
+      //       );
+      //       eventElement.appendChild(textNode);
+      //       colorIndex = (colorIndex + 1) % colors.length;
+      //       eventElement.onclick = function () {
+      //         showModal(event);
+      //       };
+
+      //       Res[0].appendChild(eventElement);
+      //       eCount++;
+      //     });
+      //     console.log(Res[0].length);
+      //     Res[1].textContent = `• ${eCount} events`;
+      //   }
+      // }
 
       function createEventList_Week(currCount, cell) {
         let EventPoint = document.createElement("div");
