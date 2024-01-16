@@ -144,11 +144,8 @@
 
         #calendar li::before {
           content: "• ";
-          position: absolute;
-          left: -15px;
-          top: 38%;
+          position:relative;
           transform: translateY(-50%);
-          font-size: 2em;
         }
 
         .color-0::before {
@@ -210,14 +207,14 @@
 
           overflow: auto;
           word-break: break-word;
-          font-size: 10px;
-      
+          font-size: 25pt;
+          font-weight: bold;
           box-sizing: border-box;
         }
 
         #calendar td div{
           list-style: none;
-          font-size: 10px;
+          font-size: 20pt;
         }
 
         #calendar .today {
@@ -737,11 +734,8 @@
 
         #calendar li::before {
           content: "• ";
-          position: absolute;
-          left: -3px;
-          top: 50%;
+          position: relative;
           transform: translateY(-50%);
-          font-size: 1em;
         }
 
         .color-0::before {
@@ -1419,7 +1413,6 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         position: relative;
         overflow-y: auto;
-        width: 80%;
         align-items: center;
         justify-content: center;
         flex-direction:column;
@@ -2260,30 +2253,6 @@
             // Add the late night row (9:01pm to 11:59pm)
             addTimeRow(weekCalendarBody, baseDate, 22, 24, "9:01pm - 11:59pm", specialDate);
 
-
-        // for (let hour = 6; hour < 22; hour++) {
-        //   let row = document.createElement("tr");
-        //   row.classList.add("row-cell");
-
-        //   let timeLabel = document.createElement("td");
-        //   timeLabel.textContent = formatHour(hour);
-        //   row.appendChild(timeLabel);
-
-        //   for (let day = 0; day < 7; day++) {
-        //     let cell = document.createElement("td");
-        //     let text_space = document.createElement("div");
-        //     cell.classList.add("custom-cell");
-        //     text_space.classList.add("text-cell");
-        //     cell.appendChild(text_space);
-
-        //     let cellDate = new Date(baseDate);
-        //     cellDate.setDate(baseDate.getDate() + day);
-        //     addEventsToCell(text_space, cellDate, hour, specialDate);
-        //     row.appendChild(cell);
-        //   }
-
-        //   weekCalendarBody.appendChild(row);
-        // }
       }
 
       function addTimeRow(weekCalendarBody, baseDate, startHour, endHour, timeLabelContent, specialDate) {
