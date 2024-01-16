@@ -82,14 +82,14 @@
         #Carer_id,
         #Customer_id,
         #Calendar_id {
-          font-size: 1.1rem; 
-          font-weight: bold; 
-          color: #333; 
+          font-size: 1.1rem;
+          font-weight: bold;
+          color: #333;
           padding: 10px 0;
-          margin-bottom: 10px; 
+          margin-bottom: 10px;
           text-transform: uppercase;
           display: block;
-          background-color: transparent; 
+          background-color: transparent;
           border-radius: 0;
           color: #4ad09b;
           border: none;
@@ -98,24 +98,24 @@
         #carer-dropdown,
         #customer-dropdown,
         #calendar-dropdown {
-          margin-top: 15px; 
+          margin-top: 15px;
           margin-left: 5px;
-          width: 70%; 
-          height: 50%; 
+          width: 70%;
+          height: 50%;
           box-sizing: border-box;
-          border: 2px solid #4ad09b; 
+          border: 2px solid #4ad09b;
           border-radius: 5px;
-          padding: 5px; 
-          background-color: #fff; 
-          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
-          color: #333; 
-          font-size: 1rem; 
+          padding: 5px;
+          background-color: #fff;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+          color: #333;
+          font-size: 1rem;
         }
 
         #carer-dropdown:hover,
         #customer-dropdown:hover,
         #calendar-dropdown:hover {
-          border-color: #369f8c; 
+          border-color: #369f8c;
         }
 
         .Filtercontainer {
@@ -128,8 +128,8 @@
           width: 100%;
           margin: 0 auto;
           position: relative;
-          box-shadow: 0 4px 8px rgba(74, 208, 155, 0.5); 
-          padding: 20px; 
+          box-shadow: 0 4px 8px rgba(74, 208, 155, 0.5);
+          padding: 20px;
         }
         #calendar ul {
           list-style-type: none;
@@ -144,7 +144,7 @@
 
         #calendar li::before {
           content: "• ";
-          position:relative;
+          position: relative;
           transform: translateY(-50%);
         }
 
@@ -201,7 +201,7 @@
           padding: 10px;
           text-align: left;
           vertical-align: top;
-         
+
           width: 14%;
           height: 120px;
 
@@ -212,7 +212,7 @@
           box-sizing: border-box;
         }
 
-        #calendar td div{
+        #calendar td div {
           list-style: none;
           font-size: 20pt;
         }
@@ -408,8 +408,6 @@
           background-color: #369f8c;
         }
 
-
-
         .edit-schedule-popup {
           display: none;
           position: fixed;
@@ -551,7 +549,7 @@
           height: 60px;
           overflow-y: auto;
         }
- 
+
         .event-tip {
           display: block;
           cursor: pointer;
@@ -575,8 +573,6 @@
           color: white;
         }
 
-
-
         .daily-calendar {
           border-collapse: separate;
           border-spacing: 10px;
@@ -587,7 +583,6 @@
           height: 100%;
           overflow-y: hidden;
         }
-
       }
 
       @media (max-width: 768px) {
@@ -785,7 +780,7 @@
           border-radius: 15px;
           font-size: 50%;
         }
-        #calendar td div{
+        #calendar td div {
           list-style: none;
           font-size: 10px;
         }
@@ -807,7 +802,6 @@
           /* border-radius: 10px; */
           box-sizing: border-box;
         }
-
 
         #calendar .today {
           background-color: #a8dbd9;
@@ -1103,9 +1097,9 @@
           text-align: center;
           margin-bottom: 10px;
         }
-        #week-calendarid{
+        #week-calendarid {
           margin: 0 auto;
-          width:95%;
+          width: 95%;
         }
         #week-calendar {
           border-collapse: collapse;
@@ -1134,7 +1128,7 @@
           vertical-align: top;
           width: 11%;
           height: 15px;
-   
+
           overflow: auto;
           word-break: break-word;
           font-size: 10px;
@@ -1144,9 +1138,9 @@
 
         .text-cell {
           width: 100%;
-          height:20px;
+          height: 20px;
         }
-        
+
         .event-tip {
           display: block;
           cursor: pointer;
@@ -1184,228 +1178,233 @@
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           /* border-radius: 15px; */
           height: 100%;
-          
         }
 
         .daily-calendar-body {
           grid-template-columns: 15% repeat(50, 1fr) !important;
         }
-
       }
 
       .daily-calendar-body {
-          display: grid;
-          grid-column-gap: 0.5rem;
-          height: 100%;
-          border-top: solid #ddd;
-          overflow-y: hidden;
-          overflow-x: auto;
-          grid-template-columns: 8rem repeat(50, 1fr);
-          grid-template-rows: repeat(18, 1fr);
-          grid-template-areas:
-            "time0 stage"
-            "time6 stage"
-            "time7 stage"
-            "time8 stage"
-            "time9 stage"
-            "time10 stage"
-            "time11 stage"
-            "time12 stage"
-            "time13 stage"
-            "time14 stage"
-            "time15 stage"
-            "time16 stage"
-            "time17 stage"
-            "time18 stage"
-            "time19 stage"
-            "time20 stage"
-            "time21 stage"
-            "time22 stage";
-        }
+        display: grid;
+        grid-column-gap: 0.5rem;
+        height: 100%;
+        border-top: solid #ddd;
+        overflow-y: auto;
+        overflow-x: auto;
+        grid-template-columns: 8rem repeat(30, 1fr);
+        grid-template-rows: repeat(24, 1fr);
+        grid-template-areas:
+          "time0 stage"
+          "time1 stage"
+          "time2 stage"
+          "time3 stage"
+          "time4 stage"
+          "time5 stage"
+          "time6 stage"
+          "time7 stage"
+          "time8 stage"
+          "time9 stage"
+          "time10 stage"
+          "time11 stage"
+          "time12 stage"
+          "time13 stage"
+          "time14 stage"
+          "time15 stage"
+          "time16 stage"
+          "time17 stage"
+          "time18 stage"
+          "time19 stage"
+          "time20 stage"
+          "time21 stage"
+          "time22 stage"
+          "time23 stage"
+          "time24 stage"
+          ;
+      }
 
-        .time {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 100%;
-          background-color: white;
-          border-bottom-style: solid;
-          border-color: #ddd;
-          position: sticky;
-          left: 0;
-        }
+      .time {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background-color: white;
+        border-bottom-style: solid;
+        border-color: #ddd;
+        position: sticky;
+        left: 0;
+      }
 
-        .dailyevent {
-          padding-top: 0.5rem;
-          display: flex;
-          justify-content: center;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          width: 70px;
-          border-radius: 0.2rem;
-          font-size: 0.8rem;
-          font-weight: bold;
-          line-height: 1.4;
-          border-top: black;
-        }
+      .dailyevent {
+        padding-top: 0.5rem;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 70px;
+        border-radius: 0.2rem;
+        font-size: 0.8rem;
+        font-weight: bold;
+        line-height: 1.4;
+        border-top: black;
+      }
 
-        .dailyevent p {
-          width: 100%;
-          font-size: 0.8em;
-          font-weight: normal;
-          text-align: center;
-          margin: 2%;
-        }
+      .dailyevent p {
+        width: 100%;
+        font-size: 0.8em;
+        font-weight: normal;
+        text-align: center;
+        margin: 2%;
+      }
 
-        .dailyevent.start-0 {
-          grid-row-start: time0;
-        }
-        .dailyevent.start-22 {
-          grid-row-start: time22;
-        }
-        .dailyevent.start-6 {
-          grid-row-start: time6;
-        }
-        .dailyevent.start-7 {
-          grid-row-start: time7;
-        }
-        .dailyevent.start-8 {
-          grid-row-start: time8;
-        }
-        .dailyevent.start-9 {
-          grid-row-start: time9;
-        }
-        .dailyevent.start-10 {
-          grid-row-start: time10;
-        }
-        .dailyevent.start-11 {
-          grid-row-start: time11;
-        }
-        .dailyevent.start-12 {
-          grid-row-start: time12;
-        }
-        .dailyevent.start-13 {
-          grid-row-start: time13;
-        }
-        .dailyevent.start-14 {
-          grid-row-start: time14;
-        }
-        .dailyevent.start-15 {
-          grid-row-start: time15;
-        }
-        .dailyevent.start-16 {
-          grid-row-start: time16;
-        }
-        .dailyevent.start-17 {
-          grid-row-start: time17;
-        }
-        .dailyevent.start-18 {
-          grid-row-start: time18;
-        }
-        .dailyevent.start-19 {
-          grid-row-start: time19;
-        }
-        .dailyevent.start-20 {
-          grid-row-start: time20;
-        }
+      .dailyevent.start-0 {
+        grid-row-start: time0;
+      }
+      .dailyevent.start-22 {
+        grid-row-start: time22;
+      }
+      .dailyevent.start-6 {
+        grid-row-start: time6;
+      }
+      .dailyevent.start-7 {
+        grid-row-start: time7;
+      }
+      .dailyevent.start-8 {
+        grid-row-start: time8;
+      }
+      .dailyevent.start-9 {
+        grid-row-start: time9;
+      }
+      .dailyevent.start-10 {
+        grid-row-start: time10;
+      }
+      .dailyevent.start-11 {
+        grid-row-start: time11;
+      }
+      .dailyevent.start-12 {
+        grid-row-start: time12;
+      }
+      .dailyevent.start-13 {
+        grid-row-start: time13;
+      }
+      .dailyevent.start-14 {
+        grid-row-start: time14;
+      }
+      .dailyevent.start-15 {
+        grid-row-start: time15;
+      }
+      .dailyevent.start-16 {
+        grid-row-start: time16;
+      }
+      .dailyevent.start-17 {
+        grid-row-start: time17;
+      }
+      .dailyevent.start-18 {
+        grid-row-start: time18;
+      }
+      .dailyevent.start-19 {
+        grid-row-start: time19;
+      }
+      .dailyevent.start-20 {
+        grid-row-start: time20;
+      }
 
+      .dailyevent.end-0 {
+        grid-row-end: time0;
+      }
+      .dailyevent.end-22 {
+        grid-row-end: time22;
+      }
 
-        .dailyevent.end-0 {
-          grid-row-end: time0;
-        }
-        .dailyevent.end-22 {
-          grid-row-end: time22;
-        }
+      .dailyevent.end-7 {
+        grid-row-end: time7;
+      }
+      .dailyevent.end-8 {
+        grid-row-end: time8;
+      }
+      .dailyevent.end-9 {
+        grid-row-end: time9;
+      }
+      .dailyevent.end-10 {
+        grid-row-end: time10;
+      }
+      .dailyevent.end-11 {
+        grid-row-end: time11;
+      }
+      .dailyevent.end-12 {
+        grid-row-end: time12;
+      }
+      .dailyevent.end-13 {
+        grid-row-end: time13;
+      }
+      .dailyevent.end-14 {
+        grid-row-end: time14;
+      }
+      .dailyevent.end-15 {
+        grid-row-end: time15;
+      }
+      .dailyevent.end-16 {
+        grid-row-end: time16;
+      }
+      .dailyevent.end-17 {
+        grid-row-end: time17;
+      }
+      .dailyevent.end-18 {
+        grid-row-end: time18;
+      }
+      .dailyevent.end-19 {
+        grid-row-end: time19;
+      }
+      .dailyevent.end-20 {
+        grid-row-end: time20;
+      }
+      .dailyevent.end-21 {
+        grid-row-end: time21;
+      }
 
-        .dailyevent.end-7 {
-          grid-row-end: time7;
-        }
-        .dailyevent.end-8 {
-          grid-row-end: time8;
-        }
-        .dailyevent.end-9 {
-          grid-row-end: time9;
-        }
-        .dailyevent.end-10 {
-          grid-row-end: time10;
-        }
-        .dailyevent.end-11 {
-          grid-row-end: time11;
-        }
-        .dailyevent.end-12 {
-          grid-row-end: time12;
-        }
-        .dailyevent.end-13 {
-          grid-row-end: time13;
-        }
-        .dailyevent.end-14 {
-          grid-row-end: time14;
-        }
-        .dailyevent.end-15 {
-          grid-row-end: time15;
-        }
-        .dailyevent.end-16 {
-          grid-row-end: time16;
-        }
-        .dailyevent.end-17 {
-          grid-row-end: time17;
-        }
-        .dailyevent.end-18 {
-          grid-row-end: time18;
-        }
-        .dailyevent.end-19 {
-          grid-row-end: time19;
-        }
-        .dailyevent.end-20 {
-          grid-row-end: time20;
-        }
-        .dailyevent.end-21 {
-          grid-row-end: time21;
-        }
+      .dailyevent.color-0 {
+        background-color: #ffa726;
+      }
+      .dailyevent.color-1 {
+        background-color: #9ccc65;
+      }
+      .dailyevent.color-2 {
+        background-color: #ff8a65;
+      }
+      .dailyevent.color-3 {
+        background-color: #b3e5fc;
+      }
+      .dailyevent.color-4 {
+        background-color: #81d4fa;
+      }
+      .dailyevent.color-5 {
+        background-color: #26c6da;
+      }
 
-        .dailyevent.color-0 {
-          background-color: #ffa726;
-        }
-        .dailyevent.color-1 {
-          background-color: #9ccc65;
-        }
-        .dailyevent.color-2 {
-          background-color: #ff8a65;
-        }
-        .dailyevent.color-3 {
-          background-color: #b3e5fc;
-        }
-        .dailyevent.color-4 {
-          background-color: #81d4fa;
-        }
-        .dailyevent.color-5 {
-          background-color: #26c6da;
-        }
+      #DateBox {
+        display: flex;
+        background-color: #4ad09b;
+        height: 42px;
+        font-size: 20px;
+        text-size-adjust: 100%;
+        align-items: center;
+        font-weight: 400;
+        justify-content: center;
+      }
 
-        #DateBox {
-          display: flex;
-          background-color: #4ad09b;
-          height: 42px;
-          font-size: 20px;
-          text-size-adjust: 100%;
-          align-items: center;
-          font-weight: 400;
-          justify-content: center;
-        }
-
-      .DayEvent{
+      .DayEvent {
         display: none;
-        position:fixed;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height:100%;
+        height: 100%;
         align-items: center;
         justify-content: center;
       }
 
-      .DayEventList{
+      .DayEventList {
         display: flex;
         background-color: #fff;
         padding: 20px;
@@ -1415,11 +1414,11 @@
         overflow-y: auto;
         align-items: center;
         justify-content: center;
-        flex-direction:column;
+        flex-direction: column;
         overflow-x: hidden;
       }
 
-      .closeEvent{
+      .closeEvent {
         position: absolute;
         top: 10px;
         right: 10px;
@@ -1428,13 +1427,11 @@
         border-style: none;
         background-color: #fff;
       }
-      
-      .eventbullet{
-        font-size:65%;
+
+      .eventbullet {
+        font-size: 65%;
         cursor: pointer;
       }
-
-
     </style>
 
     <div class="Filtercontainer">
@@ -1524,11 +1521,9 @@
         <div id="DateBox">
           <span id="dailyCalendarDay"></span>
         </div>
-        <div class="daily-calendar-body" , id="DailyBody">
-        </div>
-        </div>
+        <div class="daily-calendar-body" , id="DailyBody"></div>
       </div>
-
+    </div>
 
     <!-- Pop up window -->
     <div id="modal" class="modal">
@@ -1559,11 +1554,13 @@
           <label>Start Time:</label>
           <input
             type="datetime-local"
+            onchange="validateTime()"
             id="startTime"
           />
           <label>End Time:</label>
           <input
             type="datetime-local"
+            onchange="validateTime2()"
             id="endTime"
           />
           <label>Change Event Type for the Shift:</label>
@@ -2242,42 +2239,75 @@
           weekDaysHeader.appendChild(dayHeader);
         }
 
-            // Add the early morning row (00:00am to 5:59am)
-            addTimeRow(weekCalendarBody, baseDate, 0, 6, "00:00am - 5:59am", specialDate);
+        // Add the early morning row (00:00am to 5:59am)
+        addTimeRow(
+          weekCalendarBody,
+          baseDate,
+          0,
+          6,
+          "00:00am - 5:59am",
+          specialDate
+        );
 
-            // Add rows for each hour from 6am to 9pm
-            for (let hour = 6; hour < 22; hour++) {
-                addTimeRow(weekCalendarBody, baseDate, hour, hour + 1, formatHour(hour), specialDate);
-            }
+        // Add rows for each hour from 6am to 9pm
+        for (let hour = 6; hour < 22; hour++) {
+          addTimeRow(
+            weekCalendarBody,
+            baseDate,
+            hour,
+            hour + 1,
+            formatHour(hour),
+            specialDate
+          );
+        }
 
-            // Add the late night row (9:01pm to 11:59pm)
-            addTimeRow(weekCalendarBody, baseDate, 22, 24, "9:01pm - 11:59pm", specialDate);
-
+        // Add the late night row (9:01pm to 11:59pm)
+        addTimeRow(
+          weekCalendarBody,
+          baseDate,
+          22,
+          24,
+          "9:01pm - 11:59pm",
+          specialDate
+        );
       }
 
-      function addTimeRow(weekCalendarBody, baseDate, startHour, endHour, timeLabelContent, specialDate) {
-          let row = document.createElement("tr");
-          row.classList.add("row-cell");
+      function addTimeRow(
+        weekCalendarBody,
+        baseDate,
+        startHour,
+        endHour,
+        timeLabelContent,
+        specialDate
+      ) {
+        let row = document.createElement("tr");
+        row.classList.add("row-cell");
 
-          let timeLabel = document.createElement("td");
-          timeLabel.textContent = timeLabelContent;
-          row.appendChild(timeLabel);
+        let timeLabel = document.createElement("td");
+        timeLabel.textContent = timeLabelContent;
+        row.appendChild(timeLabel);
 
-          for (let day = 0; day < 7; day++) {
-              let cell = document.createElement("td");
-              let text_space = document.createElement("div");
-              cell.classList.add("custom-cell");
-              text_space.classList.add("text-cell");
-              cell.appendChild(text_space);
+        for (let day = 0; day < 7; day++) {
+          let cell = document.createElement("td");
+          let text_space = document.createElement("div");
+          cell.classList.add("custom-cell");
+          text_space.classList.add("text-cell");
+          cell.appendChild(text_space);
 
-              let cellDate = new Date(baseDate);
-              cellDate.setDate(baseDate.getDate() + day);
-              // Modify the addEventsToCell function to handle the startHour and endHour
-              addEventsToCell(text_space, cellDate, startHour, endHour, specialDate);
-              row.appendChild(cell);
-          }
+          let cellDate = new Date(baseDate);
+          cellDate.setDate(baseDate.getDate() + day);
+          // Modify the addEventsToCell function to handle the startHour and endHour
+          addEventsToCell(
+            text_space,
+            cellDate,
+            startHour,
+            endHour,
+            specialDate
+          );
+          row.appendChild(cell);
+        }
 
-          weekCalendarBody.appendChild(row);
+        weekCalendarBody.appendChild(row);
       }
 
       function createEventList_Week(currCount, cell) {
@@ -2305,8 +2335,8 @@
         closebutton.className = "closeEvent";
 
         EventList.onclick = function (event) {
-            event.stopPropagation();
-            closeDayEvent(currCount);
+          event.stopPropagation();
+          closeDayEvent(currCount);
         };
 
         closebutton.innerHTML = "x";
@@ -2315,57 +2345,62 @@
         EventPoint.appendChild(EventContainer);
         EventContainer.appendChild(EventList);
         cell.appendChild(EventPoint);
-        
+
         return [EventList, bullet0];
       }
 
-      function addEventsToCell(cell, cellDate, startHour, endHour, specialDate) {
-            let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
-            let colorIndex = 0;
+      function addEventsToCell(
+        cell,
+        cellDate,
+        startHour,
+        endHour,
+        specialDate
+      ) {
+        let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
+        let colorIndex = 0;
 
-            let events = specialDate.filter((event) => {
-                let startDate = new Date(event.ios_start_date);
-                return (
-                    startDate.getDate() === cellDate.getDate() &&
-                    startDate.getMonth() === cellDate.getMonth() &&
-                    startDate.getFullYear() === cellDate.getFullYear() &&
-                    startDate.getHours() >= startHour &&
-                    startDate.getHours() < endHour
-                );
-            });
+        let events = specialDate.filter((event) => {
+          let startDate = new Date(event.ios_start_date);
+          return (
+            startDate.getDate() === cellDate.getDate() &&
+            startDate.getMonth() === cellDate.getMonth() &&
+            startDate.getFullYear() === cellDate.getFullYear() &&
+            startDate.getHours() >= startHour &&
+            startDate.getHours() < endHour
+          );
+        });
 
-            if (events.length !== 0) {
-                let curCount = dayEventCount();
-                let Res = createEventList_Week(curCount, cell);
-                console.log("THE events is " + JSON.stringify(events));
-                let eCount = 0;
-                events.forEach((event) => {
-                  console.log("THE week event is" + JSON.stringify(event));
-                  let eventElement = document.createElement("div");
-                  eventElement.classList.add("event-tip");
-                  let bullet = document.createElement("span");
-                  bullet.textContent = "• ";
-                  bullet.style.color = colors[colorIndex];
-                  eventElement.appendChild(bullet);
-                  let startIndex = event.normal_start_date.length - 11;
-                  let textNode = document.createTextNode(
-                    event.normal_start_date.substring(startIndex) +
-                      " " +
-                      event.service
-                  );
-                  eventElement.appendChild(textNode);
-                  colorIndex = (colorIndex + 1) % colors.length;
-                  eventElement.onclick = function () {
-                    showModal(event);
-                  };
+        if (events.length !== 0) {
+          let curCount = dayEventCount();
+          let Res = createEventList_Week(curCount, cell);
+          console.log("THE events is " + JSON.stringify(events));
+          let eCount = 0;
+          events.forEach((event) => {
+            console.log("THE week event is" + JSON.stringify(event));
+            let eventElement = document.createElement("div");
+            eventElement.classList.add("event-tip");
+            let bullet = document.createElement("span");
+            bullet.textContent = "• ";
+            bullet.style.color = colors[colorIndex];
+            eventElement.appendChild(bullet);
+            let startIndex = event.normal_start_date.length - 11;
+            let textNode = document.createTextNode(
+              event.normal_start_date.substring(startIndex) +
+                " " +
+                event.service
+            );
+            eventElement.appendChild(textNode);
+            colorIndex = (colorIndex + 1) % colors.length;
+            eventElement.onclick = function () {
+              showModal(event);
+            };
 
-                  Res[0].appendChild(eventElement);
-                  eCount++;
-                   
-                });
-                Res[1].textContent = `• ${eCount} events`;
-            }
+            Res[0].appendChild(eventElement);
+            eCount++;
+          });
+          Res[1].textContent = `• ${eCount} events`;
         }
+      }
 
       function createEventPoint(currCount, cell) {
         let EventPoint = document.createElement("div");
@@ -2391,8 +2426,8 @@
         closebutton.className = "closeEvent";
 
         EventList.onclick = function (event) {
-            event.stopPropagation();
-            closeDayEvent(currCount);
+          event.stopPropagation();
+          closeDayEvent(currCount);
         };
 
         closebutton.innerHTML = "x";
@@ -2400,8 +2435,8 @@
         EventList.id = `event-list-${currCount}`;
         EventPoint.appendChild(EventContainer);
         EventContainer.appendChild(EventList);
-        
-        cell.appendChild(EventPoint)
+
+        cell.appendChild(EventPoint);
 
         return [EventList, bullet0];
       }
@@ -2461,11 +2496,9 @@
           let row = document.createElement("tr");
 
           for (let j = 0; j < 7; j++) {
-
             let cellM = document.createElement("td");
 
             if (i === 0 && j < firstDay) {
-              
               row.appendChild(cellM);
             } else if (date > daysInMonth) {
               break;
@@ -2501,16 +2534,15 @@
               ];
               // let eventsList = document.createElement("ul");
               // cell.appendChild(eventsList);
-              
-              
+
               cellM.textContent = `${date}`;
               if (daysEvents.length !== 0) {
                 let curCountM, ResM, eCountM;
-                
+
                 curCountM = dayEventCount();
                 ResM = createEventPoint(curCountM, cellM);
                 eCountM = 0;
-                
+
                 daysEvents.forEach((event, index) => {
                   let eventItem = document.createElement("li");
                   let eventStartDate = new Date(event.ios_start_date);
@@ -2531,11 +2563,10 @@
                     showModal(event);
                   };
 
-                    ResM[0].appendChild(eventItem);
-                    eCountM ++;
+                  ResM[0].appendChild(eventItem);
+                  eCountM++;
                 });
-                  ResM[1].textContent = `• ${eCountM} events`;
-               
+                ResM[1].textContent = `• ${eCountM} events`;
               }
               row.appendChild(cellM);
               date++;
@@ -2919,24 +2950,21 @@
 
           if (eHour === 21) {
             eTime = eHour;
-          } else if (eHour < 6){
+          } else if (eHour < 6) {
             eTime = 0;
-          } else if (eHour > 21){
+          } else if (eHour > 21) {
             eTime = 22;
-          }
-          else {
+          } else {
             eTime = eHour + 1;
           }
 
-           if (sHour < 6){
+          if (sHour < 6) {
             sTime = 0;
-          } else if (sHour >= 21){
+          } else if (sHour >= 21) {
             sTime = 22;
-          }
-          else {
+          } else {
             sTime = sHour + 1;
           }
-
 
           let sDisplay;
           if (sHour === 12) {
@@ -2997,73 +3025,88 @@
         createDailyCal(curDay, specialDates);
       }
 
-      // function validateTime() {
-      //   var input = document.getElementById("startTime");
+      function validateTime() {
+        let input = document.getElementById("startTime");
 
-      //   var value = input.value;
+        let value = input.value;
 
-      //   var date = new Date(value);
+        let date = new Date(value);
 
-      //   var StartDate = value.split("T")[0];
+        let StartDate = value.split("T")[0];
 
-      //   var EndDate = document.getElementById("endTime").value.split("T")[0];
+        var EndDate = document.getElementById("endTime").value.split("T")[0];
 
-      //   if (StartDate !== EndDate && EndDate && value) {
-      //     alert("Schedule should be in the same date");
-      //     input.value = "";
-      //     return;
-      //   }
+        if (StartDate !== EndDate && EndDate && value) {
+          alert("Schedule should be in the same date");
+          input.value = "";
+          return;
+        }
 
-      //   var hours = date.getHours();
-      //   var minutes = date.getMinutes();
-      //   var valid = hours >= 6 && hours < 21;
+        
 
-      //   if (!valid && value) {
-      //     alert("Start time must between 6:00 am to 8:59 pm！");
-      //     input.value = "";
-      //   }
-      // }
+        // var hours = date.getHours();
+        // var minutes = date.getMinutes();
+        // var valid = hours >= 6 && hours < 21;
 
-      // function validateTime2() {
-      //   var StartDate = document
-      //     .getElementById("startTime")
-      //     .value.split("T")[0];
+        // if (!valid && value) {
+        //   alert("Start time must between 6:00 am to 8:59 pm！");
+        //   input.value = "";
+        // }
+      }
 
-      //   var input = document.getElementById("endTime");
+      function validateTime2() {
+        let StartDate = document
+          .getElementById("startTime")
+          .value.split("T")[0];
 
-      //   var value = input.value;
+        
+        let input = document.getElementById("endTime");
 
-      //   if (!StartDate) {
-      //     alert("Please select start time first");
-      //     input.value = "";
-      //     return;
-      //   }
+        let value = input.value;
 
-      //   var date = new Date(value);
+        if (!StartDate) {
+          alert("Please select start time first");
+          input.value = "";
+          return;
+        }
 
-      //   var EndDate = value.split("T")[0];
+        let ETime = new Date(value);
+        let STime = new Date(document
+          .getElementById("startTime")
+          .value);
 
-      //   if (StartDate !== EndDate && value) {
-      //     alert("Schedule should be in the same date");
-      //     input.value = "";
-      //     return;
-      //   }
+        let Ehour = ETime.getTime();
+        let Shour = STime.getTime();
+        console.log(Ehour, "  ", Shour)
 
-      //   var hours = date.getHours();
-      //   var minutes = date.getMinutes();
-      //   var valid =
-      //     (hours === 21 && minutes === 0) || (hours > 6 && hours < 21);
+        let EndDate = value.split("T")[0];
 
-      //   if (!valid && value) {
-      //     alert("End time must between 6:01 am to 9:00 pm！");
-      //     input.value = "";
-      //   }
-      // }
+        if (StartDate !== EndDate && value) {
+          alert("Schedule should be in the same date");
+          input.value = "";
+          return;
+        }
+
+        if (Ehour < Shour){
+          alert("End time must be later than start time！");
+          input.value = "";
+          return;
+        }
+
+        // var hours = date.getHours();
+        // var minutes = date.getMinutes();
+        // var valid =
+        //   (hours === 21 && minutes === 0) || (hours > 6 && hours < 21);
+
+        // if (!valid && value) {
+        //   alert("End time must between 6:01 am to 9:00 pm！");
+        //   input.value = "";
+        // }
+      }
 
       function showDayEvent(counter) {
         let dayEvent = document.getElementById(`event-point-${counter}`);
-          dayEvent.style.display = "flex";
-
+        dayEvent.style.display = "flex";
       }
 
       function closeDayEvent(counter) {
