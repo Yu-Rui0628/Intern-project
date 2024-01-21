@@ -6,6 +6,41 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.css"
     />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const times = [];
+          for (let i = 0; i< 24; i++){
+            times.push(`time${i}`);
+          }
+
+  
+        times.forEach(time => {
+          const className = `.dailyevent.start-${time.slice(4)}`;
+          const rule = `
+            ${className} {
+              grid-row-start: ${time}s;
+            }
+          `;
+          console.log(className);
+          const style = document.createElement('style');
+          style.textContent = rule;
+          document.head.appendChild(style);
+        });
+
+        times.forEach(time => {
+          const className = `.dailyevent.end-${time.slice(4)}`;
+          const rule = `
+            ${className} {
+              grid-row-end: ${time}e;
+            }
+          `;
+          const style = document.createElement('style');
+          style.textContent = rule;
+          document.head.appendChild(style);
+        });
+      });
+    </script>
     <style>
       #week-calendarid,
       #daily-calendarID {
@@ -1174,7 +1209,7 @@
           margin: auto;
           padding: 0 5%;
           /* background-color: white; */
-          overflow-y: hidden;
+          overflow-y: auto;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           /* border-radius: 15px; */
           height: 100%;
@@ -1188,38 +1223,60 @@
       .daily-calendar-body {
         display: grid;
         grid-column-gap: 0.5rem;
-        height: 100%;
+        height: 100vh;
         border-top: solid #ddd;
         overflow-y: auto;
-        overflow-x: auto;
-        grid-template-columns: 8rem repeat(30, 1fr);
-        grid-template-rows: repeat(24, 1fr);
+        grid-template-columns: 8rem repeat(20, 1fr);
+        grid-template-rows: repeat(48, 1fr);
         grid-template-areas:
-          "time0 stage"
-          "time1 stage"
-          "time2 stage"
-          "time3 stage"
-          "time4 stage"
-          "time5 stage"
-          "time6 stage"
-          "time7 stage"
-          "time8 stage"
-          "time9 stage"
-          "time10 stage"
-          "time11 stage"
-          "time12 stage"
-          "time13 stage"
-          "time14 stage"
-          "time15 stage"
-          "time16 stage"
-          "time17 stage"
-          "time18 stage"
-          "time19 stage"
-          "time20 stage"
-          "time21 stage"
-          "time22 stage"
-          "time23 stage"
-          "time24 stage"
+          "time0s stage"
+          "time0e stage"
+          "time1s stage"
+          "time1e stage"
+          "time2s stage"
+          "time2e stage"
+          "time3s stage"
+          "time3e stage"
+          "time4s stage"
+          "time4e stage"
+          "time5s stage"
+          "time5e stage"
+          "time6s stage"
+          "time6e stage"
+          "time7s stage"
+          "time7e stage"
+          "time8s stage"
+          "time8e stage"
+          "time9s stage"
+          "time9e stage"
+          "time10s stage"
+          "time10e stage"
+          "time11s stage"
+          "time11e stage"
+          "time12s stage"
+          "time12e stage"
+          "time13s stage"
+          "time13e stage"
+          "time14s stage"
+          "time14e stage"
+          "time15s stage"
+          "time15e stage"
+          "time16s stage"
+          "time16e stage"
+          "time17s stage"
+          "time17e stage"
+          "time18s stage"
+          "time18e stage"
+          "time19s stage"
+          "time19e stage"
+          "time20s stage"
+          "time20e stage"
+          "time21s stage"
+          "time21e stage"
+          "time22s stage"
+          "time22e stage"
+          "time23s stage"
+          "time23e stage"
           ;
       }
 
@@ -1227,10 +1284,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100%;
+        height: 100px;
         background-color: white;
-        border-bottom-style: solid;
-        border-color: #ddd;
+
         position: sticky;
         left: 0;
       }
@@ -1242,12 +1298,13 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        width: 70px;
+        width: auto;
         border-radius: 0.2rem;
         font-size: 0.8rem;
         font-weight: bold;
         line-height: 1.4;
         border-top: black;
+        
       }
 
       .dailyevent p {
@@ -1256,111 +1313,6 @@
         font-weight: normal;
         text-align: center;
         margin: 2%;
-      }
-
-      .dailyevent.start-0 {
-        grid-row-start: time0;
-      }
-      .dailyevent.start-22 {
-        grid-row-start: time22;
-      }
-      .dailyevent.start-6 {
-        grid-row-start: time6;
-      }
-      .dailyevent.start-7 {
-        grid-row-start: time7;
-      }
-      .dailyevent.start-8 {
-        grid-row-start: time8;
-      }
-      .dailyevent.start-9 {
-        grid-row-start: time9;
-      }
-      .dailyevent.start-10 {
-        grid-row-start: time10;
-      }
-      .dailyevent.start-11 {
-        grid-row-start: time11;
-      }
-      .dailyevent.start-12 {
-        grid-row-start: time12;
-      }
-      .dailyevent.start-13 {
-        grid-row-start: time13;
-      }
-      .dailyevent.start-14 {
-        grid-row-start: time14;
-      }
-      .dailyevent.start-15 {
-        grid-row-start: time15;
-      }
-      .dailyevent.start-16 {
-        grid-row-start: time16;
-      }
-      .dailyevent.start-17 {
-        grid-row-start: time17;
-      }
-      .dailyevent.start-18 {
-        grid-row-start: time18;
-      }
-      .dailyevent.start-19 {
-        grid-row-start: time19;
-      }
-      .dailyevent.start-20 {
-        grid-row-start: time20;
-      }
-
-      .dailyevent.end-0 {
-        grid-row-end: time0;
-      }
-      .dailyevent.end-22 {
-        grid-row-end: time22;
-      }
-
-      .dailyevent.end-7 {
-        grid-row-end: time7;
-      }
-      .dailyevent.end-8 {
-        grid-row-end: time8;
-      }
-      .dailyevent.end-9 {
-        grid-row-end: time9;
-      }
-      .dailyevent.end-10 {
-        grid-row-end: time10;
-      }
-      .dailyevent.end-11 {
-        grid-row-end: time11;
-      }
-      .dailyevent.end-12 {
-        grid-row-end: time12;
-      }
-      .dailyevent.end-13 {
-        grid-row-end: time13;
-      }
-      .dailyevent.end-14 {
-        grid-row-end: time14;
-      }
-      .dailyevent.end-15 {
-        grid-row-end: time15;
-      }
-      .dailyevent.end-16 {
-        grid-row-end: time16;
-      }
-      .dailyevent.end-17 {
-        grid-row-end: time17;
-      }
-      .dailyevent.end-18 {
-        grid-row-end: time18;
-      }
-      .dailyevent.end-19 {
-        grid-row-end: time19;
-      }
-      .dailyevent.end-20 {
-        grid-row-end: time20;
-      }
-      .dailyevent.end-21 {
-        grid-row-end: time21;
       }
 
       .dailyevent.color-0 {
@@ -1431,6 +1383,11 @@
       .eventbullet {
         font-size: 65%;
         cursor: pointer;
+      }
+
+      #timeEnd{
+        border-bottom-style: solid;
+        border-color: #ddd;
       }
     </style>
 
@@ -2866,38 +2823,33 @@
       function createDailyTimeLine() {
         const scheduleContainerElement = document.getElementById("DailyBody");
 
-        const startTime = 6;
-        const endTime = 21;
+        const startTime = 0;
+        const endTime = 24;
 
-        const timeElement0 = document.createElement("div");
-        timeElement0.className = `time start-0`;
-        timeElement0.style.setProperty("padding", "15% 0");
-        timeElement0.textContent = "0 am - 6am";
-        timeElement0.style.setProperty("grid-area", `time0`);
-        scheduleContainerElement.appendChild(timeElement0);
 
         //create time column
-        for (let hour = startTime; hour <= endTime; hour++) {
+        for (let hour = startTime; hour < endTime; hour++) {
           let time;
           if (hour === 12) {
-            time = `${hour} pm`;
+            time = `12 pm`;
+          }else if (hour === 0){
+            time = `12 am`;
           } else {
             time = `${hour}` > 12 ? `${hour - 12} pm` : `${hour} am`;
           }
 
-          const timeElement = document.createElement("div");
-          timeElement.className = `time start-${hour}`;
-          timeElement.textContent = time;
-          timeElement.style.setProperty("grid-area", `time${hour}`);
-          scheduleContainerElement.appendChild(timeElement);
+          const timeElementS = document.createElement("div");
+          timeElementS.className = `time start-${hour}`;
+          timeElementS.textContent = time;
+          timeElementS.style.setProperty("grid-area", `time${hour}s`);
+          const timeElementE = document.createElement("div");
+          timeElementE.className = `time end-${hour}`;
+          timeElementE.id = "timeEnd";
+          timeElementE.style.setProperty("grid-area", `time${hour}e`);
+          scheduleContainerElement.appendChild(timeElementS);
+          scheduleContainerElement.appendChild(timeElementE);
         }
 
-        const timeElement22 = document.createElement("div");
-        timeElement22.className = `time start-22`;
-        timeElement22.textContent = "9 pm - 12 pm";
-        timeElement22.style.setProperty("grid-area", `time22`);
-        timeElement22.style.setProperty("padding", "10% 0");
-        scheduleContainerElement.appendChild(timeElement22);
       }
 
       createDailyTimeLine();
@@ -2945,30 +2897,12 @@
           const sMin = event.ios_start_date.getMinutes();
           const eHour = event.ios_end_date.getHours();
           const eMin = event.ios_end_date.getMinutes();
-          let eTime = 0;
-          let sTime = 0;
-
-          if (eHour === 21) {
-            eTime = eHour;
-          } else if (eHour < 6) {
-            eTime = 0;
-          } else if (eHour > 21) {
-            eTime = 22;
-          } else {
-            eTime = eHour + 1;
-          }
-
-          if (sHour < 6) {
-            sTime = 0;
-          } else if (sHour >= 21) {
-            sTime = 22;
-          } else {
-            sTime = sHour + 1;
-          }
 
           let sDisplay;
           if (sHour === 12) {
-            sDisplay = `${sHour}:${sMin.toString().padStart(2, "0")} pm`;
+            sDisplay = `12:${sMin.toString().padStart(2, "0")} pm`;
+          }else if (sHour === 24){
+            sDisplay = `12:${sMin.toString().padStart(2, "0")} am`;
           } else {
             sDisplay =
               `${sHour}` > 12
@@ -2978,7 +2912,9 @@
 
           let eDisplay;
           if (eHour === 12) {
-            eDisplay = `${eHour}:${eMin.toString().padStart(2, "0")} pm`;
+            eDisplay = `12:${eMin.toString().padStart(2, "0")} pm`;
+          }else if (sHour === 24){
+            sDisplay = `12:${eMin.toString().padStart(2, "0")} am`;
           } else {
             eDisplay =
               `${eHour}` > 12
@@ -2988,7 +2924,7 @@
 
           eventElement.className = `dailyevent color-${
             index % 6
-          } start-${sTime} end-${eTime}`;
+          } start-${sHour} end-${eHour}`;
           eventElement.textContent = `${sDisplay} - ${eDisplay}`;
 
           const eventItemList = [event.service, event.customer, event.carer]
