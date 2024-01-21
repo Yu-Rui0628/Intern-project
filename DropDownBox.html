@@ -22,7 +22,6 @@
               grid-row-start: ${time}s;
             }
           `;
-          console.log(className);
           const style = document.createElement('style');
           style.textContent = rule;
           document.head.appendChild(style);
@@ -1282,7 +1281,7 @@
 
       .time {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: center;
         height: 100px;
         background-color: white;
@@ -1312,7 +1311,6 @@
         font-size: 0.8em;
         font-weight: normal;
         text-align: center;
-        margin: 2%;
       }
 
       .dailyevent.color-0 {
@@ -2824,6 +2822,23 @@
 
         //console.log(daysEvents);
 
+        let eventCount = [
+        ];
+
+        for (let i = 0; i < 24; i++){
+          eventCount.push(0);
+        }
+
+        daysEvents.forEach((event) =>{
+          const HourS = event.ios_start_date.getHours();
+          const HourE = event.ios_end_date.getHours();
+
+          for (let i = HourS; i <= HourE; i++){
+            eventCount[i]++;
+          }
+          console.log(eventCount);
+        });
+
         daysEvents.forEach((event, index) => {
           let eventElement = document.createElement("div");
 
@@ -2863,6 +2878,19 @@
           } start-${sHour} end-${eHour}`;
           eventElement.textContent = `${sDisplay} - ${eDisplay}`;
 
+          let EventL = 0;
+
+          for (let j = sHour; j<= eHour; j++){
+            console.log(eventCount[j]);
+            if (eventCount[j] > EventL){
+              EventL = eventCount[j];
+            }
+          }
+          const spanNo = 20 / EventL;
+          
+          
+          eventElement.style.setProperty("grid-column-end", `span ${spanNo}`);
+
           const eventItemList = [event.service, event.customer, event.carer]
             .map((c) => {
               const elem = document.createElement("p");
@@ -2876,6 +2904,8 @@
           };
           scheduleContainerElement.appendChild(eventElement);
         });
+
+        
       }
 
       function deleteDailyEvent() {
