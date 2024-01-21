@@ -1585,7 +1585,6 @@
     <script>
       const airtableBaseId = "app8p4RecoWg7JsOX";
       const airtableTableName = "Users";
-      const airtableUrl = "https://api.airtable.com/v0/app8p4RecoWg7JsOX/Users";
       const airtableApiKey =
         "patbjbBB4mGfLvwMD.e257cd19ea5b9b3a5337417837f56d29c6f8b8dfeae4a7853b8da010f990e3df";
       const emailToSearch = "jessie.wu@everyoungai.com";
@@ -1593,6 +1592,10 @@
       const encodedFormulaByEmail = encodeURIComponent(
         `{Email} = '${emailToSearch}'`
       );
+      let carer_customer_id = {
+        carer: {},
+        customer: {},
+      };
 
       let daySeed = 0;
       let dayEventCount = createCounter(daySeed);
@@ -1643,62 +1646,42 @@
       };
 
       async function fetchCustomerNames(customerRecordIds, role) {
-        await fetchAllRecords();
-        //console.log("All the record is" + JSON.stringify(allRecords) );
-        const recordId = allRecords[0]["fields"]["Client"];
-        const userType = ["Customer", "Carer Active"];
+          await fetchAllRecords();
+          //console.log("All the record is" + JSON.stringify(allRecords) );
+          const recordId = allRecords[0]["fields"]["Client"];
+          const userType = ["Carers", "Customers"];
+          const userObjectType = ["Carer Active","Customer"]
 
-        const fetchPromises = userType.map((type) => {
-          const encodedFormula = encodeURIComponent(
-            `AND({Record ID (from Client)} = '${recordId}', {User Type} = '${type}')`
-          );
-          const url = `https://api.airtable.com/v0/${airtableBaseId}/Users?filterByFormula=${encodedFormula}`;
-          return fetch(url, {
-            headers: { Authorization: `Bearer ${airtableApiKey}` },
-          }).then((response) => response.json());
-        });
-
-        try {
-          const results = await Promise.all(fetchPromises);
-          for (let i = 0; i < results.length; i++) {
-            for (const record of results[i].records) {
-              userObject[userType[i]].push(record.fields.Name);
-            }
-          }
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      }
-
-      let carerRecordID = [];
-      async function findCalendar() {
-        for (var i = 0; i < userObject["Carer Active"].length; i++) {
-          const Casername = userObject["Carer Active"][i];
-          const encodedFormulaByCaserId = encodeURIComponent(
-            `{Name} = '${Casername}'`
-          );
-          try {
-            const response = await fetch(
-              `https://api.airtable.com/v0/${airtableBaseId}/Carers?filterByFormula=${encodedFormulaByCaserId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${airtableApiKey}`,
-                },
-              }
+          const fetchPromises = userType.map((type) => {
+            const encodedFormula = encodeURIComponent(
+              `{Record ID (from Client)} = '${recordId}'`
             );
+            const url = `https://api.airtable.com/v0/${airtableBaseId}/${type}?filterByFormula=${encodedFormula}`;
+            return fetch(url, {
+              headers: { Authorization: `Bearer ${airtableApiKey}` },
+            }).then((response) => response.json());
+          });
 
-            const Caser_Data = await response.json();
+          try {
+            const results = await Promise.all(fetchPromises);
+            for (let i = 0; i < results.length; i++) {
+              for (const record of results[i].records) {
+                userObject[userObjectType[i]].push(record.fields.Name);
+                if (i == 0){
+                  carer_customer_id.carer[record.fields.Name] =record.fields.devRecordId;
+                }
+                if(i == 1){
+                  carer_customer_id.customer[record.fields.Name] = record.fields.recordid;
+                }
 
-            for (const record of Caser_Data.records) {
-              carerRecordID.push(record.fields.devRecordId);
+              }
+
             }
-
-            //console.log("Carer ID collection is" + carerRecordID);
+            console.log("The result is" +JSON.stringify(carer_customer_id) );
           } catch (error) {
             console.error("Error:", error);
           }
         }
-      }
 
       let UserList;
       async function FindCustomer(LINKED_FIELD_NAME, LINKED_RECORD_ID) {
@@ -1750,7 +1733,7 @@
 
       async function handleAllRecords() {
         await fetchCustomerNames();
-        await findCalendar();
+
 
         //console.log("The user's OBJECT is " +JSON.stringify(userObject) );
 
@@ -1950,10 +1933,7 @@
         }
       }
 
-      let carer_customer_id = {
-        carer: {},
-        customer: {},
-      };
+      
       async function fetchRecord(url, headers) {
         const response = await fetch(url, { headers });
         if (response.ok) {
@@ -1965,55 +1945,11 @@
         }
       }
 
-      async function get_carer_customer_record_id() {
-        let carerPromises = userObject["Carer Active"].slice(1).map((carer) => {
-          const encodedFormula = encodeURIComponent(`{Name} = '${carer}'`);
-          const url = `https://api.airtable.com/v0/${airtableBaseId}/Carers?filterByFormula=${encodedFormula}`;
-          return fetchRecord(url, { Authorization: `Bearer ${airtableApiKey}` })
-            .then((data) => {
-              if (data.records && data.records.length > 0) {
-                carer_customer_id.carer[carer] =
-                  data.records[0].fields.devRecordId;
-              } else {
-                //console.log(`No records found for Carer: ${carer}`);
-              }
-            })
-            .catch((error) =>
-              console.error(`Error fetching Carer: ${carer}`, error)
-            );
-        });
-
-        let customerPromises = userObject["Customer"]
-          .slice(1)
-          .map((customer) => {
-            const encodedFormula = encodeURIComponent(`{Name} = '${customer}'`);
-            const url = `https://api.airtable.com/v0/${airtableBaseId}/Customers?filterByFormula=${encodedFormula}`;
-            return fetchRecord(url, {
-              Authorization: `Bearer ${airtableApiKey}`,
-            })
-              .then((data) => {
-                if (data.records && data.records.length > 0) {
-                  carer_customer_id.customer[customer] =
-                    data.records[0].fields.recordid;
-                } else {
-                  //console.log(`No records found for Customer: ${customer}`);
-                }
-              })
-              .catch((error) =>
-                console.error(`Error fetching Customer: ${customer}`, error)
-              );
-          });
-
-        await Promise.all([...carerPromises, ...customerPromises]);
-        //console.log("The response data is: ", carer_customer_id);
-      }
-
       async function OriginalDeploy() {
         document.getElementById("loadingIcon").style.display = "block";
 
         const all_carer = await CollectAllRecord("Customer", "Customers");
 
-        await get_carer_customer_record_id();
         specialDates = await GenerateResult(all_carer);
         //console.log("Original Special dates IS " +JSON.stringify(specialDates) );
 
