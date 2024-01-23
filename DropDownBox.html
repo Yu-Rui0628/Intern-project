@@ -8,33 +8,32 @@
     />
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         const times = [];
-          for (let i = 0; i< 24; i++){
-            times.push(`time${i}`);
-          }
+        for (let i = 0; i < 24; i++) {
+          times.push(`time${i}`);
+        }
 
-  
-        times.forEach(time => {
+        times.forEach((time) => {
           const className = `.dailyevent.start-${time.slice(4)}`;
           const rule = `
             ${className} {
               grid-row-start: ${time}s;
             }
           `;
-          const style = document.createElement('style');
+          const style = document.createElement("style");
           style.textContent = rule;
           document.head.appendChild(style);
         });
 
-        times.forEach(time => {
+        times.forEach((time) => {
           const className = `.dailyevent.end-${time.slice(4)}`;
           const rule = `
             ${className} {
               grid-row-end: ${time}e;
             }
           `;
-          const style = document.createElement('style');
+          const style = document.createElement("style");
           style.textContent = rule;
           document.head.appendChild(style);
         });
@@ -546,7 +545,7 @@
         #week-calendar {
           border-collapse: collapse;
           border-spacing: 10px;
-          width: 90%;
+          width: 100%;
           margin: auto;
           padding: 0 5%;
           background-color: #4ad09b;
@@ -558,8 +557,10 @@
           font-size: 13px;
           background-color: #4ad09b;
           color: white;
-          padding: 10px;
+          width: 120px;
+          padding: 10px 0;
           border-radius: 15px;
+          text-align: center;
         }
 
         #week-calendar td {
@@ -1151,7 +1152,7 @@
           background-color: #4ad09b;
           color: white;
           padding: 10px;
-          border-radius: 15px;
+          
         }
 
         #week-calendar td {
@@ -1275,11 +1276,10 @@
           "time22s stage"
           "time22e stage"
           "time23s stage"
-          "time23e stage"
-          ;
+          "time23e stage";
       }
 
-      .time {
+      .DailyBodytime {
         display: flex;
         align-items: flex-end;
         justify-content: center;
@@ -1303,7 +1303,6 @@
         font-weight: bold;
         line-height: 1.4;
         border-top: black;
-        
       }
 
       .dailyevent p {
@@ -1314,22 +1313,22 @@
       }
 
       .dailyevent.color-0 {
-        background-color: #ffa726;
+        background-color: #f7e3c5;
       }
       .dailyevent.color-1 {
-        background-color: #9ccc65;
+        background-color: #e5fec9;
       }
       .dailyevent.color-2 {
-        background-color: #ff8a65;
+        background-color: #f6d9d0;
       }
       .dailyevent.color-3 {
-        background-color: #b3e5fc;
+        background-color: #d1f9fd;
       }
       .dailyevent.color-4 {
-        background-color: #81d4fa;
+        background-color: #fed9fa;
       }
       .dailyevent.color-5 {
-        background-color: #26c6da;
+        background-color: #fbfbd4;
       }
 
       #DateBox {
@@ -1383,9 +1382,108 @@
         cursor: pointer;
       }
 
-      #timeEnd{
+      #timeEnd {
         border-bottom-style: solid;
         border-color: #ddd;
+      }
+
+      .current-time-line {
+        position: relative;
+        top: 0;
+        width: 2200%;
+        height: 1.5px;
+        background-color: rgb(141, 139, 139);
+      }
+
+      .flex-table {
+        display: flex;
+        flex-direction: row;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-y: auto;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        border: 1px solid #ddd;
+      }
+
+      .table-col {
+        display: flex;
+        border: 1px solid #ddd;
+        overflow-y: hidden;
+        flex-direction: column;
+        width: 120%;
+        border-collapse: separate;
+        border-spacing: 10px;
+        background-color: white;
+        height: 100%;
+      }
+
+      .weekly-calendar-body {
+        display: grid;
+        grid-gap: 0.2rem;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(48, 55px);
+        grid-template-areas:
+          "time0s"
+          "time0e"
+          "time1s"
+          "time1e"
+          "time2s"
+          "time2e"
+          "time3s"
+          "time3e"
+          "time4s"
+          "time4e"
+          "time5s"
+          "time5e"
+          "time6s"
+          "time6e"
+          "time7s"
+          "time7e"
+          "time8s"
+          "time8e"
+          "time9s"
+          "time9e"
+          "time10s"
+          "time10e"
+          "time11s"
+          "time11e"
+          "time12s"
+          "time12e"
+          "time13s"
+          "time13e"
+          "time14s"
+          "time14e"
+          "time15s"
+          "time15e"
+          "time16s"
+          "time16e"
+          "time17s"
+          "time17e"
+          "time18s"
+          "time18e"
+          "time19s"
+          "time19e"
+          "time20s"
+          "time20e"
+          "time21s"
+          "time21e"
+          "time22s"
+          "time22e"
+          "time23s"
+          "time23e";
+      }
+
+      .WeeklyTimetime{
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        height: 100%;
+      }
+
+      #WeeklyTime{
+        grid-template-columns: 100% !important;
       }
     </style>
 
@@ -1453,14 +1551,42 @@
         <span id="WeekMonthYear"></span>
         <button id="nextWeek" class="week-calendar-button">&gt;</button>
       </div>
-      <table id="week-calendar">
-        <thead>
-          <tr id="week-days-header">
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody id="week-calendar-body"></tbody>
-      </table>
+      <div class="daily-calendar">
+        <table id="week-calendar">
+          <thead>
+            <tr id="week-days-header">
+              <th>Time</th>
+            </tr>
+          </thead>
+          <!-- <tbody id="week-calendar-body"></tbody> -->
+        </table>
+        <div class="flex-table">
+          <div class="table-col" style="overflow: hidden;">
+            <div class="weekly-calendar-body" , id="WeeklyTime" style="overflow: hidden;"></div>
+          </div>
+          <div class="table-col">
+            <div class="weekly-calendar-body" , id="weeklyDay0"></div>
+          </div>
+          <div class="table-col">
+            <div class="weekly-calendar-body" , id="weeklyDay1"></div>
+          </div>
+          <div class="table-col">
+            <div class="weekly-calendar-body" , id="weeklyDay2"></div>
+          </div>
+          <div class="table-col">
+            <div class="weekly-calendar-body" , id="weeklyDay3"></div>
+          </div>
+          <div class="table-col">
+            <div class="weekly-calendar-body" , id="weeklyDay4"></div>
+          </div>
+          <div class="table-col">
+            <div class="weekly-calendar-body" , id="weeklyDay5"></div>
+          </div>
+          <div class="table-col">
+            <div class="weekly-calendar-body" , id="weeklyDay6"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Daily Calendar -->
@@ -1476,7 +1602,9 @@
         <div id="DateBox">
           <span id="dailyCalendarDay"></span>
         </div>
-        <div class="daily-calendar-body" , id="DailyBody"></div>
+        <div class="daily-calendar-body" , id="DailyBody">
+          <!-- <div class = "current-time-line"></div> -->
+        </div>
       </div>
     </div>
 
@@ -1598,42 +1726,42 @@
       };
 
       async function fetchCustomerNames(customerRecordIds, role) {
-          await fetchAllRecords();
-          //console.log("All the record is" + JSON.stringify(allRecords) );
-          const recordId = allRecords[0]["fields"]["Client"];
-          const userType = ["Carers", "Customers"];
-          const userObjectType = ["Carer Active","Customer"]
+        await fetchAllRecords();
+        //console.log("All the record is" + JSON.stringify(allRecords) );
+        const recordId = allRecords[0]["fields"]["Client"];
+        const userType = ["Carers", "Customers"];
+        const userObjectType = ["Carer Active", "Customer"];
 
-          const fetchPromises = userType.map((type) => {
-            const encodedFormula = encodeURIComponent(
-              `{Record ID (from Client)} = '${recordId}'`
-            );
-            const url = `https://api.airtable.com/v0/${airtableBaseId}/${type}?filterByFormula=${encodedFormula}`;
-            return fetch(url, {
-              headers: { Authorization: `Bearer ${airtableApiKey}` },
-            }).then((response) => response.json());
-          });
+        const fetchPromises = userType.map((type) => {
+          const encodedFormula = encodeURIComponent(
+            `{Record ID (from Client)} = '${recordId}'`
+          );
+          const url = `https://api.airtable.com/v0/${airtableBaseId}/${type}?filterByFormula=${encodedFormula}`;
+          return fetch(url, {
+            headers: { Authorization: `Bearer ${airtableApiKey}` },
+          }).then((response) => response.json());
+        });
 
-          try {
-            const results = await Promise.all(fetchPromises);
-            for (let i = 0; i < results.length; i++) {
-              for (const record of results[i].records) {
-                userObject[userObjectType[i]].push(record.fields.Name);
-                if (i == 0){
-                  carer_customer_id.carer[record.fields.Name] =record.fields.devRecordId;
-                }
-                if(i == 1){
-                  carer_customer_id.customer[record.fields.Name] = record.fields.recordid;
-                }
-
+        try {
+          const results = await Promise.all(fetchPromises);
+          for (let i = 0; i < results.length; i++) {
+            for (const record of results[i].records) {
+              userObject[userObjectType[i]].push(record.fields.Name);
+              if (i == 0) {
+                carer_customer_id.carer[record.fields.Name] =
+                  record.fields.devRecordId;
               }
-
+              if (i == 1) {
+                carer_customer_id.customer[record.fields.Name] =
+                  record.fields.recordid;
+              }
             }
-            console.log("The result is" +JSON.stringify(carer_customer_id) );
-          } catch (error) {
-            console.error("Error:", error);
           }
+          console.log("The result is" + JSON.stringify(carer_customer_id));
+        } catch (error) {
+          console.error("Error:", error);
         }
+      }
 
       let UserList;
       async function FindCustomer(LINKED_FIELD_NAME, LINKED_RECORD_ID) {
@@ -1685,7 +1813,6 @@
 
       async function handleAllRecords() {
         await fetchCustomerNames();
-
 
         //console.log("The user's OBJECT is " +JSON.stringify(userObject) );
 
@@ -1885,7 +2012,6 @@
         }
       }
 
-      
       async function fetchRecord(url, headers) {
         const response = await fetch(url, { headers });
         if (response.ok) {
@@ -2099,11 +2225,11 @@
       }
 
       function createWeekCalendar(baseDate, specialDate) {
-        const weekCalendarBody = document.getElementById("week-calendar-body");
+        // const weekCalendarBody = document.getElementById("week-calendar-body");
         const weekDaysHeader = document.getElementById("week-days-header");
         const WeekMonthYear = document.getElementById("WeekMonthYear");
 
-        weekCalendarBody.innerHTML = "";
+        // weekCalendarBody.innerHTML = "";
         weekDaysHeader.innerHTML = "<th>Time</th>";
 
         const currentYear = baseDate.getFullYear();
@@ -2128,170 +2254,284 @@
             day: "2-digit",
           });
           weekDaysHeader.appendChild(dayHeader);
+          createWeeklyEvent(dayDate, specialDate, `weeklyDay${i}`);
         }
 
-        // Add the early morning row (00:00am to 5:59am)
-        addTimeRow(
-          weekCalendarBody,
-          baseDate,
-          0,
-          6,
-          "00:00am - 5:59am",
-          specialDate
-        );
+        // // Add the early morning row (00:00am to 5:59am)
+        // addTimeRow(
+        //   weekCalendarBody,
+        //   baseDate,
+        //   0,
+        //   6,
+        //   "00:00am - 5:59am",
+        //   specialDate
+        // );
 
-        // Add rows for each hour from 6am to 9pm
-        for (let hour = 6; hour < 22; hour++) {
-          addTimeRow(
-            weekCalendarBody,
-            baseDate,
-            hour,
-            hour + 1,
-            formatHour(hour),
-            specialDate
-          );
-        }
+        //   // Add rows for each hour from 6am to 9pm
+        //   for (let hour = 6; hour < 22; hour++) {
+        //     addTimeRow(
+        //       weekCalendarBody,
+        //       baseDate,
+        //       hour,
+        //       hour + 1,
+        //       formatHour(hour),
+        //       specialDate
+        //     );
+        //   }
 
-        // Add the late night row (9:01pm to 11:59pm)
-        addTimeRow(
-          weekCalendarBody,
-          baseDate,
-          22,
-          24,
-          "9:01pm - 11:59pm",
-          specialDate
-        );
+        //   // Add the late night row (9:01pm to 11:59pm)
+        //   addTimeRow(
+        //     weekCalendarBody,
+        //     baseDate,
+        //     22,
+        //     24,
+        //     "9:01pm - 11:59pm",
+        //     specialDate
+        //   );
+        // }
+
+        // function addTimeRow(
+        //   weekCalendarBody,
+        //   baseDate,
+        //   startHour,
+        //   endHour,
+        //   timeLabelContent,
+        //   specialDate
+        // ) {
+        //   let row = document.createElement("tr");
+        //   row.classList.add("row-cell");
+
+        //   let timeLabel = document.createElement("td");
+        //   timeLabel.textContent = timeLabelContent;
+        //   row.appendChild(timeLabel);
+
+        //   for (let day = 0; day < 7; day++) {
+        //     let cell = document.createElement("td");
+        //     let text_space = document.createElement("div");
+        //     cell.classList.add("custom-cell");
+        //     text_space.classList.add("text-cell");
+        //     cell.appendChild(text_space);
+
+        //     let cellDate = new Date(baseDate);
+        //     cellDate.setDate(baseDate.getDate() + day);
+        //     // Modify the addEventsToCell function to handle the startHour and endHour
+        //     addEventsToCell(
+        //       text_space,
+        //       cellDate,
+        //       startHour,
+        //       endHour,
+        //       specialDate
+        //     );
+        //     row.appendChild(cell);
+        //   }
+
+        //   weekCalendarBody.appendChild(row);
       }
 
-      function addTimeRow(
-        weekCalendarBody,
-        baseDate,
-        startHour,
-        endHour,
-        timeLabelContent,
-        specialDate
-      ) {
-        let row = document.createElement("tr");
-        row.classList.add("row-cell");
+      function createWeeklyEvent(Day, specialDates,id) {
+        const scheduleContainerElement = document.getElementById(`${id}`);
 
-        let timeLabel = document.createElement("td");
-        timeLabel.textContent = timeLabelContent;
-        row.appendChild(timeLabel);
+        const curDayDisplay = Day.toLocaleString("en-AU", {
+          weekday: "long",
+          timeZone: "Australia/Sydney",
+        }).split(",")[0];
 
-        for (let day = 0; day < 7; day++) {
-          let cell = document.createElement("td");
-          let text_space = document.createElement("div");
-          cell.classList.add("custom-cell");
-          text_space.classList.add("text-cell");
-          cell.appendChild(text_space);
+        const curMonthDisplay = Day.toLocaleString("en-AU", {
+          year: "numeric",
+          month: "long",
+          day: "2-digit",
+          timeZone: "Australia/Sydney",
+        }).split(",")[0];
 
-          let cellDate = new Date(baseDate);
-          cellDate.setDate(baseDate.getDate() + day);
-          // Modify the addEventsToCell function to handle the startHour and endHour
-          addEventsToCell(
-            text_space,
-            cellDate,
-            startHour,
-            endHour,
-            specialDate
-          );
-          row.appendChild(cell);
-        }
+        const curDayString = Day.toLocaleString("en-AU", {
+          timeZone: "Australia/Sydney",
+        }).split(",")[0];
 
-        weekCalendarBody.appendChild(row);
-      }
 
-      function createEventList_Week(currCount, cell) {
-        let EventPoint = document.createElement("div");
-        EventPoint.className = "eventPoint";
+        let daysEvents = specialDates.filter((d) => {
+          const eventday = d.ios_start_date
+            .toLocaleString("en-AU", { timeZone: "Australia/Sydney" })
+            .split(",")[0];
 
-        let bullet0 = document.createElement("span");
-        bullet0.className = "eventbullet";
-
-        EventPoint.appendChild(bullet0);
-        EventPoint.onclick = function (event) {
-          showDayEvent(currCount);
-        };
-
-        let EventContainer = document.createElement("div");
-        EventContainer.className = "DayEvent";
-
-        EventContainer.id = `event-point-${currCount}`;
-
-        let EventList = document.createElement("div");
-        EventList.className = "DayEventList";
-
-        let closebutton = document.createElement("button");
-        closebutton.id = `dayevent${currCount}-close`;
-        closebutton.className = "closeEvent";
-
-        EventList.onclick = function (event) {
-          event.stopPropagation();
-          closeDayEvent(currCount);
-        };
-
-        closebutton.innerHTML = "x";
-        EventList.appendChild(closebutton);
-        EventList.id = `event-list-${currCount}`;
-        EventPoint.appendChild(EventContainer);
-        EventContainer.appendChild(EventList);
-        cell.appendChild(EventPoint);
-
-        return [EventList, bullet0];
-      }
-
-      function addEventsToCell(
-        cell,
-        cellDate,
-        startHour,
-        endHour,
-        specialDate
-      ) {
-        let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
-        let colorIndex = 0;
-
-        let events = specialDate.filter((event) => {
-          let startDate = new Date(event.ios_start_date);
-          return (
-            startDate.getDate() === cellDate.getDate() &&
-            startDate.getMonth() === cellDate.getMonth() &&
-            startDate.getFullYear() === cellDate.getFullYear() &&
-            startDate.getHours() >= startHour &&
-            startDate.getHours() < endHour
-          );
+          return curDayString === eventday;
         });
 
-        if (events.length !== 0) {
-          let curCount = dayEventCount();
-          let Res = createEventList_Week(curCount, cell);
-          console.log("THE events is " + JSON.stringify(events));
-          let eCount = 0;
-          events.forEach((event) => {
-            console.log("THE week event is" + JSON.stringify(event));
-            let eventElement = document.createElement("div");
-            eventElement.classList.add("event-tip");
-            let bullet = document.createElement("span");
-            bullet.textContent = "• ";
-            bullet.style.color = colors[colorIndex];
-            eventElement.appendChild(bullet);
-            let startIndex = event.normal_start_date.length - 11;
-            let textNode = document.createTextNode(
-              event.normal_start_date.substring(startIndex) +
-                " " +
-                event.service
-            );
-            eventElement.appendChild(textNode);
-            colorIndex = (colorIndex + 1) % colors.length;
-            eventElement.onclick = function () {
-              showModal(event);
-            };
+        let eventCount = [];
 
-            Res[0].appendChild(eventElement);
-            eCount++;
-          });
-          Res[1].textContent = `• ${eCount} events`;
+        for (let i = 0; i < 24; i++) {
+          eventCount.push(0);
         }
+
+        daysEvents.forEach((event) => {
+          const HourS = event.ios_start_date.getHours();
+          const HourE = event.ios_end_date.getHours();
+
+          for (let i = HourS; i <= HourE; i++) {
+            eventCount[i]++;
+          }
+          console.log(eventCount);
+        });
+
+        daysEvents.forEach((event, index) => {
+          let eventElement = document.createElement("div");
+
+          // ${event.service}
+
+          const sHour = event.ios_start_date.getHours();
+          const sMin = event.ios_start_date.getMinutes();
+          const eHour = event.ios_end_date.getHours();
+          const eMin = event.ios_end_date.getMinutes();
+
+          let sDisplay;
+          if (sHour === 12) {
+            sDisplay = `12:${sMin.toString().padStart(2, "0")} pm`;
+          } else if (sHour === 24) {
+            sDisplay = `12:${sMin.toString().padStart(2, "0")} am`;
+          } else {
+            sDisplay =
+              `${sHour}` > 12
+                ? `${sHour - 12}:${sMin.toString().padStart(2, "0")} pm`
+                : `${sHour}:${sMin.toString().padStart(2, "0")} am`;
+          }
+
+          let eDisplay;
+          if (eHour === 12) {
+            eDisplay = `12:${eMin.toString().padStart(2, "0")} pm`;
+          } else if (sHour === 24) {
+            sDisplay = `12:${eMin.toString().padStart(2, "0")} am`;
+          } else {
+            eDisplay =
+              `${eHour}` > 12
+                ? `${eHour - 12}:${eMin.toString().padStart(2, "0")} pm`
+                : `${eHour}:${eMin.toString().padStart(2, "0")} am`;
+          }
+
+          eventElement.className = `dailyevent color-${
+            index % 6
+          } start-${sHour} end-${eHour}`;
+          eventElement.textContent = `${sDisplay} - ${eDisplay}`;
+
+          let EventL = 0;
+
+          for (let j = sHour; j <= eHour; j++) {
+            console.log(eventCount[j]);
+            if (eventCount[j] > EventL) {
+              EventL = eventCount[j];
+            }
+          }
+          const spanNo = 8 / EventL;
+
+          eventElement.style.setProperty("grid-column-end", `span ${spanNo}`);
+
+
+          const eventItemList = [event.service, event.customer, event.carer]
+            .map((c) => {
+              const elem = document.createElement("p");
+              elem.textContent = c;
+              return elem;
+            })
+            .forEach((elem) => eventElement.appendChild(elem));
+
+          eventElement.onclick = function () {
+            showModal(event);
+          };
+          scheduleContainerElement.appendChild(eventElement);
+        });
       }
+
+
+
+      // function createEventList_Week(currCount, cell) {
+      //   let EventPoint = document.createElement("div");
+      //   EventPoint.className = "eventPoint";
+
+      //   let bullet0 = document.createElement("span");
+      //   bullet0.className = "eventbullet";
+
+      //   EventPoint.appendChild(bullet0);
+      //   EventPoint.onclick = function (event) {
+      //     showDayEvent(currCount);
+      //   };
+
+      //   let EventContainer = document.createElement("div");
+      //   EventContainer.className = "DayEvent";
+
+      //   EventContainer.id = `event-point-${currCount}`;
+
+      //   let EventList = document.createElement("div");
+      //   EventList.className = "DayEventList";
+
+      //   let closebutton = document.createElement("button");
+      //   closebutton.id = `dayevent${currCount}-close`;
+      //   closebutton.className = "closeEvent";
+
+      //   EventList.onclick = function (event) {
+      //     event.stopPropagation();
+      //     closeDayEvent(currCount);
+      //   };
+
+      //   closebutton.innerHTML = "x";
+      //   EventList.appendChild(closebutton);
+      //   EventList.id = `event-list-${currCount}`;
+      //   EventPoint.appendChild(EventContainer);
+      //   EventContainer.appendChild(EventList);
+      //   cell.appendChild(EventPoint);
+
+      //   return [EventList, bullet0];
+      // }
+
+      // function addEventsToCell(
+      //   cell,
+      //   cellDate,
+      //   startHour,
+      //   endHour,
+      //   specialDate
+      // ) {
+      //   let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
+      //   let colorIndex = 0;
+
+      //   let events = specialDate.filter((event) => {
+      //     let startDate = new Date(event.ios_start_date);
+      //     return (
+      //       startDate.getDate() === cellDate.getDate() &&
+      //       startDate.getMonth() === cellDate.getMonth() &&
+      //       startDate.getFullYear() === cellDate.getFullYear() &&
+      //       startDate.getHours() >= startHour &&
+      //       startDate.getHours() < endHour
+      //     );
+      //   });
+
+      //   if (events.length !== 0) {
+      //     let curCount = dayEventCount();
+      //     let Res = createEventList_Week(curCount, cell);
+      //     console.log("THE events is " + JSON.stringify(events));
+      //     let eCount = 0;
+      //     events.forEach((event) => {
+      //       console.log("THE week event is" + JSON.stringify(event));
+      //       let eventElement = document.createElement("div");
+      //       eventElement.classList.add("event-tip");
+      //       let bullet = document.createElement("span");
+      //       bullet.textContent = "• ";
+      //       bullet.style.color = colors[colorIndex];
+      //       eventElement.appendChild(bullet);
+      //       let startIndex = event.normal_start_date.length - 11;
+      //       let textNode = document.createTextNode(
+      //         event.normal_start_date.substring(startIndex) +
+      //           " " +
+      //           event.service
+      //       );
+      //       eventElement.appendChild(textNode);
+      //       colorIndex = (colorIndex + 1) % colors.length;
+      //       eventElement.onclick = function () {
+      //         showModal(event);
+      //       };
+
+      //       Res[0].appendChild(eventElement);
+      //       eCount++;
+      //     });
+      //     Res[1].textContent = `• ${eCount} events`;
+      //   }
+      // }
 
       function createEventPoint(currCount, cell) {
         let EventPoint = document.createElement("div");
@@ -2357,8 +2597,9 @@
           });
       }
 
-      function adjustWeek(days) {
+      async function adjustWeek(days) {
         currentBaseDate.setDate(currentBaseDate.getDate() + days);
+        await deleteDailyEvent();
         createWeekCalendar(currentBaseDate, specialDates);
         console.log(JSON.stringify(currentBaseDate.getDate()));
       }
@@ -2754,39 +2995,39 @@
 
       let curDay = new Date();
 
-      function createDailyTimeLine() {
-        const scheduleContainerElement = document.getElementById("DailyBody");
+      function createDailyTimeLine(id) {
+        const scheduleContainerElement = document.getElementById(`${id}`);
 
         const startTime = 0;
         const endTime = 24;
-
 
         //create time column
         for (let hour = startTime; hour < endTime; hour++) {
           let time;
           if (hour === 12) {
             time = `12 pm`;
-          }else if (hour === 0){
+          } else if (hour === 0) {
             time = `12 am`;
           } else {
             time = `${hour}` > 12 ? `${hour - 12} pm` : `${hour} am`;
           }
 
           const timeElementS = document.createElement("div");
-          timeElementS.className = `time start-${hour}`;
+          timeElementS.className = `${id}time start-${hour}`;
           timeElementS.textContent = time;
           timeElementS.style.setProperty("grid-area", `time${hour}s`);
           const timeElementE = document.createElement("div");
-          timeElementE.className = `time end-${hour}`;
+          timeElementE.className = `${id}time end-${hour}`;
           timeElementE.id = "timeEnd";
           timeElementE.style.setProperty("grid-area", `time${hour}e`);
           scheduleContainerElement.appendChild(timeElementS);
           scheduleContainerElement.appendChild(timeElementE);
         }
-
       }
 
-      createDailyTimeLine();
+      createDailyTimeLine("DailyBody");
+      createDailyTimeLine("WeeklyTime");
+
 
       function createDailyEvent(Day, specialDates) {
         const scheduleContainerElement = document.getElementById("DailyBody");
@@ -2822,18 +3063,17 @@
 
         //console.log(daysEvents);
 
-        let eventCount = [
-        ];
+        let eventCount = [];
 
-        for (let i = 0; i < 24; i++){
+        for (let i = 0; i < 24; i++) {
           eventCount.push(0);
         }
 
-        daysEvents.forEach((event) =>{
+        daysEvents.forEach((event) => {
           const HourS = event.ios_start_date.getHours();
           const HourE = event.ios_end_date.getHours();
 
-          for (let i = HourS; i <= HourE; i++){
+          for (let i = HourS; i <= HourE; i++) {
             eventCount[i]++;
           }
           console.log(eventCount);
@@ -2852,7 +3092,7 @@
           let sDisplay;
           if (sHour === 12) {
             sDisplay = `12:${sMin.toString().padStart(2, "0")} pm`;
-          }else if (sHour === 24){
+          } else if (sHour === 24) {
             sDisplay = `12:${sMin.toString().padStart(2, "0")} am`;
           } else {
             sDisplay =
@@ -2864,7 +3104,7 @@
           let eDisplay;
           if (eHour === 12) {
             eDisplay = `12:${eMin.toString().padStart(2, "0")} pm`;
-          }else if (sHour === 24){
+          } else if (sHour === 24) {
             sDisplay = `12:${eMin.toString().padStart(2, "0")} am`;
           } else {
             eDisplay =
@@ -2880,15 +3120,14 @@
 
           let EventL = 0;
 
-          for (let j = sHour; j<= eHour; j++){
+          for (let j = sHour; j <= eHour; j++) {
             console.log(eventCount[j]);
-            if (eventCount[j] > EventL){
+            if (eventCount[j] > EventL) {
               EventL = eventCount[j];
             }
           }
           const spanNo = 20 / EventL;
-          
-          
+
           eventElement.style.setProperty("grid-column-end", `span ${spanNo}`);
 
           const eventItemList = [event.service, event.customer, event.carer]
@@ -2904,8 +3143,6 @@
           };
           scheduleContainerElement.appendChild(eventElement);
         });
-
-        
       }
 
       function deleteDailyEvent() {
@@ -2944,8 +3181,6 @@
           return;
         }
 
-        
-
         // var hours = date.getHours();
         // var minutes = date.getMinutes();
         // var valid = hours >= 6 && hours < 21;
@@ -2961,7 +3196,6 @@
           .getElementById("startTime")
           .value.split("T")[0];
 
-        
         let input = document.getElementById("endTime");
 
         let value = input.value;
@@ -2973,13 +3207,11 @@
         }
 
         let ETime = new Date(value);
-        let STime = new Date(document
-          .getElementById("startTime")
-          .value);
+        let STime = new Date(document.getElementById("startTime").value);
 
         let Ehour = ETime.getTime();
         let Shour = STime.getTime();
-        console.log(Ehour, "  ", Shour)
+        console.log(Ehour, "  ", Shour);
 
         let EndDate = value.split("T")[0];
 
@@ -2989,7 +3221,7 @@
           return;
         }
 
-        if (Ehour < Shour){
+        if (Ehour < Shour) {
           alert("End time must be later than start time！");
           input.value = "";
           return;
@@ -3006,15 +3238,29 @@
         // }
       }
 
-      function showDayEvent(counter) {
-        let dayEvent = document.getElementById(`event-point-${counter}`);
-        dayEvent.style.display = "flex";
-      }
+      //   function showDayEvent(counter) {
+      //     let dayEvent = document.getElementById(`event-point-${counter}`);
+      //     dayEvent.style.display = "flex";
+      //   }
 
-      function closeDayEvent(counter) {
-        let dayEvent = document.getElementById(`event-point-${counter}`);
-        dayEvent.style.display = "none";
-      }
+      //   function closeDayEvent(counter) {
+      //     let dayEvent = document.getElementById(`event-point-${counter}`);
+      //     dayEvent.style.display = "none";
+      //   }
+
+      //   function updateCurrentTimeLine() {
+      //   const currentTime = new Date();
+      //   const hours = currentTime.getHours();
+      //   const minutes = currentTime.getMinutes();
+      //   const totalMinutes = hours * 60 + minutes;
+
+      //   const lineTop = totalMinutes / 1440 * 4796;
+
+      //   const currentTimeLine = document.querySelector('.current-time-line');
+      //   currentTimeLine.style.top = `${lineTop}%`;
+      // }
+      // updateCurrentTimeLine();
+      // setInterval(updateCurrentTimeLine, 60000);
     </script>
   </body>
 </html>
