@@ -6,39 +6,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.css"
     />
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const times = [];
-        for (let i = 0; i < 24; i++) {
-          times.push(`time${i}`);
-        }
-
-        times.forEach((time) => {
-          const className = `.dailyevent.start-${time.slice(4)}`;
-          const rule = `
-            ${className} {
-              grid-row-start: ${time}s;
-            }
-          `;
-          const style = document.createElement("style");
-          style.textContent = rule;
-          document.head.appendChild(style);
-        });
-
-        times.forEach((time) => {
-          const className = `.dailyevent.end-${time.slice(4)}`;
-          const rule = `
-            ${className} {
-              grid-row-end: ${time}e;
-            }
-          `;
-          const style = document.createElement("style");
-          style.textContent = rule;
-          document.head.appendChild(style);
-        });
-      });
-    </script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     <style>
       #week-calendarid,
       #daily-calendarID {
@@ -49,6 +17,52 @@
   <body>
     <style>
       @media (min-width: 769px) {
+  
+
+        .fc-event {/*event style*/
+            background-color: #4ad09b;
+            color: white;
+            border: 1px solid #4ad09b; 
+        }
+
+        .fc-event:hover {/*event style*/
+            background-color: #5c865c;
+            color: white;
+            border: 1px solid #5c865c; 
+        }
+        .fc .fc-toolbar.fc-header-toolbar
+        {
+          margin-top: 20px;
+          margin-left:10px;
+          margin-right: 10px
+        }
+        .fc .fc-toolbar-title{
+         
+          color:#4ad09b
+        }
+     
+
+        .fc-time-grid .fc-slats td[data-time] .fc-time {
+            color: #4ad09b;
+        }
+
+        .fc-daygrid-day { /*month calendar style*/
+              background-color: #f8f9fa; 
+          }
+
+        .fc .fc-col-header-cell-cushion {
+          display: inline-block;
+          padding: 2px 4px;
+          color: #4ad09b
+        }
+
+        .fc-daygrid-day-number {
+                color: #4ad09b; 
+          }
+          .fc-daygrid-weekday {
+            color: #4ad09b;
+          }
+
         body {
           background-color: white;
           font-family: "Times New Roman", serif;
@@ -68,14 +82,7 @@
           color: #3b543b;
         }
 
-        #calendar th {
-          background-color: #b4d3b2;
-          color: #3e533e;
-        }
 
-        #calendar .today {
-          background-color: #cde4c3;
-        }
 
         .modal-content {
           background-color: #f8faf5;
@@ -133,7 +140,7 @@
         #calendar-dropdown {
           margin-top: 15px;
           margin-left: 5px;
-          width: 70%;
+          width: 60px;
           height: 50%;
           box-sizing: border-box;
           border: 2px solid #4ad09b;
@@ -164,22 +171,7 @@
           box-shadow: 0 4px 8px rgba(74, 208, 155, 0.5);
           padding: 20px;
         }
-        #calendar ul {
-          list-style-type: none;
-          padding-left: 0;
-        }
 
-        #calendar li {
-          margin-left: 15px;
-          position: relative;
-          cursor: pointer;
-        }
-
-        #calendar li::before {
-          content: "• ";
-          position: relative;
-          transform: translateY(-50%);
-        }
 
         .color-0::before {
           color: red;
@@ -210,50 +202,6 @@
           font-family: "Trebuchet MS", sans-serif;
         }
 
-        #calendar {
-          border-collapse: collapse;
-          height: 50%;
-          width: 90%;
-          margin: auto;
-          padding: 0 5%;
-          background-color: #4ad09b;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          border-radius: 15px;
-        }
-
-        #calendar th {
-          background-color: #4ad09b;
-          color: white;
-          padding: 10px;
-          border-radius: 15px;
-        }
-
-        #calendar td {
-          border: 1px solid #d3d3d3;
-          background-color: white;
-          padding: 10px;
-          text-align: left;
-          vertical-align: top;
-
-          width: 14%;
-          height: 120px;
-
-          overflow: auto;
-          word-break: break-word;
-          font-size: 25pt;
-          font-weight: bold;
-          box-sizing: border-box;
-        }
-
-        #calendar td div {
-          list-style: none;
-          font-size: 20pt;
-        }
-
-        #calendar .today {
-          background-color: #a8dbd9;
-          border-radius: 10px;
-        }
         .calendar-nav {
           padding: 10px;
           text-align: center;
@@ -533,7 +481,7 @@
         }
 
         .week-calendar-container {
-          overflow-x: auto;
+          overflow-x: hidden;
         }
 
         .week-calendar-nav {
@@ -621,6 +569,52 @@
       }
 
       @media (max-width: 768px) {
+        .fc-event {/*event style*/
+            background-color: #4ad09b;
+            color: white;
+            border: 1px solid #4ad09b; 
+        }
+
+        .fc-event:hover {/*event style*/
+            background-color: #5c865c;
+            color: white;
+            border: 1px solid #5c865c; 
+        }
+        .fc .fc-toolbar.fc-header-toolbar
+        {
+          margin-top: 20px;
+          margin-left:10px;
+          margin-right: 10px
+        }
+        .fc .fc-toolbar-title{
+          font-size: 0.7em;
+          color:#4ad09b
+        }
+     
+
+        .fc-time-grid .fc-slats td[data-time] .fc-time {
+            color: #4ad09b;
+        }
+
+        .fc-daygrid-day { /*month calendar style*/
+              background-color: #f8f9fa; 
+          }
+
+        .fc .fc-col-header-cell-cushion {
+          display: inline-block;
+          padding: 2px 4px;
+          color: #4ad09b;
+          font-size: 5px;
+        }
+
+        .fc-daygrid-day-number {
+                color: #4ad09b; 
+          }
+          .fc-daygrid-weekday {
+            color: #4ad09b;
+          }
+
+        
         body {
           background-color: white;
           font-family: "Times New Roman", serif;
@@ -638,15 +632,6 @@
         .btn-primary:hover {
           background-color: #cde4c3;
           color: #3b543b;
-        }
-
-        #calendar th {
-          background-color: #b4d3b2;
-          color: #3e533e;
-        }
-
-        #calendar .today {
-          background-color: #cde4c3;
         }
 
         .modal-content {
@@ -751,23 +736,6 @@
           padding: 20px; /* Add padding */
         }
 
-        #calendar ul {
-          list-style-type: none;
-          padding-left: 0;
-        }
-
-        #calendar li {
-          margin-left: 1px;
-          position: relative;
-          cursor: pointer;
-        }
-
-        #calendar li::before {
-          content: "• ";
-          position: relative;
-          transform: translateY(-50%);
-        }
-
         .color-0::before {
           color: red;
         }
@@ -797,51 +765,6 @@
           font-family: "Trebuchet MS", sans-serif;
         }
 
-        #calendar {
-          border-collapse: collapse;
-          height: 50%;
-          width: 98%;
-          margin: auto;
-          padding: 0 5%;
-          background-color: #4ad09b;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          border-radius: 15px;
-        }
-
-        #calendar th {
-          background-color: #4ad09b;
-          color: white;
-          padding: 10px;
-          border-radius: 15px;
-          font-size: 50%;
-        }
-        #calendar td div {
-          list-style: none;
-          font-size: 10px;
-        }
-
-        #calendar td {
-          border: 1px solid #d3d3d3;
-          background-color: white;
-          padding: 10px;
-          text-align: left;
-          vertical-align: top;
-          /* width: 110px;
-                    height: 120px; */
-          width: 100px;
-          height: 60px;
-
-          overflow: auto;
-          word-break: break-word;
-          font-size: 6px;
-          /* border-radius: 10px; */
-          box-sizing: border-box;
-        }
-
-        #calendar .today {
-          background-color: #a8dbd9;
-          border-radius: 10px;
-        }
         .calendar-nav {
           padding: 10px;
           text-align: center;
@@ -1123,6 +1046,7 @@
         }
 
         #calendar-containerid {
+
           width: 100%;
           overflow-x: auto;
         }
@@ -1507,9 +1431,9 @@
         <div class="col-md-auto form-group mb-3 d-flex align-items-center">
           <label for="calendar-dropdown" id="Calendar_id">Calendar</label>
           <select id="calendar-dropdown" class="form-control">
-            <option value="month" selected>month</option>
-            <option value="week">week</option>
-            <option value="day">day</option>
+            <option value="dayGridMonth" selected>month</option>
+            <option value="timeGridWeek">week</option>
+            <option value="timeGridDay">day</option>
             <!-- Options here -->
           </select>
         </div>
@@ -1518,95 +1442,15 @@
 
     <!-- Testing loading ICON -->
     <div id="loadingIcon" class="loading"></div>
-
+<!--  Calendar Container -->
     <div class="calendar-container" id="calendar-containerid">
-      <div class="calendar-nav">
-        <button onclick="moveMonth(-1)">&lt;</button>
-        <span id="monthYear"></span>
-        <button onclick="moveMonth(1)">&gt;</button>
-      </div>
-
-      <table id="calendar">
-        <thead>
-          <tr>
-            <th>Sun</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
-          </tr>
-        </thead>
-        <tbody id="calendar-body">
-          <!-- Calendar days will be generated here -->
-        </tbody>
-      </table>
     </div>
 
-    <!-- Week Calendar -->
-    <div class="week-calendar" id="week-calendarid">
-      <div class="week-calendar-nav">
-        <button id="prevWeek" class="week-calendar-button">&lt;</button>
-        <span id="WeekMonthYear"></span>
-        <button id="nextWeek" class="week-calendar-button">&gt;</button>
-      </div>
-      <div class="daily-calendar">
-        <table id="week-calendar">
-          <thead>
-            <tr id="week-days-header">
-              <th>Time</th>
-            </tr>
-          </thead>
-          <!-- <tbody id="week-calendar-body"></tbody> -->
-        </table>
-        <div class="flex-table">
-          <div class="table-col" style="overflow: hidden;">
-            <div class="weekly-calendar-body" , id="WeeklyTime" style="overflow: hidden;"></div>
-          </div>
-          <div class="table-col">
-            <div class="weekly-calendar-body" , id="weeklyDay0"></div>
-          </div>
-          <div class="table-col">
-            <div class="weekly-calendar-body" , id="weeklyDay1"></div>
-          </div>
-          <div class="table-col">
-            <div class="weekly-calendar-body" , id="weeklyDay2"></div>
-          </div>
-          <div class="table-col">
-            <div class="weekly-calendar-body" , id="weeklyDay3"></div>
-          </div>
-          <div class="table-col">
-            <div class="weekly-calendar-body" , id="weeklyDay4"></div>
-          </div>
-          <div class="table-col">
-            <div class="weekly-calendar-body" , id="weeklyDay5"></div>
-          </div>
-          <div class="table-col">
-            <div class="weekly-calendar-body" , id="weeklyDay6"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
+
 
     <!-- Daily Calendar -->
 
-    <div class="daily-calendar-container" id="daily-calendarID">
-      <div class="calendar-nav">
-        <button onclick="moveDay(-1)">&lt;</button>
-        <span id="dailyCalendarMonth"></span>
-        <button onclick="moveDay(1)">&gt;</button>
-      </div>
-
-      <div class="daily-calendar">
-        <div id="DateBox">
-          <span id="dailyCalendarDay"></span>
-        </div>
-        <div class="daily-calendar-body" , id="DailyBody">
-          <!-- <div class = "current-time-line"></div> -->
-        </div>
-      </div>
-    </div>
 
     <!-- Pop up window -->
     <div id="modal" class="modal">
@@ -2029,7 +1873,7 @@
         const all_carer = await CollectAllRecord("Customer", "Customers");
 
         specialDates = await GenerateResult(all_carer);
-        //console.log("Original Special dates IS " +JSON.stringify(specialDates) );
+        console.log("Original Special dates IS " +JSON.stringify(specialDates) );
 
         async function GenerateResult(input) {
           let output = [];
@@ -2171,40 +2015,20 @@
           customerUpdateSelect.appendChild(optionElement);
         });
       }
-      async function switchCalendar() {
-        document
-          .getElementById("calendar-dropdown")
-          .addEventListener("change", function () {
-            var monthCalendar = document.getElementById("calendar-containerid");
-            var weekCalendar = document.getElementById("week-calendarid");
-            var dayCalendar = document.getElementById("daily-calendarID");
 
-            if (this.value === "month") {
-              dayCalendar.style.display = "none";
-              monthCalendar.style.display = "block";
-              weekCalendar.style.display = "none";
-            } else if (this.value === "week") {
-              dayCalendar.style.display = "none";
-              monthCalendar.style.display = "none";
-              weekCalendar.style.display = "block";
-            } else if (this.value === "day") {
-              dayCalendar.style.display = "block";
-              monthCalendar.style.display = "none";
-              weekCalendar.style.display = "none";
-            }
-          });
-      }
 
       async function FinalDeploy() {
-        await switchCalendar();
         await setupEventListeners();
         await OriginalDeploy();
-        setupNavigationButtons();
-        //console.log("The user object is" + JSON.stringify(userObject))
-
         update_whole_calendar();
       }
-      FinalDeploy();
+      document.addEventListener('DOMContentLoaded', async function() {
+          try {
+              await FinalDeploy();
+          } catch (error) {
+              console.error('Error during final deployment:', error);
+          }
+      });
 
       /////////////////////////////////////////SEPARATE LINE FOR CANLENDER/////////////////////////////////////////////
       let currentYear = new Date().getFullYear();
@@ -2215,498 +2039,63 @@
 
       let currentBaseDate = new Date();
 
-      function setupWeekCalendar(specialDate) {
-        currentBaseDate = new Date();
-        currentBaseDate.setDate(
-          currentBaseDate.getDate() - currentBaseDate.getDay()
-        );
-
-        createWeekCalendar(currentBaseDate, specialDate);
-      }
-
-      function createWeekCalendar(baseDate, specialDate) {
-        // const weekCalendarBody = document.getElementById("week-calendar-body");
-        const weekDaysHeader = document.getElementById("week-days-header");
-        const WeekMonthYear = document.getElementById("WeekMonthYear");
-
-        // weekCalendarBody.innerHTML = "";
-        weekDaysHeader.innerHTML = "<th>Time</th>";
-
-        const currentYear = baseDate.getFullYear();
-
-        //console.log("The week special date is" + JSON.stringify(specialDate) );
-        const curMonthDisplay = baseDate
-          .toLocaleString("en-AU", {
-            year: "numeric",
-            month: "long",
-            timeZone: "Australia/Sydney",
-          })
-          .split(",")[0];
-
-        WeekMonthYear.textContent = curMonthDisplay;
-
-        for (let i = 0; i < 7; i++) {
-          let dayDate = new Date(baseDate);
-          dayDate.setDate(baseDate.getDate() + i);
-          let dayHeader = document.createElement("th");
-          dayHeader.textContent = dayDate.toLocaleString("default", {
-            weekday: "short",
-            day: "2-digit",
-          });
-          weekDaysHeader.appendChild(dayHeader);
-          createWeeklyEvent(dayDate, specialDate, `weeklyDay${i}`);
-        }
-
-        // // Add the early morning row (00:00am to 5:59am)
-        // addTimeRow(
-        //   weekCalendarBody,
-        //   baseDate,
-        //   0,
-        //   6,
-        //   "00:00am - 5:59am",
-        //   specialDate
-        // );
-
-        //   // Add rows for each hour from 6am to 9pm
-        //   for (let hour = 6; hour < 22; hour++) {
-        //     addTimeRow(
-        //       weekCalendarBody,
-        //       baseDate,
-        //       hour,
-        //       hour + 1,
-        //       formatHour(hour),
-        //       specialDate
-        //     );
-        //   }
-
-        //   // Add the late night row (9:01pm to 11:59pm)
-        //   addTimeRow(
-        //     weekCalendarBody,
-        //     baseDate,
-        //     22,
-        //     24,
-        //     "9:01pm - 11:59pm",
-        //     specialDate
-        //   );
-        // }
-
-        // function addTimeRow(
-        //   weekCalendarBody,
-        //   baseDate,
-        //   startHour,
-        //   endHour,
-        //   timeLabelContent,
-        //   specialDate
-        // ) {
-        //   let row = document.createElement("tr");
-        //   row.classList.add("row-cell");
-
-        //   let timeLabel = document.createElement("td");
-        //   timeLabel.textContent = timeLabelContent;
-        //   row.appendChild(timeLabel);
-
-        //   for (let day = 0; day < 7; day++) {
-        //     let cell = document.createElement("td");
-        //     let text_space = document.createElement("div");
-        //     cell.classList.add("custom-cell");
-        //     text_space.classList.add("text-cell");
-        //     cell.appendChild(text_space);
-
-        //     let cellDate = new Date(baseDate);
-        //     cellDate.setDate(baseDate.getDate() + day);
-        //     // Modify the addEventsToCell function to handle the startHour and endHour
-        //     addEventsToCell(
-        //       text_space,
-        //       cellDate,
-        //       startHour,
-        //       endHour,
-        //       specialDate
-        //     );
-        //     row.appendChild(cell);
-        //   }
-
-        //   weekCalendarBody.appendChild(row);
-      }
-
-      function createWeeklyEvent(Day, specialDates,id) {
-        const scheduleContainerElement = document.getElementById(`${id}`);
-
-        const curDayDisplay = Day.toLocaleString("en-AU", {
-          weekday: "long",
-          timeZone: "Australia/Sydney",
-        }).split(",")[0];
-
-        const curMonthDisplay = Day.toLocaleString("en-AU", {
-          year: "numeric",
-          month: "long",
-          day: "2-digit",
-          timeZone: "Australia/Sydney",
-        }).split(",")[0];
-
-        const curDayString = Day.toLocaleString("en-AU", {
-          timeZone: "Australia/Sydney",
-        }).split(",")[0];
-
-
-        let daysEvents = specialDates.filter((d) => {
-          const eventday = d.ios_start_date
-            .toLocaleString("en-AU", { timeZone: "Australia/Sydney" })
-            .split(",")[0];
-
-          return curDayString === eventday;
-        });
-
-        let eventCount = [];
-
-        for (let i = 0; i < 24; i++) {
-          eventCount.push(0);
-        }
-
-        daysEvents.forEach((event) => {
-          const HourS = event.ios_start_date.getHours();
-          const HourE = event.ios_end_date.getHours();
-
-          for (let i = HourS; i <= HourE; i++) {
-            eventCount[i]++;
-          }
-          console.log(eventCount);
-        });
-
-        daysEvents.forEach((event, index) => {
-          let eventElement = document.createElement("div");
-
-          // ${event.service}
-
-          const sHour = event.ios_start_date.getHours();
-          const sMin = event.ios_start_date.getMinutes();
-          const eHour = event.ios_end_date.getHours();
-          const eMin = event.ios_end_date.getMinutes();
-
-          let sDisplay;
-          if (sHour === 12) {
-            sDisplay = `12:${sMin.toString().padStart(2, "0")} pm`;
-          } else if (sHour === 24) {
-            sDisplay = `12:${sMin.toString().padStart(2, "0")} am`;
-          } else {
-            sDisplay =
-              `${sHour}` > 12
-                ? `${sHour - 12}:${sMin.toString().padStart(2, "0")} pm`
-                : `${sHour}:${sMin.toString().padStart(2, "0")} am`;
-          }
-
-          let eDisplay;
-          if (eHour === 12) {
-            eDisplay = `12:${eMin.toString().padStart(2, "0")} pm`;
-          } else if (sHour === 24) {
-            sDisplay = `12:${eMin.toString().padStart(2, "0")} am`;
-          } else {
-            eDisplay =
-              `${eHour}` > 12
-                ? `${eHour - 12}:${eMin.toString().padStart(2, "0")} pm`
-                : `${eHour}:${eMin.toString().padStart(2, "0")} am`;
-          }
-
-          eventElement.className = `dailyevent color-${
-            index % 6
-          } start-${sHour} end-${eHour}`;
-          eventElement.textContent = `${sDisplay} - ${eDisplay}`;
-
-          let EventL = 0;
-
-          for (let j = sHour; j <= eHour; j++) {
-            console.log(eventCount[j]);
-            if (eventCount[j] > EventL) {
-              EventL = eventCount[j];
-            }
-          }
-          const spanNo = 8 / EventL;
-
-          eventElement.style.setProperty("grid-column-end", `span ${spanNo}`);
-
-
-          const eventItemList = [event.service, event.customer, event.carer]
-            .map((c) => {
-              const elem = document.createElement("p");
-              elem.textContent = c;
-              return elem;
-            })
-            .forEach((elem) => eventElement.appendChild(elem));
-
-          eventElement.onclick = function () {
-            showModal(event);
-          };
-          scheduleContainerElement.appendChild(eventElement);
-        });
-      }
-
-
-
-      // function createEventList_Week(currCount, cell) {
-      //   let EventPoint = document.createElement("div");
-      //   EventPoint.className = "eventPoint";
-
-      //   let bullet0 = document.createElement("span");
-      //   bullet0.className = "eventbullet";
-
-      //   EventPoint.appendChild(bullet0);
-      //   EventPoint.onclick = function (event) {
-      //     showDayEvent(currCount);
-      //   };
-
-      //   let EventContainer = document.createElement("div");
-      //   EventContainer.className = "DayEvent";
-
-      //   EventContainer.id = `event-point-${currCount}`;
-
-      //   let EventList = document.createElement("div");
-      //   EventList.className = "DayEventList";
-
-      //   let closebutton = document.createElement("button");
-      //   closebutton.id = `dayevent${currCount}-close`;
-      //   closebutton.className = "closeEvent";
-
-      //   EventList.onclick = function (event) {
-      //     event.stopPropagation();
-      //     closeDayEvent(currCount);
-      //   };
-
-      //   closebutton.innerHTML = "x";
-      //   EventList.appendChild(closebutton);
-      //   EventList.id = `event-list-${currCount}`;
-      //   EventPoint.appendChild(EventContainer);
-      //   EventContainer.appendChild(EventList);
-      //   cell.appendChild(EventPoint);
-
-      //   return [EventList, bullet0];
-      // }
-
-      // function addEventsToCell(
-      //   cell,
-      //   cellDate,
-      //   startHour,
-      //   endHour,
-      //   specialDate
-      // ) {
-      //   let colors = ["red", "blue", "green", "orange", "purple", "yellow"];
-      //   let colorIndex = 0;
-
-      //   let events = specialDate.filter((event) => {
-      //     let startDate = new Date(event.ios_start_date);
-      //     return (
-      //       startDate.getDate() === cellDate.getDate() &&
-      //       startDate.getMonth() === cellDate.getMonth() &&
-      //       startDate.getFullYear() === cellDate.getFullYear() &&
-      //       startDate.getHours() >= startHour &&
-      //       startDate.getHours() < endHour
-      //     );
-      //   });
-
-      //   if (events.length !== 0) {
-      //     let curCount = dayEventCount();
-      //     let Res = createEventList_Week(curCount, cell);
-      //     console.log("THE events is " + JSON.stringify(events));
-      //     let eCount = 0;
-      //     events.forEach((event) => {
-      //       console.log("THE week event is" + JSON.stringify(event));
-      //       let eventElement = document.createElement("div");
-      //       eventElement.classList.add("event-tip");
-      //       let bullet = document.createElement("span");
-      //       bullet.textContent = "• ";
-      //       bullet.style.color = colors[colorIndex];
-      //       eventElement.appendChild(bullet);
-      //       let startIndex = event.normal_start_date.length - 11;
-      //       let textNode = document.createTextNode(
-      //         event.normal_start_date.substring(startIndex) +
-      //           " " +
-      //           event.service
-      //       );
-      //       eventElement.appendChild(textNode);
-      //       colorIndex = (colorIndex + 1) % colors.length;
-      //       eventElement.onclick = function () {
-      //         showModal(event);
-      //       };
-
-      //       Res[0].appendChild(eventElement);
-      //       eCount++;
-      //     });
-      //     Res[1].textContent = `• ${eCount} events`;
-      //   }
-      // }
-
-      function createEventPoint(currCount, cell) {
-        let EventPoint = document.createElement("div");
-        EventPoint.className = "eventPoint";
-
-        let bullet0 = document.createElement("span");
-        bullet0.className = "eventbullet";
-
-        EventPoint.appendChild(bullet0);
-        EventPoint.onclick = function (event) {
-          showDayEvent(currCount);
-        };
-
-        let EventContainer = document.createElement("div");
-        EventContainer.className = "DayEvent";
-
-        EventContainer.id = `event-point-${currCount}`;
-
-        let EventList = document.createElement("div");
-        EventList.className = "DayEventList";
-
-        let closebutton = document.createElement("button");
-        closebutton.className = "closeEvent";
-
-        EventList.onclick = function (event) {
-          event.stopPropagation();
-          closeDayEvent(currCount);
-        };
-
-        closebutton.innerHTML = "x";
-        EventList.appendChild(closebutton);
-        EventList.id = `event-list-${currCount}`;
-        EventPoint.appendChild(EventContainer);
-        EventContainer.appendChild(EventList);
-
-        cell.appendChild(EventPoint);
-
-        return [EventList, bullet0];
-      }
-
-      function formatHour(hour) {
-        const ampm = hour >= 12 ? "PM" : "AM";
-        hour = hour % 12;
-        hour = hour ? hour : 12;
-        return `${hour}:00 ${ampm}`;
-      }
-
-      function setupNavigationButtons() {
-        document
-          .getElementById("prevWeek")
-          .addEventListener("click", function () {
-            adjustWeek(-7);
-
-            // console.log("THe week special Dates is" +JSON.stringify(specialDates) );
-          });
-
-        document
-          .getElementById("nextWeek")
-          .addEventListener("click", function () {
-            adjustWeek(7);
-
-            // console.log("THe week special Dates is" +JSON.stringify(specialDates) );
-          });
-      }
-
-      async function adjustWeek(days) {
-        currentBaseDate.setDate(currentBaseDate.getDate() + days);
-        await deleteDailyEvent();
-        createWeekCalendar(currentBaseDate, specialDates);
-        console.log(JSON.stringify(currentBaseDate.getDate()));
-      }
 
       function update_whole_calendar() {
-        createCalendar(currentYear, currentMonth, specialDates);
-        createWeekCalendar(currentBaseDate, specialDates);
-        // setupWeekCalendar(specialDates);
-        createDailyCal(curDay, specialDates);
+
+        var calendar = getCalendarInstance();
+
+
+          calendar.destroy();
+
+
+          createCalendar(specialDates);
+
       }
 
-      function createCalendar(year, month, specialDates) {
-        let monthYear = document.getElementById("monthYear");
-        let calendarBody = document.getElementById("calendar-body");
-        let firstDay = new Date(year, month).getDay();
-        let daysInMonth = new Date(year, month + 1, 0).getDate();
+      function getCalendarInstance() {
+          var calendarEl = document.getElementById('calendar-containerid');
+          return new FullCalendar.Calendar(calendarEl);
+      }
 
-        monthYear.textContent = `${new Date(year, month).toLocaleString(
-          "default",
-          { month: "long" }
-        )} ${year}`;
-        calendarBody.innerHTML = "";
 
-        let date = 1;
-        for (let i = 0; i < 6; i++) {
-          let row = document.createElement("tr");
+      function formatSpecialDates(specialDates) {
 
-          for (let j = 0; j < 7; j++) {
-            let cellM = document.createElement("td");
-
-            if (i === 0 && j < firstDay) {
-              row.appendChild(cellM);
-            } else if (date > daysInMonth) {
-              break;
-            } else {
-              let cellDate = new Date(year, month, date);
-              let formattedDate = `${cellDate.getFullYear()}-${String(
-                cellDate.getMonth() + 1
-              ).padStart(2, "0")}-${String(cellDate.getDate()).padStart(
-                2,
-                "0"
-              )}`;
-
-              let daysEvents = specialDates.filter((d) => {
-                let eventStartDate = new Date(d.ios_start_date);
-                let eventFormattedDate = `${eventStartDate.getFullYear()}-${String(
-                  eventStartDate.getMonth() + 1
-                ).padStart(2, "0")}-${String(eventStartDate.getDate()).padStart(
-                  2,
-                  "0"
-                )}`;
-
-                return formattedDate === eventFormattedDate;
-              });
-
-              daysEvents.sort((a, b) => a.ios_start_date - b.ios_end_date);
-              let colors = [
-                "red",
-                "blue",
-                "green",
-                "orange",
-                "purple",
-                "yellow",
-              ];
-              // let eventsList = document.createElement("ul");
-              // cell.appendChild(eventsList);
-
-              cellM.textContent = `${date}`;
-              if (daysEvents.length !== 0) {
-                let curCountM, ResM, eCountM;
-
-                curCountM = dayEventCount();
-                ResM = createEventPoint(curCountM, cellM);
-                eCountM = 0;
-
-                daysEvents.forEach((event, index) => {
-                  let eventItem = document.createElement("li");
-                  let eventStartDate = new Date(event.ios_start_date);
-                  let sydneyTime = eventStartDate.toLocaleString("en-AU", {
-                    timeZone: "Australia/Sydney",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    timeZoneName: "short",
-                  });
-
-                  let sydneyshowTime = sydneyTime.slice(0, -4);
-                  eventItem.textContent = `${sydneyshowTime} ${event.service}`;
-
-                  eventItem.className = `color-${index % colors.length}`;
-
-                  eventItem.onclick = function () {
-                    //console.log("THE EVENT IS " +JSON.stringify(event) );
-                    showModal(event);
-                  };
-
-                  ResM[0].appendChild(eventItem);
-                  eCountM++;
-                });
-                ResM[1].textContent = `• ${eCountM} events`;
-              }
-              row.appendChild(cellM);
-              date++;
-            }
-          }
-          calendarBody.appendChild(row);
+            return specialDates.map(date => {
+                return {
+                    title: date.service, 
+                    start: date.ios_start_date,
+                    end: date.ios_end_date, 
+                    extendedProps: {
+                    normal_start_date: date.normal_start_date,
+                    normal_end_date: date.normal_end_date,
+                    carer: date.carer,
+                    customer: date.customer,
+                    service: date.service,
+                    schedule_id: date.schedule_id
+                   }
+                };
+            });
         }
+      function createCalendar(specialDates){
+        var calendarEl = document.getElementById('calendar-containerid');
 
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth', 
+            events: formatSpecialDates(specialDates),
+            allDaySlot: false,
+            dayMaxEventRows: true,
+            eventClick: function(info) {
+   
+                showModal(info.event); 
+            }
+
+        });
+        var cal_select = document.getElementById("calendar-dropdown");
+        cal_select.addEventListener('change', function() {
+        calendar.changeView(cal_select.value);
+        });
+
+        calendar.render();
         document.getElementById("loadingIcon").style.display = "none";
       }
 
@@ -2722,16 +2111,19 @@
         let modal = document.getElementById("modal");
         document.getElementById(
           "Start_End_time"
-        ).textContent = `${event.normal_start_date} - ${event.normal_end_date}`;
+        ).textContent = `${event.extendedProps.normal_start_date} - ${event.extendedProps.normal_end_date}`;
+        
+
+
         document.getElementById(
           "Event_title"
-        ).textContent = `Event: ${event.service}`;
+        ).textContent = `Event: ${event.extendedProps.service}`;
         document.getElementById(
           "modalCarer"
-        ).textContent = `Carer: ${event.carer}`;
+        ).textContent = `Carer: ${event.extendedProps.carer}`;
         document.getElementById(
           "modalCustomer"
-        ).textContent = `Customer: ${event.customer}`;
+        ).textContent = `Customer: ${event.extendedProps.customer}`;
         // document.getElementById('modalScheduleId').textContent = `Schedule ID: ${event.schedule_id}`;
 
         let editButton = document.getElementById("editButton");
@@ -2782,8 +2174,6 @@
 
           var formattedStartTime = formatDateTime(startTime);
           var formattedEndTime = formatDateTime(endTime);
-          //console.log("THE unformateed start time is" + startTime);
-          //console.log("THE formatted start time is" + formattedStartTime);
 
           var startDateTime = new Date(formattedStartTime);
           var endDateTime = new Date(formattedEndTime);
@@ -2810,7 +2200,7 @@
           //console.log(`The carer id is ${selectCarerId} and customer id is ${selectCustomerId}`)
 
           await updateConfirm(
-            event,
+            event.extendedProps,
             data,
             eventType,
             formattedStartTime,
@@ -2829,7 +2219,7 @@
         }
 
         deleteButton.onclick = async function () {
-          await deleteConfirm(event);
+          await deleteConfirm(event.extendedProps);
 
           updateSpecialDates(specialDates);
 
@@ -2884,8 +2274,7 @@
               scheduleToUpdate.carer = data_to_update.Carers;
               scheduleToUpdate.normal_start_date = start_time;
               scheduleToUpdate.normal_end_date = end_time;
-              // scheduleToUpdate.ios_start_date = transfer_iostime(start_time);
-              // scheduleToUpdate.ios_end_date = transfer_iostime(end_time);
+
 
               scheduleToUpdate.ios_start_date = new Date(data_to_update.Start);
               scheduleToUpdate.ios_end_date = new Date(data_to_update.End);
@@ -2898,34 +2287,7 @@
         }
       }
 
-      function transfer_iostime(normal_time) {
-        let match = normal_time.match(
-          /(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2}) (am|pm)/i
-        );
-        if (!match) {
-          throw new Error("Invalid time format");
-        }
-
-        let hour = parseInt(match[4], 10);
-        if (match[7].toLowerCase() === "pm" && hour < 12) {
-          hour += 12;
-        } else if (match[7].toLowerCase() === "am" && hour === 12) {
-          hour = 0;
-        }
-
-        let sydneyDate = new Date(
-          `${match[3]}-${match[1].padStart(2, "0")}-${match[2].padStart(
-            2,
-            "0"
-          )}T${hour.toString().padStart(2, "0")}:${match[5]}:${match[6]}`
-        );
-
-        let timezoneOffsetInHours = 10;
-        sydneyDate.setHours(sydneyDate.getHours() - timezoneOffsetInHours);
-        //console.log("THE TRANSFOR IOS TIME IS " + sydneyDate);
-
-        return sydneyDate;
-      }
+    
 
       function closeModal() {
         let modal = document.getElementById("modal");
@@ -2993,176 +2355,8 @@
 
       //////////////////////////////////////////// Daily Calender ////////////////////////////////////////////////
 
-      let curDay = new Date();
+     
 
-      function createDailyTimeLine(id) {
-        const scheduleContainerElement = document.getElementById(`${id}`);
-
-        const startTime = 0;
-        const endTime = 24;
-
-        //create time column
-        for (let hour = startTime; hour < endTime; hour++) {
-          let time;
-          if (hour === 12) {
-            time = `12 pm`;
-          } else if (hour === 0) {
-            time = `12 am`;
-          } else {
-            time = `${hour}` > 12 ? `${hour - 12} pm` : `${hour} am`;
-          }
-
-          const timeElementS = document.createElement("div");
-          timeElementS.className = `${id}time start-${hour}`;
-          timeElementS.textContent = time;
-          timeElementS.style.setProperty("grid-area", `time${hour}s`);
-          const timeElementE = document.createElement("div");
-          timeElementE.className = `${id}time end-${hour}`;
-          timeElementE.id = "timeEnd";
-          timeElementE.style.setProperty("grid-area", `time${hour}e`);
-          scheduleContainerElement.appendChild(timeElementS);
-          scheduleContainerElement.appendChild(timeElementE);
-        }
-      }
-
-      createDailyTimeLine("DailyBody");
-      createDailyTimeLine("WeeklyTime");
-
-
-      function createDailyEvent(Day, specialDates) {
-        const scheduleContainerElement = document.getElementById("DailyBody");
-
-        const curDayDisplay = Day.toLocaleString("en-AU", {
-          weekday: "long",
-          timeZone: "Australia/Sydney",
-        }).split(",")[0];
-
-        const curMonthDisplay = Day.toLocaleString("en-AU", {
-          year: "numeric",
-          month: "long",
-          day: "2-digit",
-          timeZone: "Australia/Sydney",
-        }).split(",")[0];
-
-        const curDayString = Day.toLocaleString("en-AU", {
-          timeZone: "Australia/Sydney",
-        }).split(",")[0];
-
-        const DateDisplay = document.getElementById("dailyCalendarDay");
-        DateDisplay.textContent = curDayDisplay;
-        const MonthDisplay = document.getElementById("dailyCalendarMonth");
-        MonthDisplay.textContent = curMonthDisplay;
-
-        let daysEvents = specialDates.filter((d) => {
-          const eventday = d.ios_start_date
-            .toLocaleString("en-AU", { timeZone: "Australia/Sydney" })
-            .split(",")[0];
-
-          return curDayString === eventday;
-        });
-
-        //console.log(daysEvents);
-
-        let eventCount = [];
-
-        for (let i = 0; i < 24; i++) {
-          eventCount.push(0);
-        }
-
-        daysEvents.forEach((event) => {
-          const HourS = event.ios_start_date.getHours();
-          const HourE = event.ios_end_date.getHours();
-
-          for (let i = HourS; i <= HourE; i++) {
-            eventCount[i]++;
-          }
-          console.log(eventCount);
-        });
-
-        daysEvents.forEach((event, index) => {
-          let eventElement = document.createElement("div");
-
-          // ${event.service}
-
-          const sHour = event.ios_start_date.getHours();
-          const sMin = event.ios_start_date.getMinutes();
-          const eHour = event.ios_end_date.getHours();
-          const eMin = event.ios_end_date.getMinutes();
-
-          let sDisplay;
-          if (sHour === 12) {
-            sDisplay = `12:${sMin.toString().padStart(2, "0")} pm`;
-          } else if (sHour === 24) {
-            sDisplay = `12:${sMin.toString().padStart(2, "0")} am`;
-          } else {
-            sDisplay =
-              `${sHour}` > 12
-                ? `${sHour - 12}:${sMin.toString().padStart(2, "0")} pm`
-                : `${sHour}:${sMin.toString().padStart(2, "0")} am`;
-          }
-
-          let eDisplay;
-          if (eHour === 12) {
-            eDisplay = `12:${eMin.toString().padStart(2, "0")} pm`;
-          } else if (sHour === 24) {
-            sDisplay = `12:${eMin.toString().padStart(2, "0")} am`;
-          } else {
-            eDisplay =
-              `${eHour}` > 12
-                ? `${eHour - 12}:${eMin.toString().padStart(2, "0")} pm`
-                : `${eHour}:${eMin.toString().padStart(2, "0")} am`;
-          }
-
-          eventElement.className = `dailyevent color-${
-            index % 6
-          } start-${sHour} end-${eHour}`;
-          eventElement.textContent = `${sDisplay} - ${eDisplay}`;
-
-          let EventL = 0;
-
-          for (let j = sHour; j <= eHour; j++) {
-            console.log(eventCount[j]);
-            if (eventCount[j] > EventL) {
-              EventL = eventCount[j];
-            }
-          }
-          const spanNo = 20 / EventL;
-
-          eventElement.style.setProperty("grid-column-end", `span ${spanNo}`);
-
-          const eventItemList = [event.service, event.customer, event.carer]
-            .map((c) => {
-              const elem = document.createElement("p");
-              elem.textContent = c;
-              return elem;
-            })
-            .forEach((elem) => eventElement.appendChild(elem));
-
-          eventElement.onclick = function () {
-            showModal(event);
-          };
-          scheduleContainerElement.appendChild(eventElement);
-        });
-      }
-
-      function deleteDailyEvent() {
-        const deleteItem = document.querySelectorAll("div.dailyevent");
-        deleteItem.forEach((element) => {
-          element.parentNode.removeChild(element);
-        });
-      }
-
-      async function createDailyCal(Day, specialDates) {
-        await deleteDailyEvent();
-        // FindEvent();
-        createDailyEvent(Day, specialDates);
-      }
-
-      function moveDay(step) {
-        curDay.setDate(curDay.getDate() + step);
-
-        createDailyCal(curDay, specialDates);
-      }
 
       function validateTime() {
         let input = document.getElementById("startTime");
@@ -3181,14 +2375,6 @@
           return;
         }
 
-        // var hours = date.getHours();
-        // var minutes = date.getMinutes();
-        // var valid = hours >= 6 && hours < 21;
-
-        // if (!valid && value) {
-        //   alert("Start time must between 6:00 am to 8:59 pm！");
-        //   input.value = "";
-        // }
       }
 
       function validateTime2() {
@@ -3227,40 +2413,8 @@
           return;
         }
 
-        // var hours = date.getHours();
-        // var minutes = date.getMinutes();
-        // var valid =
-        //   (hours === 21 && minutes === 0) || (hours > 6 && hours < 21);
-
-        // if (!valid && value) {
-        //   alert("End time must between 6:01 am to 9:00 pm！");
-        //   input.value = "";
-        // }
       }
 
-      //   function showDayEvent(counter) {
-      //     let dayEvent = document.getElementById(`event-point-${counter}`);
-      //     dayEvent.style.display = "flex";
-      //   }
-
-      //   function closeDayEvent(counter) {
-      //     let dayEvent = document.getElementById(`event-point-${counter}`);
-      //     dayEvent.style.display = "none";
-      //   }
-
-      //   function updateCurrentTimeLine() {
-      //   const currentTime = new Date();
-      //   const hours = currentTime.getHours();
-      //   const minutes = currentTime.getMinutes();
-      //   const totalMinutes = hours * 60 + minutes;
-
-      //   const lineTop = totalMinutes / 1440 * 4796;
-
-      //   const currentTimeLine = document.querySelector('.current-time-line');
-      //   currentTimeLine.style.top = `${lineTop}%`;
-      // }
-      // updateCurrentTimeLine();
-      // setInterval(updateCurrentTimeLine, 60000);
     </script>
   </body>
 </html>
